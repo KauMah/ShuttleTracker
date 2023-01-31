@@ -17,6 +17,8 @@ pids
 # Dependency directories
 server/node_modules/
 
+# Generated js code
+server/dist
 
 # dotenv environment variable files
 server/.env
