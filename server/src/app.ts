@@ -5,6 +5,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
+import users from './routes/users';
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,8 @@ app.get('/', (req: Request, res: Response) => {
   // this is how an express route sends data back, although this is a really simple case - usually it sends some JSON
   res.send('hello');
 });
+
+app.use('/user', users);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

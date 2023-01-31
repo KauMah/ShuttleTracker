@@ -36,5 +36,6 @@
             "always"
         ],
         "comma-dangle": ["error", "always"],
+        "space-in-brackets": ["error", "always"],
     }
 }
