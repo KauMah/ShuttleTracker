@@ -26,7 +26,6 @@ client/node_modules/
 
 # Generated js code
 server/dist
-client/public
 
 # dotenv environment variable files
 server/.env
