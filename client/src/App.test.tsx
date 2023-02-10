@@ -1,9 +1,18 @@
-import React from 'react';
+import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App', () => {
+  it('Renders hello world', () => {
+    // arrange
+    render(<App />);
+    // Act
+    // expect
+    expect(
+      screen.getByRole('heading', {
+        level: 1,
+      })
+    ).toHaveTextContent('Hello World');
+  });
 });
