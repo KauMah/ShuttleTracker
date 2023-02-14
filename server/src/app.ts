@@ -2,12 +2,17 @@ import * as dotenv from 'dotenv';
 
 import express, { NextFunction, Request, Response } from 'express';
 
+import connect from './config/mongoSetup';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
+import morgan from 'morgan';
 import users from './routes/users';
 
 dotenv.config();
+const DB_URI = process.env.MONGO_URL || '';
+
+connect(DB_URI);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -16,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
+app.use(morgan('combined'));
 
 app.get('/', (req: Request, res: Response) => {
   // this is how you get access to the request body, similarly can get access to route params and cookies etc
