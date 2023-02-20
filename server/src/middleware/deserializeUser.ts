@@ -11,8 +11,8 @@ export const deserializeUser = async (req: Request, res: Response, next: NextFun
     let access_token;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       access_token = req.headers.authorization.split(' ')[1];
-    } else if (req.cookies.access_token) {
-      access_token = _.get(req.cookies, 'access_token', '');
+    } else if (req.cookies.accessToken) {
+      access_token = _.get(req.cookies, 'accessToken', '');
     }
 
     if (!access_token) {
@@ -36,7 +36,8 @@ export const deserializeUser = async (req: Request, res: Response, next: NextFun
     if (!user) {
       return next(new AppError('User no longer exists', 401));
     }
-    res.locals.use = user;
+
+    res.locals.user = user;
     next();
   } catch (err: any) {
     next(err);

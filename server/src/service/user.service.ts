@@ -35,13 +35,14 @@ export const signToken = async (user: DocumentType<User>) => {
   const access_token = signJwt(
     { sub: user._id },
     {
-      expiresIn: `${_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', 5)}m`,
+      expiresIn: `${_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', 12)}h`,
     }
   );
 
   // Create redis session
-  redisClient.set(user._id, JSON.stringify(user), {
-    EX: 60 * 60,
+  const hrsToExpire: number = parseInt(_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', '12'));
+  redisClient.set(user._id.toString(), JSON.stringify(user), {
+    EX: 60 * 60 * hrsToExpire,
   });
 
   return { access_token };

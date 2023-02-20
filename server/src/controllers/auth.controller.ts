@@ -6,11 +6,11 @@ import { RegisterUserInput } from '../schemas/user.schema';
 import _ from 'lodash';
 
 export const excludedFields = ['password'];
-const expTime: number = parseInt(_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', '5'));
+const expTime: number = parseInt(_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', '12'));
 
 const accessTokenCookieOptions: CookieOptions = {
-  expires: new Date(Date.now() + expTime * 60 * 1000),
-  maxAge: expTime * 60 * 1000,
+  expires: new Date(Date.now() + expTime * 60 * 60 * 1000),
+  maxAge: expTime * 60 * 60 * 1000,
   httpOnly: true,
   sameSite: 'lax',
 };
