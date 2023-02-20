@@ -38,18 +38,3 @@ export class User {
 
 const userModel = getModelForClass(User);
 export default userModel;
-// const User = mongoose.model(
-//   'User',
-//   new mongoose.Schema({
-//     email: {
-//       type: String,
-//       unique: true,
-//     },
-//     password: String,
-//     role: {
-//       type: String,
-//       enum: ['rider', 'driver', 'admin'],
-//       default: 'rider',
-//     },
-//   })
-// );
