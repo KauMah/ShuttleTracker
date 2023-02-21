@@ -9,7 +9,7 @@ export const validate = (schema: AnyZodObject) => (req: Request, res: Response, 
       body: req.body,
     });
     next();
-  } catch (err: any) {
+  } catch (err: unknown) {
     if (err instanceof ZodError) {
       return res.status(400).json({
         status: 'fail',

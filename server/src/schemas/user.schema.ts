@@ -11,14 +11,11 @@ export const registerUserSchema = object({
     password: string({ required_error: 'Password is required' })
       .min(8, 'Password must be longer than 8 characters')
       .max(32, 'Password must be shorter than 32 characters'),
-    passwordConfirm: string({ required_error: 'Must confirm password' }).refine(
-      (data: any) => data.password === data.passwordConfirm,
-      {
-        path: ['passwordConfirm'],
-        message: 'Passwords do not match',
-      }
-    ),
+    passwordConfirm: string({ required_error: 'Must confirm password' }),
     role: z.optional(z.nativeEnum(Role)),
+  }).refine((data) => data.password === data.passwordConfirm, {
+    path: ['passwordConfirm'],
+    message: 'Passwords do not match',
   }),
 });
 

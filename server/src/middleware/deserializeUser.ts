@@ -39,7 +39,7 @@ export const deserializeUser = async (req: Request, res: Response, next: NextFun
 
     res.locals.user = user;
     next();
-  } catch (err: any) {
+  } catch (err: unknown) {
     next(err);
   }
 };
