@@ -16,7 +16,8 @@
         "ecmaVersion": "latest"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "unused-imports"
     ],
     "rules": {
         "indent": [
@@ -35,7 +36,6 @@
             "error",
             "always"
         ],
-        "comma-dangle": ["error", "always"],
-        "space-in-brackets": ["error", "always"],
+        "object-curly-spacing": ["error", "always"]
     }
 }

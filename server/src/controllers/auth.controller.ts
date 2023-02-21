@@ -1,9 +1,12 @@
 import { CookieOptions, NextFunction, Request, Response } from 'express';
+import { Error, MongooseError } from 'mongoose';
 import { findUser, registerUser, signToken } from '../service/user.service';
 
 import AppError from '../utils/appError';
+import { MongoError } from 'mongodb';
 import { RegisterUserInput } from '../schemas/user.schema';
 import _ from 'lodash';
+import { errors } from '@typegoose/typegoose';
 
 export const excludedFields = ['password'];
 const expTime: number = parseInt(_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', '12'));
@@ -18,7 +21,11 @@ const accessTokenCookieOptions: CookieOptions = {
 // production settings
 if (_.get(process.env, 'NODE_ENV', 'development') === 'production') accessTokenCookieOptions.secure = true;
 
-export const registerHandler = async (req: Request<{}, {}, RegisterUserInput>, res: Response, next: NextFunction) => {
+export const registerHandler = async (
+  req: Request<object, object, RegisterUserInput>,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const user = await registerUser({
       email: req.body.email,
@@ -33,18 +40,24 @@ export const registerHandler = async (req: Request<{}, {}, RegisterUserInput>, r
         user,
       },
     });
-  } catch (err: any) {
-    if (err.code === 11000) {
-      return res.status(409).json({
-        status: 'fail',
-        message: 'Email already exists',
-      });
+  } catch (err: unknown) {
+    if (err instanceof MongoError) {
+      if (err.code === 11000) {
+        return res.status(409).json({
+          status: 'fail',
+          message: 'Email already exists',
+        });
+      }
     }
     next(err);
   }
 };
 
-export const loginHandler = async (req: Request<{}, {}, RegisterUserInput>, res: Response, next: NextFunction) => {
+export const loginHandler = async (
+  req: Request<object, object, RegisterUserInput>,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const user = await findUser({ email: req.body.email });
 
@@ -64,7 +77,7 @@ export const loginHandler = async (req: Request<{}, {}, RegisterUserInput>, res:
       status: 'success',
       access_token,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     next(err);
   }
 };

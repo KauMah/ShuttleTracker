@@ -11,7 +11,7 @@ export const getMeHandler = (req: Request, res: Response, next: NextFunction) =>
         user,
       },
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     next(err);
   }
 };
@@ -26,7 +26,7 @@ export const getAllUserHandler = async (req: Request, res: Response, next: NextF
         users,
       },
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     next(err);
   }
 };

@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 
 import express, { NextFunction, Request, Response } from 'express';
 
+import { ErrorStatus } from './utils/types';
 import authRouter from './routes/auth.route';
 import connectDB from './utils/connectDB';
 import cookieParser from 'cookie-parser';
@@ -38,12 +39,12 @@ app.use('/user', userRouter);
 app.use('/auth', authRouter);
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
-  const err = new Error(`Route ${req.originalUrl} not found`) as any;
+  const err = new Error(`Route ${req.originalUrl} not found`) as ErrorStatus;
   err.statusCode = 404;
   next(err);
 });
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: ErrorStatus, req: Request, res: Response) => {
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
 

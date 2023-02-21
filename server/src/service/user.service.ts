@@ -36,7 +36,7 @@ export const signToken = async (user: DocumentType<User>) => {
     { sub: user._id },
     {
       expiresIn: `${_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', 12)}h`,
-    }
+    },
   );
 
   // Create redis session

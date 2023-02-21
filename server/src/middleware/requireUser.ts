@@ -10,7 +10,7 @@ export const requireUser = (req: Request, res: Response, next: NextFunction) => 
     }
 
     next();
-  } catch (err: any) {
+  } catch (err: unknown) {
     next(err);
   }
 };
