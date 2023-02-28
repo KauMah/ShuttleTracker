@@ -20,7 +20,6 @@ const styles = {
     },
   }),
   container: {
-    // display: 'flex',
     alignItems: 'center',
     textAlign: 'center' as const,
     width: '40%',
