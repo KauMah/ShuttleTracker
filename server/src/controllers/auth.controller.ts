@@ -75,7 +75,10 @@ export const loginHandler = async (
 
     res.status(200).json({
       status: 'success',
-      access_token,
+      user: {
+        access_token,
+        ..._.pick(user, ['id', 'name', 'email', 'role']),
+      },
     });
   } catch (err: unknown) {
     next(err);

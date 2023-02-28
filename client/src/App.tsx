@@ -1,19 +1,13 @@
-import React from 'react';
-import { css } from '@emotion/react';
+import 'react-toastify/dist/ReactToastify.css';
 
-const styles = {
-  header: css({
-    transition: 'background-color 0.5s',
-    '&:hover': {
-      backgroundColor: '#389723',
-    },
-  }),
-};
+import { AuthProvider } from './utils/AuthContext';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <div className="App">
-      <h1 css={styles.header}>Hello World</h1>
+      <AuthProvider />
+      <ToastContainer />
     </div>
   );
 }
