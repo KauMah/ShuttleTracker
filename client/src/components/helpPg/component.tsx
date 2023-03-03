@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-const helpPg = () => {
+const HelpPg = () => {
   return (
     <div style={styles.background}>
       <h1 css={styles.title}>MSU</h1>
@@ -35,4 +35,4 @@ const helpPg = () => {
     </div>
   );
 };
-export default helpPg;
+export default HelpPg;

@@ -1,3 +1,3 @@
-import helpPg from './component';
+import HelpPg from './component';
 
-export default helpPg;
+export default HelpPg;

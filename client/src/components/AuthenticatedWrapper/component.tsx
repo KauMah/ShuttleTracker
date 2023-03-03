@@ -1,9 +1,16 @@
-import React from 'react';
-import helpPg from '../helpPg';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+import HelpPg from '../helpPg';
+
+const router = createBrowserRouter([
+  {
+    path: '/help',
+    element: <HelpPg />,
+  },
+]);
 
 const AuthWrapper = () => {
-  return <helpPg />;
-  //window.open('./helpPg/component');
+  return <RouterProvider router={router} />;
 };
 
 export default AuthWrapper;
