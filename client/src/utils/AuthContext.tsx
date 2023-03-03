@@ -1,6 +1,8 @@
-import { createContext, useState } from 'react';
+import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom';
+import { createContext, useEffect, useState } from 'react';
 
 import AuthWrapper from '../components/AuthenticatedWrapper';
+import HelpPg from '../components/helpPg';
 import Login from '../components/login';
 
 export interface User {
@@ -21,15 +23,37 @@ export const AuthContext = createContext<AuthType>({
   setUser: () => {},
 });
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Login />,
+  },
+  {
+    path: '/home',
+    element: <HelpPg />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+]);
+
 export const AuthProvider = () => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  useEffect(() => {
+    console.log('eeee');
+    if (!user) {
+      redirect('/login');
+    } else {
+      redirect('/home');
+    }
+  }, [user]);
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      {!user && <Login />}
-      {user && <AuthWrapper />}
+      <RouterProvider router={router} />;
     </AuthContext.Provider>
   );
 };
