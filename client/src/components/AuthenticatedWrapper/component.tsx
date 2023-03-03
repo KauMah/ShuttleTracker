@@ -1,7 +1,9 @@
 import React from 'react';
+import helpPg from '../helpPg';
 
 const AuthWrapper = () => {
-  return <div>ur logged in fool</div>;
+  return <helpPg />;
+  //window.open('./helpPg/component');
 };
 
 export default AuthWrapper;
