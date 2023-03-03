@@ -1,7 +1,16 @@
-import React from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+import HelpPg from '../helpPg';
+
+const router = createBrowserRouter([
+  {
+    path: '/help',
+    element: <HelpPg />,
+  },
+]);
 
 const AuthWrapper = () => {
-  return <div>ur logged in fool</div>;
+  return <RouterProvider router={router} />;
 };
 
 export default AuthWrapper;
