@@ -2,7 +2,7 @@ import { Severity, getModelForClass, index, modelOptions, prop } from '@typegoos
 
 import { TimeSeriesBucketTimestamp } from 'redis';
 
-interface GeoJSONPoint {
+export interface GeoJSONPoint {
   type: 'Point';
   coordinates: [number, number];
 }
