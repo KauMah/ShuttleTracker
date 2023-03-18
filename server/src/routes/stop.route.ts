@@ -9,7 +9,7 @@ const router = express.Router();
 // router.use(deserializeUser, requireUser);
 
 router.get('/', (req: Request, res: Response) => {
-  stopModel.create({ name: 'bloo/p', loc: [20, 20] });
+  stopModel.create({ name: 'bloop', loc: [20, 20] });
   res.status(200).json({ status: 'success' });
 });
 
