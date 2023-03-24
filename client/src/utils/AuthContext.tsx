@@ -26,7 +26,7 @@ export const AuthContext = createContext<AuthType>({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Login />,
+    element: <HelpPg />,
   },
   {
     path: '/home',
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <Login />,
+    element: <HelpPg />,
   },
 ]);
 
