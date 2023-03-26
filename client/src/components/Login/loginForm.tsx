@@ -1,4 +1,6 @@
 import { $grey, $lightGrey, $white } from '../../assets/colors';
+import { redirect, useNavigate } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
 import { Formik } from 'formik';
@@ -7,7 +9,6 @@ import _ from 'lodash';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 import { toast } from 'react-toastify';
-import { useContext } from 'react';
 
 interface LoginValues {
   email?: string;
@@ -34,7 +35,11 @@ const styles = {
 };
 
 const LoginForm = (): JSX.Element => {
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user) navigate('/');
+  }, [user, navigate]);
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -53,6 +58,8 @@ const LoginForm = (): JSX.Element => {
           .then((data) => {
             // console.log(_.get(data, 'data.user.access_token', ''));
             setUser(_.get(data, 'data.user', ''));
+            localStorage.setItem('user', JSON.stringify(_.get(data, 'data.user', '')));
+            redirect('/');
           })
           .catch((err) => {
             toast(_.get(err, 'response.data.error[0].message', 'Failed unexpectedly, check connection'), {
