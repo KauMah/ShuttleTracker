@@ -23,37 +23,36 @@ export const AuthContext = createContext<AuthType>({
   setUser: () => {},
 });
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HelpPg />,
-  },
-  {
-    path: '/home',
-    element: <HelpPg />,
-  },
-  {
-    path: '/login',
-    element: <HelpPg />,
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <Login />,
+//   },
+//   {
+//     path: '/help',
+//     element: <HelpPg />,
+//   },
+// ]);
 
 export const AuthProvider = () => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  //maybe isnt needed??????
   useEffect(() => {
-    console.log('eeee');
     if (!user) {
-      redirect('/login');
+      console.log('www');
+      redirect('/');
     } else {
-      redirect('/home');
+      console.log('lllll');
+      redirect('/help');
     }
   }, [user]);
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      <RouterProvider router={router} />;
+      {!user && <Login />}
+      {user && <AuthWrapper />}
     </AuthContext.Provider>
   );
 };

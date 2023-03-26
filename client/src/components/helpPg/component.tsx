@@ -1,51 +1,26 @@
 import { $grey, $red, $white } from '../../assets/colors';
 
-import React from 'react';
-
-//import { css } from '@emotion/react';
+import { css } from '@emotion/react';
 
 const styles = {
-  background: {
+  colLeft: {
     backgroundColor: $grey,
-    height: '50vh',
-    width: '100vw',
+    height: '100vh',
   },
-  background2: {
+  colRight: {
     backgroundColor: $red,
-    height: '50vh',
-    width: '100vw',
+    height: '100vh',
   },
+  title: css({}),
 };
-// const HelpPg = () => {
-//   return (
-//     <div className="container">
-//       <div className="row">
-//         <div className="col-6">jaja</div>
-//         <div className="col-6">lalalal</div>
-//       </div>
-//     </div>
-//   );
-// };
 const HelpPg = () => {
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
-        <div className="col">
-          <div style={styles.background}></div>
-        </div>
-        <div className="col">
-          <div style={styles.background2}></div>
-        </div>
+        <div className="col-4" style={styles.colLeft}></div>
+        <div className="col-8" style={styles.colRight}></div>
       </div>
     </div>
   );
 };
-// const HelpPg = () => {
-//   return (
-//     <div style={styles.background}>
-//       <h1 css={styles.title}>MSU</h1>
-//       <div style={styles.container} className="container-"></div>
-//     </div>
-//   );
-// };
 export default HelpPg;
