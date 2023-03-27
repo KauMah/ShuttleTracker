@@ -1,7 +1,5 @@
-import { createContext, useState } from 'react';
-
-import AuthWrapper from '../components/AuthenticatedWrapper';
-import Login from '../components/login';
+import { ReactNode, createContext, useEffect, useState } from 'react';
+import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom';
 
 export interface User {
   name: string;
@@ -16,20 +14,27 @@ interface AuthType {
   setUser: React.Dispatch<React.SetStateAction<User>>;
 }
 
+interface AuthProps {
+  children: ReactNode;
+}
+
 export const AuthContext = createContext<AuthType>({
   user: null,
   setUser: () => {},
 });
 
-export const AuthProvider = () => {
+export const AuthProvider = ({ children }: AuthProps) => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {!user && <Login />}
-      {user && <AuthWrapper />}
-    </AuthContext.Provider>
-  );
+  //maybe isnt needed??????
+  useEffect(() => {
+    if (!user) {
+      redirect('/login');
+    } else {
+      redirect('/help');
+    }
+  }, [user]);
+  return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
 };
