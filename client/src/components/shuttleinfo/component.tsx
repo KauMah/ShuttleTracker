@@ -1,7 +1,6 @@
 import Navbar from '../navBar';
 
-const Home = () => {
+const ShuttleInfo = () => {
   return <Navbar />;
 };
-
-export default Home;
+export default ShuttleInfo;

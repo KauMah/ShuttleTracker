@@ -1,7 +1,6 @@
 import Navbar from '../navBar';
 
-const Home = () => {
+const Account = () => {
   return <Navbar />;
 };
-
-export default Home;
+export default Account;

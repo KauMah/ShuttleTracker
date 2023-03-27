@@ -1,55 +1,57 @@
-import { $black, $grey, $red } from '../../assets/colors';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import { $grey, $red, $white } from '../../assets/colors';
+
+import { NavLink } from 'react-router-dom';
+import { css } from '@emotion/react';
 
 const styles = {
   background: {
     backgroundColor: $red,
     height: '25vh',
-
-    padding: '30px',
+    padding: '60px',
   },
-  title: {},
+  title: css({
+    color: $white,
+    fontSize: 50,
+    // borderBottom: '100px',
+    lineHeight: '0px',
+    transition: 'color 0.25s',
+    '&:hover': {
+      color: $grey,
+    },
+  }),
   links: {
-    // color: $black,
     fontSize: 20,
-    padding: '10px',
+    padding: '20px',
+    lineHeight: '0px',
   },
 };
 
 const Navbar = () => {
   return (
-    <nav className="container">
-      <div className="row">
-        <div className="col w-100" style={styles.background}>
-          <div className="d-flex justify-content-end">
-            <NavLink to="/home" style={styles.links}>
-              Home
-            </NavLink>
-            <NavLink to="/shuttle info" style={styles.links}>
-              View Shuttle Info
-            </NavLink>
-            <NavLink to="/help" style={styles.links}>
-              Help
-            </NavLink>
-            <NavLink to="/account" style={styles.links}>
-              Account
-            </NavLink>
-            <NavLink to="/logout" style={styles.links}>
-              Logout
-            </NavLink>
-          </div>
+    <div className="row">
+      <div className="col" style={styles.background}>
+        <h1 css={styles.title}>MSU</h1>
+      </div>
+      <div className="col" style={styles.background}>
+        <div className="d-flex justify-content-end">
+          <NavLink to="/home" style={styles.links}>
+            Home
+          </NavLink>
+          <NavLink to="/shuttleInfo" style={styles.links}>
+            View Shuttle-Info
+          </NavLink>
+          <NavLink to="/help" style={styles.links}>
+            Help
+          </NavLink>
+          <NavLink to="/account" style={styles.links}>
+            Account
+          </NavLink>
+          <NavLink to="/logout" style={styles.links}>
+            Logout
+          </NavLink>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 export default Navbar;
-
-// const HelpPg = () => {
-//   return (
-//     <div className="container-fluid">
-//       <div className="row">
-//         <div className="col-4" style={styles.colLeft}></div>
-//         <div className="col-8" style={styles.colRight}></div>
-//       </div>
-//     </div>
