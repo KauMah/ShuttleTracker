@@ -1,23 +1,40 @@
-import { $black, $grey, $red, $white } from '../../assets/colors';
+import { $black, $grey, $lightGrey, $msured, $red, $white } from '../../assets/colors';
 
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
 
 const styles = {
-  msulogo: css({
+  buslogo: css({
     backgroundColor: $white,
-    transform: 'skew(10deg)',
     padding: '15px 30px',
+    transform: 'skew(-14deg)',
+  }),
+  bltitle: css({
+    color: $msured,
+    fontFamily: 'Roboto',
+    fontSize: '1.6em',
+    fontWeight: '700',
+    textAlign: 'center',
+  }),
+  msulogo: css({
+    backgroundColor: $msured,
+    transform: 'skew(-14deg)',
+    padding: '30px 30px 25px',
+  }),
+  mltitle: css({
+    color: $white,
+    fontFamily: 'Roboto',
+    fontSize: '1.7em',
+    fontWeight: '700',
   }),
   msulinks: css({
-    backgroundColor: $red,
+    backgroundColor: $lightGrey,
     transform: 'skew(-14deg)',
   }),
   background: css({
     backgroundColor: $red,
     backdropFilter: 'blur(10px)',
     WebKitBackDropFilter: 'blur(2px)',
-    mask: 'linear-gradient(black 30%, transparent)',
     height: '15vh',
     padding: '50px',
   }),
@@ -26,7 +43,6 @@ const styles = {
     fontSize: 40,
     fontFamily: 'sans-serif',
     fontWeight: 'Bold',
-    // fontStyle: 'oblique',
     lineHeight: '50px',
     textAlign: 'center',
     transition: 'color 0.25s',
@@ -46,10 +62,13 @@ const styles = {
 const Navbar = () => {
   return (
     <div className="row">
-      <div className="col-2" css={styles.msulogo}>
-        <h1 css={styles.title}>MSU</h1>
+      <div className="col-2" css={styles.buslogo}>
+        <h1 css={styles.bltitle}>MSU Bus Shuttle Tracker</h1>
       </div>
-      <div className="col-10" css={styles.msulinks}>
+      <div className="col-1" css={styles.msulogo}>
+        <h1 css={styles.mltitle}>MSU</h1>
+      </div>
+      <div className="col-9" css={styles.msulinks}>
         <div className="d-flex justify-content-end">
           <NavLink to="/home" css={styles.links}>
             Home

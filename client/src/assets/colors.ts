@@ -4,3 +4,4 @@ export const $white = '#fff';
 export const $black = '#000';
 export const $grey = '#888';
 export const $lightGrey = '#d9d9d9';
+export const $transparent = ' rgba(0,0,0,0)';
