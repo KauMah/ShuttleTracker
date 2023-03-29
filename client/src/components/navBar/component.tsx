@@ -2,6 +2,7 @@ import { $black, $grey, $lightGrey, $msured, $red, $white } from '../../assets/c
 
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
+import msuNav from '../../assets/img/MsuNav.jpg';
 
 const styles = {
   buslogo: css({
@@ -26,36 +27,35 @@ const styles = {
     fontFamily: 'Roboto',
     fontSize: '1.7em',
     fontWeight: '700',
+    textAlign: 'center',
   }),
   msulinks: css({
+    // backgroundImage: `url(${msuNav})`,
+    background: `url(${msuNav}) no-repeat 50% 50% fixed`,
+    backgroundSize: 'cover',
     backgroundColor: $lightGrey,
     transform: 'skew(-14deg)',
+    opacity: 0.95,
+    // backgroundSize: 'contain',
+    // backgroundRepeat: 'no-repeat',
   }),
-  background: css({
-    backgroundColor: $red,
-    backdropFilter: 'blur(10px)',
-    WebKitBackDropFilter: 'blur(2px)',
-    height: '15vh',
-    padding: '50px',
-  }),
-  title: css({
-    color: $black,
-    fontSize: 40,
-    fontFamily: 'sans-serif',
-    fontWeight: 'Bold',
-    lineHeight: '50px',
-    textAlign: 'center',
-    transition: 'color 0.25s',
-    '&:hover': {
-      color: $grey,
-    },
-  }),
+  // title: css({
+  //   color: $black,
+  //   fontSize: 40,
+  //   fontFamily: 'sans-serif',
+  //   fontWeight: 'Bold',
+  //   lineHeight: '50px',
+  //   textAlign: 'center',
+  //   transition: 'color 0.25s',
+  //   '&:hover': {
+  //     color: $grey,
+  //   },
+  // }),
   links: css({
     color: $black,
     fontSize: 25,
     fontWeight: 'bold',
     padding: '30px 30px',
-    textAlign: 'center',
   }),
 };
 
