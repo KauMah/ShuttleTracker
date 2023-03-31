@@ -16,7 +16,7 @@ const LocalRoutes = () => {
       <Routes>
         <Route path="/" element={user.user ? <Home /> : <Navigate to={'/login'} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="shuttleInfo" element={<ShuttleInfo />} />
+        <Route path="/shuttleInfo" element={<ShuttleInfo />} />
         <Route path="/home" element={<Home />} />
         <Route path="/help" element={<HelpPg />} />
         <Route path="/account" element={<Account />} />

@@ -12,7 +12,7 @@ export interface User {
 
 interface AuthType {
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 interface AuthProps {
