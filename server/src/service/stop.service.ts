@@ -30,3 +30,8 @@ export const updateStop = async (id: string, stop: Partial<DocumentType<Stop>>) 
 export const deleteStop = async (id: string) => {
   return await stopModel.findByIdAndDelete(id);
 };
+
+// Get all stops
+export const getStops = async () => {
+  return await stopModel.find();
+};

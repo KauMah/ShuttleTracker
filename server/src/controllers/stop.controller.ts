@@ -1,7 +1,7 @@
 import { CreateStopInput, DeleteStopInput, EditStopInput } from '../schemas/stop.schema';
 import { GeoJSONPoint, Stop } from '../models/stop.model';
 import { NextFunction, Request, Response } from 'express';
-import { createStop, deleteStop, updateStop } from '../service/stop.service';
+import { createStop, deleteStop, getStops, updateStop } from '../service/stop.service';
 
 import { DocumentType } from '@typegoose/typegoose';
 import { MongoError } from 'mongodb';
@@ -93,6 +93,24 @@ export const deleteStopHandler = async (
       res.status(400).json({
         status: 'fail',
         message: 'Error occurred deleting Stop',
+      });
+    }
+    next();
+  }
+};
+
+export const getStopHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const stops = await getStops();
+    res.status(200).json({
+      status: 'success',
+      data: stops,
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Error occurred getting Stops',
       });
     }
     next();
