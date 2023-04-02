@@ -20,16 +20,16 @@ export enum Role {
 })
 export class User {
   @prop({ required: true })
-  public name!: string;
+    name!: string;
 
   @prop({ unique: true, required: true })
-  public email!: string;
+    email!: string;
 
   @prop({ required: true, minlength: 8, maxLength: 32, select: false })
-  public password!: string;
+    password!: string;
 
   @prop({ default: 'rider', enum: Role })
-  public role!: string;
+    role!: string;
 
   async comparePasswords(hashedPassword: string, candidatePassword: string) {
     return await bcrypt.compare(candidatePassword, hashedPassword);

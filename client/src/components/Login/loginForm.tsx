@@ -93,7 +93,11 @@ const LoginForm = (): JSX.Element => {
           />
           <p style={styles.error}>{errors.password && touched.password && errors.password}</p>
 
-          <button css={styles.submitButton} type="submit" disabled={isSubmitting}>
+          <button
+            css={styles.submitButton}
+            type="submit"
+            disabled={!touched.email || !touched.password || isSubmitting}
+          >
             SUBMIT
           </button>
         </form>

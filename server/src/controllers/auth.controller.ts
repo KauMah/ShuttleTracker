@@ -1,10 +1,12 @@
 import { CookieOptions, NextFunction, Request, Response } from 'express';
+import { Error, MongooseError } from 'mongoose';
 import { findUser, registerUser, signToken } from '../service/user.service';
 
 import AppError from '../utils/appError';
 import { MongoError } from 'mongodb';
 import { RegisterUserInput } from '../schemas/user.schema';
 import _ from 'lodash';
+import { errors } from '@typegoose/typegoose';
 
 export const excludedFields = ['password'];
 const expTime: number = parseInt(_.get(process.env, 'ACCESS_TOKEN_EXPIRES_IN', '12'));

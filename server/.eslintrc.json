@@ -20,6 +20,10 @@
         "unused-imports"
     ],
     "rules": {
+        "indent": [
+            "error",
+            2
+        ],
         "linebreak-style": [
             "error",
             "unix"
@@ -32,8 +36,6 @@
             "error",
             "always"
         ],
-        "object-curly-spacing": ["error", "always"],
-        "@typescript-eslint/no-unused-vars": "on",
-        "unused-imports/no-unused-imports-ts": "on"
+        "object-curly-spacing": ["error", "always"]
     }
 }
