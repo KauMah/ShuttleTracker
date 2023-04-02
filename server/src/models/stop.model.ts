@@ -1,7 +1,5 @@
 import { Severity, getModelForClass, index, modelOptions, prop } from '@typegoose/typegoose';
 
-import { TimeSeriesBucketTimestamp } from 'redis';
-
 export interface GeoJSONPoint {
   type: 'Point';
   coordinates: [number, number];

@@ -1,4 +1,4 @@
-import { FilterQuery, QueryOptions } from 'mongoose';
+import { FilterQuery, QueryOptions, Types } from 'mongoose';
 
 import { DocumentType } from '@typegoose/typegoose';
 import { Stop } from '../models/stop.model';
@@ -22,7 +22,7 @@ export const findStopByField = async (query: FilterQuery<User>, options: QueryOp
 };
 
 // Update stop by ID
-export const updateStop = async (id: string, stop: Partial<DocumentType<Stop>>) => {
+export const updateStop = async (id: Types.ObjectId, stop: Partial<DocumentType<Stop>>) => {
   return await stopModel.findByIdAndUpdate(id, { $set: _.omit({ ...stop }, ['_id']) });
 };
 

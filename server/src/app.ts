@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import routeRouter from './routes/route.route';
 import stopRouter from './routes/stop.route';
 import userRouter from './routes/user.route';
 
@@ -39,6 +40,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/stop', stopRouter);
+app.use('/route', routeRouter);
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const err = new Error(`Route ${req.originalUrl} not found`) as ErrorStatus;
