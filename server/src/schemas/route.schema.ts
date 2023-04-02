@@ -23,6 +23,13 @@ export const editRouteStopsSchema = object({
   }),
 });
 
+export const routeIdSchema = object({
+  body: object({
+    id: string({ required_error: 'id is required' }),
+  }),
+});
+
 export type CreateRouteInput = TypeOf<typeof createRouteSchema>['body'];
 export type EditRouteNameInput = TypeOf<typeof editRouteNameSchema>['body'];
 export type EditRouteStopsInput = TypeOf<typeof editRouteStopsSchema>['body'];
+export type RouteIdInput = TypeOf<typeof routeIdSchema>['body'];

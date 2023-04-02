@@ -26,3 +26,13 @@ export const addRouteStops = async (id: string, stops: Types.ObjectId[]) => {
 export const removeRouteStops = async (id: string, stops: Types.ObjectId[]) => {
   return await routeModel.findByIdAndUpdate(id, { $pull: { stops: { $in: stops } } }, { new: true });
 };
+
+// get Route by Id
+export const getRouteById = async (id: string) => {
+  return await routeModel.findById(id);
+};
+
+// get all Routes
+export const getAllRoutes = async () => {
+  return await routeModel.find();
+};

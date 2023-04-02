@@ -2,11 +2,19 @@ import {
   CreateRouteInput,
   EditRouteNameInput,
   EditRouteStopsInput,
+  RouteIdInput,
   editRouteNameSchema,
 } from '../schemas/route.schema';
 import { MongoError, MongoServerError, ObjectId } from 'mongodb';
 import { NextFunction, Request, Response } from 'express';
-import { addRouteStops, createRoute, editRouteName, removeRouteStops } from '../service/route.service';
+import {
+  addRouteStops,
+  createRoute,
+  editRouteName,
+  getAllRoutes,
+  getRouteById,
+  removeRouteStops,
+} from '../service/route.service';
 
 import { DocumentType } from '@typegoose/typegoose';
 import { Route } from '../models/route.model';
@@ -131,6 +139,47 @@ export const removeRouteStopHandler = async (
       err,
     });
 
+    next(err);
+  }
+};
+
+export const getRouteByIdHandler = async (
+  req: Request<object, object, RouteIdInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.body;
+  try {
+    const route = await getRouteById(id);
+    res.status(200).json({
+      status: 'success',
+      data: route,
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError || err instanceof MongoServerError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Something went wrong getting Route',
+      });
+    }
+    next(err);
+  }
+};
+
+export const getRoutesHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const route = await getAllRoutes();
+    res.status(200).json({
+      status: 'success',
+      data: route,
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError || err instanceof MongoServerError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Something went wrong getting Route',
+      });
+    }
     next(err);
   }
 };
