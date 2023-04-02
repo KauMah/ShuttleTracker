@@ -46,12 +46,6 @@ export const editStopHandler = async (
   const { stop } = req.body;
   try {
     const { _id } = stop as Partial<DocumentType<Stop>>;
-    // let tempStop;
-    // if (!stop.loc) {
-    //   tempStop = { ...stop } as Partial<DocumentType<Stop>>;
-    // } else {
-    //   tempStop = { ...stop, loc: stop.loc as GeoJSONPoint };
-    // }
     if (!_id)
       res.status(400).json({
         status: 'fail',

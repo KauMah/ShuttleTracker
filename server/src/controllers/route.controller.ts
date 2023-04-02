@@ -1,9 +1,16 @@
+import {
+  CreateRouteInput,
+  EditRouteNameInput,
+  EditRouteStopsInput,
+  editRouteNameSchema,
+} from '../schemas/route.schema';
 import { MongoError, MongoServerError, ObjectId } from 'mongodb';
 import { NextFunction, Request, Response } from 'express';
+import { addRouteStops, createRoute, editRouteName, removeRouteStops } from '../service/route.service';
 
-import { CreateRouteInput } from '../schemas/route.schema';
+import { DocumentType } from '@typegoose/typegoose';
+import { Route } from '../models/route.model';
 import { Types } from 'mongoose';
-import { createRoute } from '../service/route.service';
 
 export const createRouteHandler = async (
   req: Request<object, object, CreateRouteInput>,
@@ -27,6 +34,95 @@ export const createRouteHandler = async (
       res.status(400).json({
         status: 'fail',
         message: 'Something went wrong saving Route to collection',
+      });
+    }
+    res.status(500).json({
+      status: 'fail',
+      message: 'Internal Error occurred',
+      err,
+    });
+
+    next(err);
+  }
+};
+
+export const editRouteNameHandler = async (
+  req: Request<object, object, EditRouteNameInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id, route } = req.body;
+  try {
+    const rt = await editRouteName(id, { name: route.name });
+    res.status(200).json({
+      status: 'success',
+      date: rt,
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError || err instanceof MongoServerError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Something went wrong saving Route to collection',
+      });
+    }
+    res.status(500).json({
+      status: 'fail',
+      message: 'Internal Error occurred',
+      err,
+    });
+
+    next(err);
+  }
+};
+
+export const addRouteStopHandler = async (
+  req: Request<object, object, EditRouteStopsInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id, stopIds } = req.body;
+  try {
+    const idsToAdd = stopIds.map((id) => new Types.ObjectId(id));
+    const rt = await addRouteStops(id, idsToAdd);
+    res.status(200).json({
+      status: 'success',
+      data: rt,
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError || err instanceof MongoServerError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Something went wrong saving Route to collection',
+      });
+    }
+    res.status(500).json({
+      status: 'fail',
+      message: 'Internal Error occurred',
+      err,
+    });
+
+    next(err);
+  }
+};
+
+export const removeRouteStopHandler = async (
+  req: Request<object, object, EditRouteStopsInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id, stopIds } = req.body;
+  try {
+    const idsToPull = stopIds.map((id) => new Types.ObjectId(id));
+    const rt = await removeRouteStops(id, idsToPull);
+    res.status(200).json({
+      status: 'success',
+      data: rt,
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError || err instanceof MongoServerError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Something went wrong deleting Route from collection',
       });
     }
     res.status(500).json({

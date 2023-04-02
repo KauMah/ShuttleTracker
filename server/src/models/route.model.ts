@@ -20,14 +20,10 @@ export class Route {
   // public stops: Ref<Stop>[];
   @prop({
     ref: () => Stop,
-    foreignField: '_id',
-    localField: 'stops',
     default: [],
-    transform: (values: string[]) => {
-      return values.map((value) => new Types.ObjectId(value));
-    },
+    required: true,
   })
-  public stops: Ref<Stop>[];
+  public stops!: Ref<Stop>[];
 }
 
 const routeModel = getModelForClass(Route);
