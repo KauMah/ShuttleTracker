@@ -8,6 +8,7 @@ import {
 import {
   addRouteStopHandler,
   createRouteHandler,
+  deleteRouteHandler,
   editRouteNameHandler,
   getRouteByIdHandler,
   getRoutesHandler,
@@ -30,5 +31,6 @@ routeRouter.post('/addStops', restrictTo('admin'), validate(editRouteStopsSchema
 routeRouter.post('/removeStops', restrictTo('admin'), validate(editRouteStopsSchema), removeRouteStopHandler);
 routeRouter.post('/', validate(routeIdSchema), getRouteByIdHandler);
 routeRouter.get('/', getRoutesHandler);
+routeRouter.post('/delete', restrictTo('admin'), validate(routeIdSchema), deleteRouteHandler);
 
 export default routeRouter;

@@ -36,3 +36,8 @@ export const getRouteById = async (id: string) => {
 export const getAllRoutes = async () => {
   return await routeModel.find();
 };
+
+// delete Route by Id
+export const deleteRoute = async (id: string) => {
+  return await routeModel.findByIdAndDelete(id);
+};

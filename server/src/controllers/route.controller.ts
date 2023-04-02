@@ -10,6 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import {
   addRouteStops,
   createRoute,
+  deleteRoute,
   editRouteName,
   getAllRoutes,
   getRouteById,
@@ -169,6 +170,29 @@ export const getRouteByIdHandler = async (
 export const getRoutesHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const route = await getAllRoutes();
+    res.status(200).json({
+      status: 'success',
+      data: route,
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError || err instanceof MongoServerError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Something went wrong getting Route',
+      });
+    }
+    next(err);
+  }
+};
+
+export const deleteRouteHandler = async (
+  req: Request<object, object, RouteIdInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.body;
+  try {
+    const route = await deleteRoute(id);
     res.status(200).json({
       status: 'success',
       data: route,
