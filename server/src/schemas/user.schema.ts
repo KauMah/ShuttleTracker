@@ -1,4 +1,4 @@
-import { TypeOf, nativeEnum, object, optional, string, z } from 'zod';
+import { TypeOf, object, string, z } from 'zod';
 
 import { Role } from '../models/user.model';
 
@@ -12,7 +12,7 @@ export const registerUserSchema = object({
       .min(8, 'Password must be longer than 8 characters')
       .max(32, 'Password must be shorter than 32 characters'),
     passwordConfirm: string({ required_error: 'Must confirm password' }),
-    role: optional(nativeEnum(Role)),
+    role: z.optional(z.nativeEnum(Role)),
   }).refine((data) => data.password === data.passwordConfirm, {
     path: ['passwordConfirm'],
     message: 'Passwords do not match',
