@@ -1,10 +1,10 @@
 import { CreateStopInput, DeleteStopInput, EditStopInput } from '../schemas/stop.schema';
-import { GeoJSONPoint, Stop } from '../models/stop.model';
 import { NextFunction, Request, Response } from 'express';
 import { createStop, deleteStop, getStops, updateStop } from '../service/stop.service';
 
 import { DocumentType } from '@typegoose/typegoose';
 import { MongoError } from 'mongodb';
+import { Stop } from '../models/stop.model';
 
 export const addStopHandler = async (
   req: Request<object, object, CreateStopInput>,
@@ -46,18 +46,12 @@ export const editStopHandler = async (
   const { stop } = req.body;
   try {
     const { _id } = stop as Partial<DocumentType<Stop>>;
-    // let tempStop;
-    // if (!stop.loc) {
-    //   tempStop = { ...stop } as Partial<DocumentType<Stop>>;
-    // } else {
-    //   tempStop = { ...stop, loc: stop.loc as GeoJSONPoint };
-    // }
     if (!_id)
       res.status(400).json({
         status: 'fail',
         message: 'Must include id in Partial<Stop>',
       });
-    const newStop = await updateStop(_id, stop as Partial<DocumentType<Stop>>);
+    await updateStop(_id!, stop as Partial<DocumentType<Stop>>);
 
     res.status(201).json({
       status: 'success',

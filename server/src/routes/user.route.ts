@@ -5,12 +5,12 @@ import express from 'express';
 import { requireUser } from '../middleware/requireUser';
 import { restrictTo } from '../middleware/restrictTo';
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.use(deserializeUser, requireUser);
+userRouter.use(deserializeUser, requireUser);
 
-router.get('/', restrictTo('admin'), getAllUserHandler);
+userRouter.get('/', restrictTo('admin'), getAllUserHandler);
 
-router.get('/me', getMeHandler);
+userRouter.get('/me', getMeHandler);
 
-export default router;
+export default userRouter;

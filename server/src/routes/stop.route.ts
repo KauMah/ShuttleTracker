@@ -8,16 +8,16 @@ import { restrictTo } from '../middleware/restrictTo';
 import stopModel from '../models/stop.model';
 import { validate } from '../middleware/validate';
 
-const router = express.Router();
+const stopRouter = express.Router();
 
-router.use(deserializeUser, requireUser);
+stopRouter.use(deserializeUser, requireUser);
 
-router.post('/new', restrictTo('admin'), validate(createStopSchema), addStopHandler);
+stopRouter.post('/new', restrictTo('admin'), validate(createStopSchema), addStopHandler);
 
-router.post('/edit', restrictTo('admin'), validate(editStopSchema), editStopHandler);
+stopRouter.post('/edit', restrictTo('admin'), validate(editStopSchema), editStopHandler);
 
-router.post('/delete', restrictTo('admin'), validate(deleteStopSchema), deleteStopHandler);
+stopRouter.post('/delete', restrictTo('admin'), validate(deleteStopSchema), deleteStopHandler);
 
-router.get('/', restrictTo('admin'), getStopHandler);
+stopRouter.get('/', restrictTo('admin'), getStopHandler);
 
-export default router;
+export default stopRouter;
