@@ -1,15 +1,15 @@
-import { TypeOf, array, number, object, string, z } from 'zod';
+import { TypeOf, literal, number, object, string, tuple, z } from 'zod';
+
+const coordinate = tuple([number().min(-180).max(180), number().min(-90).max(90)]);
+
+const point = object({
+  type: literal('Point'),
+  coordinates: coordinate,
+});
 
 const stop = object({
   name: string({ required_error: 'Name is required' }),
-  loc: object({
-    type: z.enum(['Point']),
-    coordinates: number()
-      .array()
-      .length(2, 'Location is malformed')
-      .refine((input: number[]) => Math.abs(input[0]) > 180, { path: ['loc'], message: 'Invalid value for longitude' })
-      .refine((input: number[]) => Math.abs(input[1]) > 90, { path: ['loc'], message: 'Invalid value for latitude' }),
-  }).required(),
+  loc: point,
 });
 
 export const createStopSchema = object({
@@ -22,5 +22,12 @@ export const editStopSchema = object({
   }),
 });
 
+export const deleteStopSchema = object({
+  body: object({
+    id: string({ required_error: 'Must supply an id to delete Stop' }),
+  }),
+});
+
 export type CreateStopInput = TypeOf<typeof createStopSchema>['body'];
 export type EditStopInput = TypeOf<typeof editStopSchema>['body'];
+export type DeleteStopInput = TypeOf<typeof deleteStopSchema>['body'];

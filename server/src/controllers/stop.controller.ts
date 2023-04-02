@@ -1,7 +1,7 @@
-import { CreateStopInput, EditStopInput } from '../schemas/stop.schema';
+import { CreateStopInput, DeleteStopInput, EditStopInput } from '../schemas/stop.schema';
 import { GeoJSONPoint, Stop } from '../models/stop.model';
 import { NextFunction, Request, Response } from 'express';
-import { createStop, updateStop } from '../service/stop.service';
+import { createStop, deleteStop, updateStop } from '../service/stop.service';
 
 import { DocumentType } from '@typegoose/typegoose';
 import { MongoError } from 'mongodb';
@@ -16,8 +16,8 @@ export const addStopHandler = async (
     const stop = await createStop({
       name,
       loc: {
-        ...loc,
-        coordinates: [loc.coordinates[0], loc.coordinates[1]],
+        type: 'Point',
+        coordinates: loc.coordinates,
       },
     });
 
@@ -52,6 +52,11 @@ export const editStopHandler = async (
     // } else {
     //   tempStop = { ...stop, loc: stop.loc as GeoJSONPoint };
     // }
+    if (!_id)
+      res.status(400).json({
+        status: 'fail',
+        message: 'Must include id in Partial<Stop>',
+      });
     const newStop = await updateStop(_id, stop as Partial<DocumentType<Stop>>);
 
     res.status(201).json({
@@ -68,5 +73,28 @@ export const editStopHandler = async (
       });
       next(err);
     }
+  }
+};
+
+export const deleteStopHandler = async (
+  req: Request<object, object, DeleteStopInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.body;
+  try {
+    await deleteStop(id);
+
+    res.status(200).json({
+      status: 'success',
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Error occurred deleting Stop',
+      });
+    }
+    next();
   }
 };

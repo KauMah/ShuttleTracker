@@ -3,6 +3,7 @@ import { FilterQuery, QueryOptions } from 'mongoose';
 import { DocumentType } from '@typegoose/typegoose';
 import { Stop } from '../models/stop.model';
 import { User } from '../models/user.model';
+import _ from 'lodash';
 import stopModel from '../models/stop.model';
 
 // Create Stop
@@ -22,7 +23,7 @@ export const findStopByField = async (query: FilterQuery<User>, options: QueryOp
 
 // Update stop by ID
 export const updateStop = async (id: string, stop: Partial<DocumentType<Stop>>) => {
-  return await stopModel.findByIdAndUpdate(id, stop);
+  return await stopModel.findByIdAndUpdate(id, { $set: _.omit({ ...stop }, ['_id']) });
 };
 
 // Delete stop by ID
