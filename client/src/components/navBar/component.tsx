@@ -1,4 +1,4 @@
-import { $black, $msured, $transparent, $white } from '../../assets/colors';
+import { $black, $msured, $red, $transparent, $white } from '../../assets/colors';
 
 import { AuthContext } from '../../utils/AuthContext';
 import { NavLink } from 'react-router-dom';
@@ -26,6 +26,9 @@ const styles = {
     fontWeight: '700',
     textAlign: 'center',
   }),
+  busCondensed: css({
+    background: $red,
+  }),
   msulogo: css({
     backgroundColor: $msured,
     transform: 'skew(-10deg)',
@@ -43,6 +46,8 @@ const styles = {
   }),
   msuimg: css({
     background: `url(${msuNav}) no-repeat 50% 50% fixed`,
+    height: '100px',
+    marginLeft: '12px',
     backgroundSize: 'cover',
     border: `.5px solid #D1190D`,
     transform: 'skew(-10deg)',
@@ -52,7 +57,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center ',
     alignItems: 'center',
-    width: '87%',
+    width: '100%',
   }),
   links: css({
     color: $white,
@@ -86,17 +91,23 @@ const MsuNav = () => {
   const { setUser } = useContext(AuthContext);
   return (
     <Navbar className="fixed-top" collapseOnSelect expand="lg" bg={$transparent} variant={$transparent}>
-      <Navbar.Toggle aria-controls="navbarScroll" data-bs-target="#navbarScroll" />
-      <Navbar.Collapse>
+      <div className="row">
+        <div className="col-2" css={styles.buslogo}>
+          <h1 css={styles.bltitle}>Bus Shuttle Tracker</h1>
+        </div>
+        <div className="col-1" css={styles.msulogo}>
+          <h1 css={styles.mltitle}>MSU</h1>
+        </div>
+      </div>
+      <Navbar.Toggle
+        aria-controls="navbarScroll"
+        data-bs-target="#navbarScroll"
+        style={{ position: 'absolute', top: '15px', right: '15px' }}
+      />
+      <Navbar.Collapse id="#basic-navbar-nav">
         <div className="container-fluid">
           <div className="row" style={{ flexWrap: 'nowrap' }}>
-            <div className="col-2" css={styles.buslogo}>
-              <h1 css={styles.bltitle}>MSU Bus Shuttle Tracker</h1>
-            </div>
-            <div className="col-1" css={styles.msulogo}>
-              <h1 css={styles.mltitle}>MSU</h1>
-            </div>
-            <div className="col-9" css={styles.msuimg}>
+            <div className="col-9 justify-content-end" css={styles.msuimg}>
               <div css={styles.button}>
                 <NavLink to="/home" css={styles.links}>
                   Home
