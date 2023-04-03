@@ -12,6 +12,11 @@ const styles = {
     backgroundColor: $red,
     height: '100vh',
   },
+  header: css({
+    display: 'flex',
+    justifyContent: 'center',
+    textAlign: 'center',
+  }),
   title: css({}),
 };
 const HelpPg = () => {
@@ -20,8 +25,16 @@ const HelpPg = () => {
       <Navbar />
       <div className="container-fluid">
         <div className="row">
-          <div className="col-4" style={styles.colLeft}></div>
-          <div className="col-8" style={styles.colRight}></div>
+          <div className="col-4" style={styles.colLeft}>
+            <div css={styles.header}>
+              <h1>Important Contacts</h1>
+            </div>
+          </div>
+          <div className="col-8" style={styles.colRight}>
+            <div css={styles.header}>
+              <h1>FAQ</h1>
+            </div>
+          </div>
         </div>
       </div>
     </div>
