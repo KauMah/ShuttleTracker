@@ -1,6 +1,6 @@
-import Navbar from '../navBar';
+import MsuNav from '../navBar';
 
 const ShuttleInfo = () => {
-  return <Navbar />;
+  return <MsuNav />;
 };
 export default ShuttleInfo;

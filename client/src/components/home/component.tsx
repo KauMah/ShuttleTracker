@@ -1,7 +1,7 @@
-import Navbar from '../navBar';
+import MsuNav from '../navBar';
 
 const Home = () => {
-  return <Navbar />;
+  return <MsuNav />;
 };
 
 export default Home;

@@ -1,6 +1,6 @@
 import { $grey, $red } from '../../assets/colors';
 
-import Navbar from '../navBar';
+import MsuNav from '../navBar';
 import { css } from '@emotion/react';
 
 const styles = {
@@ -17,7 +17,7 @@ const styles = {
 const HelpPg = () => {
   return (
     <div>
-      <Navbar />
+      <MsuNav />
       <div className="container-fluid">
         <div className="row">
           <div className="col-4" style={styles.colLeft}></div>
