@@ -43,10 +43,14 @@ const ShuttleInfo = () => {
     color: $red,
   };
 
+  const mainContainerStyle = {
+    marginTop: '6.5rem',
+  };
+
   return (
     <>
       <MsuNav />
-      <div className="container mt-4">
+      <div className="container" style={mainContainerStyle}>
         <div className="row">
           <div className="col-12 d-flex justify-content-center">
             <p style={currentViewTextStyle}>Current View: Admin</p>
