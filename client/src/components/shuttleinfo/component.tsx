@@ -1,10 +1,6 @@
 import { $red } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
-<<<<<<< HEAD
 import MsuNav from '../navBar';
-=======
-import Navbar from '../navBar';
->>>>>>> 70f9bc1bbb69d1fc421e7e75d8ad24c7a16b6027
 import SendAlertButton from './sendAlertButton';
 
 const ShuttleInfo = () => {
@@ -49,11 +45,7 @@ const ShuttleInfo = () => {
 
   return (
     <>
-<<<<<<< HEAD
       <MsuNav />
-=======
-      <Navbar />
->>>>>>> 70f9bc1bbb69d1fc421e7e75d8ad24c7a16b6027
       <div className="container mt-4">
         <div className="row">
           <div className="col-12 d-flex justify-content-center">
