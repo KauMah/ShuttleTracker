@@ -1,5 +1,4 @@
-import { $red, $white } from '../../assets/colors';
-
+import { $red } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
 import MsuNav from '../navBar';
 import SendAlertButton from './sendAlertButton';
@@ -7,7 +6,7 @@ import SendAlertButton from './sendAlertButton';
 const ShuttleInfo = () => {
   const handleSendAlert = () => {
     console.log('Alert sent');
-    // Implement your alert sending logic here
+    // We still need to implement our alert sending logic here !!
   };
 
   const box1Options = [
