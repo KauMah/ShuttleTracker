@@ -1,11 +1,11 @@
 import { $black, $msured, $red, $transparent, $white } from '../../assets/colors';
+import { useContext, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
 import { NavLink } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { css } from '@emotion/react';
 import msuNav from '../../assets/img/MsuNav.jpg';
-import { useContext } from 'react';
 
 const styles = {
   buslogo: css({
@@ -25,9 +25,6 @@ const styles = {
     fontSize: '1.3em',
     fontWeight: '700',
     textAlign: 'center',
-  }),
-  busCondensed: css({
-    background: $red,
   }),
   msulogo: css({
     backgroundColor: $msured,
@@ -67,6 +64,32 @@ const styles = {
     fontWeight: '900',
     padding: '30px 30px',
   }),
+  linksCondensed: css({
+    color: $white,
+    fontSize: 20,
+    fontFamily: 'Helvetica',
+    textDecoration: 'none',
+    fontWeight: '900',
+    padding: '20px 20px',
+  }),
+  buttonCondensed: css({
+    height: '50px',
+    width: '100vw',
+    backgroundColor: $transparent,
+    // borderRadius: '10px',
+    marginLeft: '-10px',
+    padding: '10px',
+    textAlign: 'center',
+    '&:hover': {
+      transition: '0.5s',
+      background: $white,
+      opacity: 0.9,
+      //creates a child that makes the text dark when hovering
+      '& a': {
+        color: $black,
+      },
+    },
+  }),
   button: css({
     height: '50px',
     width: '120px',
@@ -89,8 +112,20 @@ const styles = {
 
 const MsuNav = () => {
   const { setUser } = useContext(AuthContext);
+  const [expanded, setExpanded] = useState(false);
+
+  const handleNavbarToggle = () => {
+    setExpanded(!expanded);
+  };
   return (
-    <Navbar className="fixed-top" collapseOnSelect expand="lg" bg={$transparent} variant={$transparent}>
+    <Navbar
+      className="fixed-top"
+      collapseOnSelect
+      expand="lg"
+      bg={$transparent}
+      variant={$transparent}
+      expanded={expanded}
+    >
       <div className="row">
         <div className="col-2" css={styles.buslogo}>
           <h1 css={styles.bltitle}>Bus Shuttle Tracker</h1>
@@ -103,44 +138,85 @@ const MsuNav = () => {
         aria-controls="navbarScroll"
         data-bs-target="#navbarScroll"
         style={{ position: 'absolute', top: '15px', right: '15px' }}
+        onClick={handleNavbarToggle}
       />
-      <Navbar.Collapse id="#basic-navbar-nav">
+      <Navbar.Collapse id="#basic-navbar-nav" className="justify-content-end">
         <div className="container-fluid">
           <div className="row" style={{ flexWrap: 'nowrap' }}>
-            <div className="col-9 justify-content-end" css={styles.msuimg}>
-              <div css={styles.button}>
-                <NavLink to="/home" css={styles.links}>
-                  Home
-                </NavLink>
+            {expanded ? (
+              <div className="col-12">
+                {/* style={{ background: $transparent }}> */}
+                <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/home" css={styles.linksCondensed}>
+                      Home
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/shuttleInfo" css={styles.linksCondensed}>
+                      Shuttle
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/help" css={styles.linksCondensed}>
+                      Help
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/account" css={styles.linksCondensed}>
+                      Account
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink
+                      to=""
+                      css={styles.linksCondensed}
+                      onClick={() => {
+                        setUser(null);
+                        localStorage.removeItem('user');
+                      }}
+                    >
+                      Logout
+                    </NavLink>
+                  </div>
+                </div>
               </div>
-              <div css={styles.button}>
-                <NavLink to="/shuttleInfo" css={styles.links}>
-                  Shuttle
-                </NavLink>
+            ) : (
+              <div className="col-9 justify-content-end" css={styles.msuimg}>
+                <div css={styles.button}>
+                  <NavLink to="/home" css={styles.links}>
+                    Home
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink to="/shuttleInfo" css={styles.links}>
+                    Shuttle
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink to="/help" css={styles.links}>
+                    Help
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink to="/account" css={styles.links}>
+                    Account
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink
+                    to=""
+                    css={styles.links}
+                    onClick={() => {
+                      setUser(null);
+                      localStorage.removeItem('user');
+                    }}
+                  >
+                    Logout
+                  </NavLink>
+                </div>
               </div>
-              <div css={styles.button}>
-                <NavLink to="/help" css={styles.links}>
-                  Help
-                </NavLink>
-              </div>
-              <div css={styles.button}>
-                <NavLink to="/account" css={styles.links}>
-                  Account
-                </NavLink>
-              </div>
-              <div css={styles.button}>
-                <NavLink
-                  to=""
-                  css={styles.links}
-                  onClick={() => {
-                    setUser(null);
-                    localStorage.removeItem('user');
-                  }}
-                >
-                  Logout
-                </NavLink>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </Navbar.Collapse>
