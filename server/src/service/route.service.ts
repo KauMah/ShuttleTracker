@@ -29,12 +29,12 @@ export const removeRouteStops = async (id: string, stops: Types.ObjectId[]) => {
 
 // get Route by Id
 export const getRouteById = async (id: string) => {
-  return await routeModel.findById(id);
+  return await routeModel.findById(id).populate('stops');
 };
 
 // get all Routes
 export const getAllRoutes = async () => {
-  return await routeModel.find();
+  return await routeModel.find().populate('stops');
 };
 
 // delete Route by Id
