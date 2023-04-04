@@ -1,4 +1,4 @@
-import { Ref, modelOptions, prop } from '@typegoose/typegoose';
+import { Ref, Severity, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
 
 import { GeoJSONPoint } from './stop.model';
 import { Route } from './route.model';
@@ -7,6 +7,9 @@ import { User } from './user.model';
 @modelOptions({
   schemaOptions: {
     timestamps: false,
+  },
+  options: {
+    allowMixed: Severity.ALLOW,
   },
 })
 export class Shuttle {
@@ -19,9 +22,13 @@ export class Shuttle {
   @prop({ required: true })
   active!: boolean;
 
-  @prop({ required: true, ref: () => User })
-  driver!: Ref<User>;
+  @prop({ ref: () => User })
+  driver: Ref<User>;
 
   @prop()
   public loc: GeoJSONPoint;
 }
+
+const shuttleModel = getModelForClass(Shuttle);
+
+export default shuttleModel;

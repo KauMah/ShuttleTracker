@@ -1,7 +1,5 @@
-import { Query, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import routeModel, { Route } from '../models/route.model';
-
-import _ from 'lodash';
 
 // Create Route
 export const createRoute = async (input: Partial<Route>) => {
