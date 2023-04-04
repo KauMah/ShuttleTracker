@@ -1,8 +1,8 @@
-import { TypeOf, literal, number, object, string, tuple, z } from 'zod';
+import { TypeOf, literal, number, object, string, tuple } from 'zod';
 
 const coordinate = tuple([number().min(-180).max(180), number().min(-90).max(90)]);
 
-const point = object({
+export const point = object({
   type: literal('Point'),
   coordinates: coordinate,
 });
