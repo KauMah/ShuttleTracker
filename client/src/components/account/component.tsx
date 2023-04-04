@@ -1,6 +1,6 @@
-import Navbar from '../navBar';
+import MsuNav from '../navBar';
 
 const Account = () => {
-  return <Navbar />;
+  return <MsuNav />;
 };
 export default Account;

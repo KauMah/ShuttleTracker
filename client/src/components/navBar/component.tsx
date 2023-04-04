@@ -1,57 +1,226 @@
-import { $grey, $red, $white } from '../../assets/colors';
+import { $black, $msured, $red, $transparent, $white } from '../../assets/colors';
+import { useContext, useState } from 'react';
 
+import { AuthContext } from '../../utils/AuthContext';
 import { NavLink } from 'react-router-dom';
+import { Navbar } from 'react-bootstrap';
 import { css } from '@emotion/react';
+import msuNav from '../../assets/img/MsuNav.jpg';
 
 const styles = {
-  background: {
-    backgroundColor: $red,
-    height: '25vh',
-    padding: '60px',
-  },
-  title: css({
+  buslogo: css({
+    backgroundColor: $white,
+    padding: '15px 30px',
+    transform: 'skew(-10deg)',
+    border: `1.5px solid #D1190D`,
+    height: '100px',
+    width: '160px',
+    paddingTop: '10px',
+    marginLeft: '-10px',
+    marginTop: '-10px',
+  }),
+  bltitle: css({
+    color: $msured,
+    fontFamily: 'Helvetica',
+    fontSize: '1.3em',
+    fontWeight: '700',
+    textAlign: 'center',
+  }),
+  msulogo: css({
+    backgroundColor: $msured,
+    transform: 'skew(-10deg)',
+    height: '100px',
+    width: '100px',
+    marginTop: '-10px',
+  }),
+  mltitle: css({
     color: $white,
-    fontSize: 50,
-    // borderBottom: '100px',
-    lineHeight: '0px',
-    transition: 'color 0.25s',
+    fontFamily: 'Helvetica',
+    fontSize: '1.3em',
+    fontWeight: '700',
+    textAlign: 'center',
+    paddingTop: '40px',
+  }),
+  msuimg: css({
+    background: `url(${msuNav}) no-repeat 50% 50% fixed`,
+    height: '100px',
+    marginLeft: '12px',
+    backgroundSize: 'cover',
+    border: `.5px solid #D1190D`,
+    transform: 'skew(-10deg)',
+    marginTop: '-10px',
+    opacity: 0.9,
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'center ',
+    alignItems: 'center',
+    width: '100%',
+  }),
+  links: css({
+    color: $white,
+    fontSize: 20,
+    fontFamily: 'Helvetica',
+    textDecoration: 'none',
+    fontWeight: '900',
+    padding: '30px 30px',
+  }),
+  linksCondensed: css({
+    color: $white,
+    fontSize: 20,
+    fontFamily: 'Helvetica',
+    textDecoration: 'none',
+    fontWeight: '900',
+    padding: '20px 20px',
+  }),
+  buttonCondensed: css({
+    height: '50px',
+    width: '100vw',
+    backgroundColor: $transparent,
+    // borderRadius: '10px',
+    marginLeft: '-10px',
+    padding: '10px',
+    textAlign: 'center',
     '&:hover': {
-      color: $grey,
+      transition: '0.5s',
+      background: $white,
+      opacity: 0.9,
+      //creates a child that makes the text dark when hovering
+      '& a': {
+        color: $black,
+      },
     },
   }),
-  links: {
-    fontSize: 20,
-    padding: '20px',
-    lineHeight: '0px',
-  },
+  button: css({
+    height: '50px',
+    width: '120px',
+    backgroundColor: $transparent,
+    borderRadius: '20px',
+    marginRight: '15px',
+    padding: '10px 0px',
+    textAlign: 'center',
+    '&:hover': {
+      transition: '0.5s',
+      background: $white,
+      opacity: 0.9,
+      //creates a child that makes the text dark when hovering
+      '& a': {
+        color: $black,
+      },
+    },
+  }),
 };
 
-const Navbar = () => {
+const MsuNav = () => {
+  const { setUser } = useContext(AuthContext);
+  const [expanded, setExpanded] = useState(false);
+
+  const handleNavbarToggle = () => {
+    setExpanded(!expanded);
+  };
   return (
-    <div className="row">
-      <div className="col" style={styles.background}>
-        <h1 css={styles.title}>MSU</h1>
-      </div>
-      <div className="col" style={styles.background}>
-        <div className="d-flex justify-content-end">
-          <NavLink to="/home" style={styles.links}>
-            Home
-          </NavLink>
-          <NavLink to="/shuttleInfo" style={styles.links}>
-            View Shuttle-Info
-          </NavLink>
-          <NavLink to="/help" style={styles.links}>
-            Help
-          </NavLink>
-          <NavLink to="/account" style={styles.links}>
-            Account
-          </NavLink>
-          <NavLink to="/logout" style={styles.links}>
-            Logout
-          </NavLink>
+    <Navbar
+      className="fixed-top"
+      collapseOnSelect
+      expand="lg"
+      bg={$transparent}
+      variant={$transparent}
+      expanded={expanded}
+    >
+      <div className="row">
+        <div className="col-2" css={styles.buslogo}>
+          <h1 css={styles.bltitle}>Bus Shuttle Tracker</h1>
+        </div>
+        <div className="col-1" css={styles.msulogo}>
+          <h1 css={styles.mltitle}>MSU</h1>
         </div>
       </div>
-    </div>
+      <Navbar.Toggle
+        aria-controls="navbarScroll"
+        data-bs-target="#navbarScroll"
+        style={{ position: 'absolute', top: '15px', right: '15px' }}
+        onClick={handleNavbarToggle}
+      />
+      <Navbar.Collapse id="#basic-navbar-nav" className="justify-content-end">
+        <div className="container-fluid">
+          <div className="row" style={{ flexWrap: 'nowrap' }}>
+            {expanded ? (
+              <div className="col-12">
+                {/* style={{ background: $transparent }}> */}
+                <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/home" css={styles.linksCondensed}>
+                      Home
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/shuttleInfo" css={styles.linksCondensed}>
+                      Shuttle
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/help" css={styles.linksCondensed}>
+                      Help
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/account" css={styles.linksCondensed}>
+                      Account
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink
+                      to=""
+                      css={styles.linksCondensed}
+                      onClick={() => {
+                        setUser(null);
+                        localStorage.removeItem('user');
+                      }}
+                    >
+                      Logout
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="col-9 justify-content-end" css={styles.msuimg}>
+                <div css={styles.button}>
+                  <NavLink to="/home" css={styles.links}>
+                    Home
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink to="/shuttleInfo" css={styles.links}>
+                    Shuttle
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink to="/help" css={styles.links}>
+                    Help
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink to="/account" css={styles.links}>
+                    Account
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink
+                    to=""
+                    css={styles.links}
+                    onClick={() => {
+                      setUser(null);
+                      localStorage.removeItem('user');
+                    }}
+                  >
+                    Logout
+                  </NavLink>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
-export default Navbar;
+export default MsuNav;
