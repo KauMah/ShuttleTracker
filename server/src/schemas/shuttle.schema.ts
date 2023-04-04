@@ -4,6 +4,7 @@ import { point } from './stop.schema';
 
 const shuttle = object({
   capacity: number({ required_error: 'Must provide a value for capacity of shuttle' }).min(1).max(100),
+  occupancy: number().min(0).max(100),
   route: string().length(24, 'ObjectId for Route must be a 24 char long hex string'),
   driver: string().length(24, 'ObjectId for Driver must be a 24 char long hex string'),
   loc: point,

@@ -16,6 +16,9 @@ export class Shuttle {
   @prop({ required: true })
   capacity!: number;
 
+  @prop({ default: 0 })
+  occupancy: number;
+
   @prop({ ref: () => Route })
   route: Ref<Route>;
 

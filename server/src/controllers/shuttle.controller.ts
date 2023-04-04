@@ -11,13 +11,14 @@ export const createShuttleHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { capacity, route, driver, loc, active } = req.body;
+  const { capacity, route, driver, loc, active, occupancy } = req.body;
   const routeId = new Types.ObjectId(route);
   const driverId = new Types.ObjectId(driver);
   const reqObj = {
     capacity,
     loc,
     active,
+    occupancy,
     route: routeId,
     driver: driverId,
   };
@@ -49,13 +50,14 @@ export const editShuttleHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { capacity, route, driver, loc, active } = req.body.shuttle;
+  const { capacity, route, driver, loc, active, occupancy } = req.body.shuttle;
   const routeId = new Types.ObjectId(route);
   const driverId = new Types.ObjectId(driver);
   const reqObj = {
     capacity,
     loc,
     active,
+    occupancy,
     route: routeId,
     driver: driverId,
   };
