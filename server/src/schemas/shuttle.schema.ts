@@ -13,6 +13,8 @@ const shuttle = object({
 export const createShuttleSchema = object({
   body: shuttle.partial({
     loc: true,
+    driver: true,
+    route: true,
   }),
 });
 
@@ -23,29 +25,12 @@ export const editShuttleParamsSchema = object({
   }),
 });
 
-export const editShuttleLocationSchema = object({
+export const shuttleByIDSchema = object({
   body: object({
     id: string({ required_error: 'id is required for update' }),
-    shuttle: point.required(),
-  }),
-});
-
-export const changeShuttleDriverSchema = object({
-  body: object({
-    id: string({ required_error: 'id is required for update' }),
-    driverId: string({ required_error: 'Driver id is required for update' }),
-  }),
-});
-
-export const changeShuttleRouteSchema = object({
-  body: object({
-    id: string({ required_error: 'id is required for update' }),
-    routeId: string({ required_error: 'Route id is required for update' }),
   }),
 });
 
 export type CreateShuttleInput = TypeOf<typeof createShuttleSchema>['body'];
 export type EditShuttleParamsInput = TypeOf<typeof editShuttleParamsSchema>['body'];
-export type EditShuttleLocationInput = TypeOf<typeof editShuttleLocationSchema>['body'];
-export type ChangeShuttleDriverInput = TypeOf<typeof changeShuttleDriverSchema>['body'];
-export type ChangeShuttleRouteInput = TypeOf<typeof changeShuttleRouteSchema>['body'];
+export type ShuttleIdInput = TypeOf<typeof shuttleByIDSchema>['body'];
