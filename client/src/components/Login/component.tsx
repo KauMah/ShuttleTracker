@@ -1,6 +1,7 @@
 import { $grey, $red, $white } from '../../assets/colors';
 
 import LoginForm from './loginForm';
+import { NavLink } from 'react-router-dom';
 import React from 'react';
 import { css } from '@emotion/react';
 
@@ -34,6 +35,8 @@ const Login = (): JSX.Element => {
       <div style={styles.container} className="container-">
         <LoginForm />
       </div>
+      <NavLink to="/register">Click</NavLink>
+      <div />
     </div>
   );
 };
