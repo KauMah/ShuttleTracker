@@ -1,4 +1,4 @@
-import { $black, $lightGrey, $msured, $red, $white } from '../../assets/colors';
+import { $lightGrey, $msured, $white } from '../../assets/colors';
 
 import { RegisterForm } from './registerform';
 import { css } from '@emotion/react';
