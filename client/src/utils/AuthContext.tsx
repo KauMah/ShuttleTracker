@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom';
+
+import { redirect } from 'react-router-dom';
 
 export interface User {
   name: string;
@@ -11,7 +12,7 @@ export interface User {
 
 interface AuthType {
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 interface AuthProps {
@@ -28,7 +29,6 @@ export const AuthProvider = ({ children }: AuthProps) => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
-  //maybe isnt needed??????
   useEffect(() => {
     if (!user) {
       redirect('/login');

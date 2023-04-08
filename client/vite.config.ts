@@ -16,10 +16,4 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
   },
-  optimizeDeps: {
-    include: ['env-config.json'],
-  },
-  define: {
-    'process.env': process.env,
-  },
 });

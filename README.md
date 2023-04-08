@@ -1,5 +1,9 @@
 # ShuttleTracker
 
+The logins are locked to a single email domain, so if you would like to see the application as a user would, you can use the credentials below:
+username: github@montclair.edu 
+password: Github123
+
 ## Back End
 The API we are building uses Node.js and Typescript along with Express to serve data to the front end application. The database we are using is a MySQL DB that is hosted on Cpanel (tentatively), but if that doesn't work out or is too cumbersome to implement, we can pivot to MongoDB. 
 

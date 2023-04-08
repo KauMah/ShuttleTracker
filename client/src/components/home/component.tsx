@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import Map, { Marker } from 'react-map-gl';
@@ -26,6 +27,13 @@ const Home = () => {
   const onMove = (event: typeof MapEvent) => {
     setViewState(event);
   };
+=======
+import MsuNav from '../navBar';
+
+const Home = () => {
+  return <MsuNav />;
+};
+>>>>>>> 9f5bd8b41a0500206bcb58fcd4c95565e382636a
 
   return (
     <>
