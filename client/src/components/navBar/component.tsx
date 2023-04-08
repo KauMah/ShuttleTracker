@@ -1,4 +1,4 @@
-import { $black, $msured, $red, $transparent, $white } from '../../assets/colors';
+import { $black, $msured, $transparent, $white } from '../../assets/colors';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
