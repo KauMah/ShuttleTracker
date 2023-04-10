@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
 
-import { $msured, $salmon, $white } from '../../assets/colors';
+import { $lightGrey, $msured, $salmon, $white } from '../../assets/colors';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Navigate, redirect, useNavigate } from 'react-router-dom';
 
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
@@ -55,17 +56,21 @@ const styles = {
   },
   input: css({
     fontFamily: 'Helvetica',
+    width: '25vw',
     display: 'flex',
     flexDirection: 'column',
-    fontWeight: 500,
-    marginBottom: '.5vh',
-    '& label': {
-      marginBottom: '.8vh',
+    fontWeight: 900,
+    marginBottom: '2vh',
+    '& input': {
+      borderRadius: '8px',
+      height: '4vh',
+      background: $lightGrey,
     },
   }),
 };
 
 const RegisterForm = (): JSX.Element => {
+  const nav = useNavigate();
   return (
     <div className="d-flex justify-content-center" style={{ marginTop: '20px' }}>
       <Formik
@@ -80,6 +85,10 @@ const RegisterForm = (): JSX.Element => {
             .post('/auth/register', { name, email, password, passwordConfirm, role })
             .then((data) => {
               console.log(data);
+              alert(
+                `Your new email is: ${email}. Please save this information. You will not be redirected to the login page`
+              );
+              nav('/login');
             })
             .catch((err) => {
               console.log(err);
@@ -93,29 +102,29 @@ const RegisterForm = (): JSX.Element => {
           <Form>
             <div css={styles.input}>
               <label htmlFor="firstName">First Name</label>
-              <Field type="text" name="firstName" id="firstName" />
+              <Field type="text" name="firstName" id="firstName" placeholder="First Name" />
               <ErrorMessage name="firstName" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="lastName">Last Name</label>
-              <Field type="text" name="lastName" id="lastName" />
+              <Field type="text" name="lastName" id="lastName" placeholder="Last Name" />
               <ErrorMessage name="lastName" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="password">Password</label>
-              <Field type="password" name="password" id="password" />
+              <Field type="password" name="password" id="password" placeholder="Password" />
               <ErrorMessage name="password" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="passwordConfirm">Confirm Password</label>
-              <Field type="password" name="passwordConfirm" id="passwordConfirm" />
+              <Field type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password" />
               <ErrorMessage name="passwordConfirm" component="div" />
             </div>
-            <label htmlFor="role"> What are you?</label>
+            <label htmlFor="role"> What are you?&nbsp;</label>
             <Field component="select" name="role" id="role">
               <option value="admin">Admin</option>
               <option value="busOP">Bus-operator</option>
-              <option value="rider">rider</option>
+              <option value="rider">Student</option>
             </Field>
             <div style={{ textAlign: 'center', marginTop: '3vh' }}>
               <button type="submit" disabled={isSubmitting} css={styles.submitButton}>
