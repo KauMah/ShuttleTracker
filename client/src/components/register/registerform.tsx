@@ -1,11 +1,11 @@
 import * as Yup from 'yup';
 
-import { $lightGrey, $msured, $salmon, $white } from '../../assets/colors';
+import { $lightGrey, $msured, $salmon } from '../../assets/colors';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { Navigate, redirect, useNavigate } from 'react-router-dom';
 
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 interface Account {
   firstName: string;
@@ -40,7 +40,6 @@ const validation = Yup.object().shape({
 
 const styles = {
   submitButton: css({
-    color: $white,
     backgroundColor: $msured,
     height: '5vh',
     width: '10vh',
@@ -50,10 +49,6 @@ const styles = {
       backgroundColor: $salmon,
     },
   }),
-  error: {
-    color: $white,
-    fontSize: '8px',
-  },
   input: css({
     fontFamily: 'Helvetica',
     width: '25vw',
@@ -72,7 +67,7 @@ const styles = {
 const RegisterForm = (): JSX.Element => {
   const nav = useNavigate();
   return (
-    <div className="d-flex justify-content-center" style={{ marginTop: '20px' }}>
+    <div className="d-flex justify-content-center" style={{ marginTop: '50px' }}>
       <Formik
         initialValues={Values}
         validationSchema={validation}

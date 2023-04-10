@@ -145,7 +145,6 @@ const MsuNav = () => {
           <div className="row" style={{ flexWrap: 'nowrap' }}>
             {expanded ? (
               <div className="col-12">
-                {/* style={{ background: $transparent }}> */}
                 <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div css={styles.buttonCondensed}>
                     <NavLink to="/home" css={styles.linksCondensed}>

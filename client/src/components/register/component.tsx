@@ -1,45 +1,46 @@
-import { $msured, $white } from '../../assets/colors';
+import { $black, $msured, $salmon, $white } from '../../assets/colors';
 
 import RegisterForm from './registerform';
 import { css } from '@emotion/react';
+import msuReg from '../../assets/img/MsuReg.jpg';
 
 const styles = {
-  MsuLogo: css({
-    fontSize: '75px',
-    '@media(max-width: 768px)': {
-      fontSize: '60px',
-    },
-    fontFamily: 'Helvetica',
-    fontWeight: '700',
-    color: $msured,
-    padding: '10px 35px',
-  }),
-  centerBlock: {
-    backgroundColor: $white,
-    marginTop: '20vh',
-    height: '60vh',
-    width: '65vw',
-    border: '2px solid pink ',
-  },
   welcome: css({
     color: $msured,
-    textShadow: '1px 1px black',
+    textShadow: '1.5px 1.5px black',
     fontWeight: '700',
-    fontSize: '30px',
+    fontSize: '50px',
+  }),
+  leftCol: css({
+    height: '100vh',
+    width: '55vw',
+    background: `url(${msuReg}) no-repeat 50% 50%`,
+    backgroundSize: '100%',
+    '@media (max-width: 988px)': {
+      display: 'none',
+    },
+  }),
+  rightCol: css({
+    height: '100vh',
+    width: '45vw',
+    marginTop: '5%',
+    '@media (max-width: 768px)': {
+      marginLeft: '40%',
+    },
   }),
 };
 const Register = () => {
   return (
-    <div>
-      <div className="row">
-        <div className="col-12 mx-auto" style={styles.centerBlock}>
-          <div className="d-flex justify-content-center" css={styles.welcome}>
-            MSU Shuttle Registration
-          </div>
-          <RegisterForm />
-        </div>
+    <div className="row">
+      <div className="col-7" css={styles.leftCol} style={{ border: '2px solid black' }}>
+        hello
       </div>
-      <div className="row" style={{ height: '30vh' }}></div>
+      <div className="col-5" css={styles.rightCol}>
+        <div className="d-flex justify-content-center" css={styles.welcome}>
+          MSU Registration
+        </div>
+        <RegisterForm />
+      </div>
     </div>
   );
 };
