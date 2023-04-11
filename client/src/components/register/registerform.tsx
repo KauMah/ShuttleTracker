@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { $lightGrey, $msured, $salmon } from '../../assets/colors';
+import { $lightGrey, $msured, $red, $salmon, $white } from '../../assets/colors';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import { api } from '../../utils/api';
@@ -62,6 +62,15 @@ const styles = {
       background: $lightGrey,
     },
   }),
+  userRole: css({
+    height: '4vh',
+    backgroundColor: $lightGrey,
+    border: '3px solid black',
+    borderRadius: '20px',
+    fontWeight: 500,
+    appearance: 'none',
+    cursor: 'pointer',
+  }),
 };
 
 const RegisterForm = (): JSX.Element => {
@@ -81,7 +90,7 @@ const RegisterForm = (): JSX.Element => {
             .then((data) => {
               console.log(data);
               alert(
-                `Your new email is: ${email}. Please save this information. You will not be redirected to the login page`
+                `Your new email is: ${email}. Please save this information. You will now be redirected to the login page`
               );
               nav('/login');
             })
@@ -115,8 +124,8 @@ const RegisterForm = (): JSX.Element => {
               <Field type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password" />
               <ErrorMessage name="passwordConfirm" component="div" />
             </div>
-            <label htmlFor="role"> What are you?&nbsp;</label>
-            <Field component="select" name="role" id="role">
+            <label htmlFor="role">What are you?&nbsp;</label>
+            <Field component="select" name="role" id="role" css={styles.userRole} style={{ textAlign: 'center' }}>
               <option value="admin">Admin</option>
               <option value="busOP">Bus-operator</option>
               <option value="rider">Student</option>
