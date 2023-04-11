@@ -56,7 +56,6 @@ const LoginForm = (): JSX.Element => {
         api
           .post('/auth/login', values)
           .then((data) => {
-            // console.log(_.get(data, 'data.user.access_token', ''));
             setUser(_.get(data, 'data.user', ''));
             localStorage.setItem('user', JSON.stringify(_.get(data, 'data.user', '')));
             redirect('/');
