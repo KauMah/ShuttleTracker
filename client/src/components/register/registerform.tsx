@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { $lightGrey, $msured, $red, $salmon, $white } from '../../assets/colors';
+import { $lightGrey, $msured, $salmon } from '../../assets/colors';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import { api } from '../../utils/api';

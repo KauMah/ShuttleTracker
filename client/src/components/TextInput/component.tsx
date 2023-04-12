@@ -1,4 +1,4 @@
-import { $grey, $lightGrey, $white } from '../../assets/colors';
+import { $black, $grey, $lightGrey, $white } from '../../assets/colors';
 
 import React from 'react';
 import { css } from '@emotion/react';
@@ -20,7 +20,8 @@ const styles = {
     },
   }),
   inputTitle: css({
-    color: $white,
+    color: $black,
+    fontFamily: 'Helvetica',
     padding: '3px',
     margintopo: '10px',
   }),
