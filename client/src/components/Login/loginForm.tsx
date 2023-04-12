@@ -1,4 +1,4 @@
-import { $grey, $lightGrey, $msured, $salmon, $white } from '../../assets/colors';
+import { $msured, $salmon, $white } from '../../assets/colors';
 import { redirect, useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 

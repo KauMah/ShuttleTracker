@@ -11,7 +11,7 @@ const styles = {
     width: '100vw',
     padding: '80px',
   },
-  container: {
+  container: css({
     background: $white,
     height: '55vh',
     width: '50%',
@@ -22,7 +22,13 @@ const styles = {
     paddingTop: '55px',
     marginLeft: 'auto',
     marginRight: 'auto',
-  },
+    '@media (max-width: 765px)': {
+      width: '70%',
+    },
+    '@media (max-width: 500px)': {
+      width: '90%',
+    },
+  }),
   title: css({
     height: '15vh',
     width: '20vw',
@@ -31,6 +37,15 @@ const styles = {
     transition: 'color 0.25s',
     border: '1px solid white',
     boxShadow: '5px 5px 5px grey',
+    '@media (max-width: 1100px)': {
+      width: '25vw',
+    },
+    '@media (max-width: 830px)': {
+      width: '30vw',
+    },
+    '@media (max-width: 765px)': {
+      width: '100%',
+    },
   }),
   titleBus: css({
     color: $white,
@@ -40,9 +55,11 @@ const styles = {
     marginTop: '3vh',
     textAlign: 'center',
     transform: 'skew(5deg)',
-    position: 'absolute',
     '&:hover': {
       color: $grey,
+    },
+    '@media (max-width: 765px)': {
+      textAlign: 'center',
     },
   }),
   titleLogin: css({
@@ -60,34 +77,41 @@ const styles = {
       color: $red,
     },
   }),
+  clickHere: css({
+    fontFamily: 'Helvetica',
+    fontSize: '15px',
+    fontWeight: 520,
+  }),
 };
 const Login = (): JSX.Element => {
   return (
     <div>
       <div className="row">
-        <div className="col-3" css={styles.title}>
+        <div className="col-12" css={styles.title}>
           <h1 css={styles.titleBus}>MSU Shuttle Tracker</h1>
         </div>
       </div>
       <div style={styles.background}>
         <h2 css={styles.titleLogin}>Login</h2>
-        <div style={styles.container} className="container">
+        <div css={styles.container} className="container">
           <LoginForm />
         </div>
-        <p className="d-flex justify-content-center" style={{ marginTop: '2vh' }}>
-          {/* &nbsp; makes it so that it skips a space */}
-          Forgot Password?&nbsp;
-          <NavLink to="/forgotPass" css={styles.link}>
-            Click Here
-          </NavLink>
-        </p>
-        <p className="d-flex justify-content-center" style={{ marginTop: '-3vh' }}>
-          {/* &nbsp; makes it so that it skips a space */}
-          Don't have an account?&nbsp;
-          <NavLink to="/register" css={styles.link}>
-            Click Here
-          </NavLink>
-        </p>
+        <div css={styles.clickHere}>
+          <p className="d-flex justify-content-center" style={{ marginTop: '2vh' }}>
+            {/* &nbsp; makes it so that it skips a space */}
+            Forgot Password?&nbsp;
+            <NavLink to="/forgotPass" css={styles.link}>
+              Click Here
+            </NavLink>
+          </p>
+          <p className="d-flex justify-content-center" style={{ marginTop: '-3vh' }}>
+            {/* &nbsp; makes it so that it skips a space */}
+            Don't have an account?&nbsp;
+            <NavLink to="/register" css={styles.link}>
+              Click Here
+            </NavLink>
+          </p>
+        </div>
         <div />
       </div>
     </div>

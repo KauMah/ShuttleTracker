@@ -1,4 +1,4 @@
-import { $black, $grey, $lightGrey, $white } from '../../assets/colors';
+import { $black, $grey, $lightGrey } from '../../assets/colors';
 
 import React from 'react';
 import { css } from '@emotion/react';
