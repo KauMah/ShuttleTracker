@@ -1,4 +1,4 @@
-import { $grey, $lightGrey, $white } from '../../assets/colors';
+import { $grey, $lightGrey, $msured, $salmon, $white } from '../../assets/colors';
 import { redirect, useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 
@@ -17,15 +17,17 @@ interface LoginValues {
 
 const styles = {
   submitButton: css({
-    backgroundColor: $lightGrey,
-    height: '40px',
-    width: '25%',
-    padding: '5px',
-    fontWeight: 900,
-    fontSize: '25px',
+    backgroundColor: $msured,
+    height: '5vh 100%',
+    width: '10vw 100%',
+    fontSize: '22px',
+    fontWeight: 700,
+    borderRadius: '13px',
+    marginTop: '3vh',
+    padding: 'auto',
     transition: 'background-color 0.25s',
     '&:hover': {
-      backgroundColor: $grey,
+      backgroundColor: $salmon,
     },
   }),
   error: {

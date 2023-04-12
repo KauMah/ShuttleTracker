@@ -1,9 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import { $black, $grey, $lightGrey, $msured, $red, $white } from '../../assets/colors';
+import { $grey, $msured, $red, $white } from '../../assets/colors';
 
 import LoginForm from './loginForm';
 import { NavLink } from 'react-router-dom';
-import React from 'react';
 import { css } from '@emotion/react';
 
 const styles = {
@@ -54,6 +53,13 @@ const styles = {
     marginTop: '-5vh',
     color: $msured,
   }),
+  link: css({
+    textDecoration: 'none',
+    color: $msured,
+    '&:hover': {
+      color: $red,
+    },
+  }),
 };
 const Login = (): JSX.Element => {
   return (
@@ -70,7 +76,17 @@ const Login = (): JSX.Element => {
         </div>
         <p className="d-flex justify-content-center" style={{ marginTop: '2vh' }}>
           {/* &nbsp; makes it so that it skips a space */}
-          Don't have an account?&nbsp;<NavLink to="/register">Click Here</NavLink>
+          Forgot Password?&nbsp;
+          <NavLink to="/forgotPass" css={styles.link}>
+            Click Here
+          </NavLink>
+        </p>
+        <p className="d-flex justify-content-center" style={{ marginTop: '-3vh' }}>
+          {/* &nbsp; makes it so that it skips a space */}
+          Don't have an account?&nbsp;
+          <NavLink to="/register" css={styles.link}>
+            Click Here
+          </NavLink>
         </p>
         <div />
       </div>
