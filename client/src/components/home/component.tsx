@@ -8,6 +8,7 @@ import MapEvent from 'react-map-gl';
 import Navbar from '../navBar';
 import { NavigationControl } from 'react-map-gl';
 import ReactMapGL from 'react-map-gl';
+import RouterInfo from './viewRoutesInfo';
 import ShuttleInfo from './viewShuttleInfo';
 import ViewState from 'react-map-gl';
 import dotenv from 'dotenv';
@@ -46,6 +47,9 @@ const Home = () => {
       </div>
       <div style={{ flex: 1 }}>
         <ShuttleInfo />
+      </div>
+      <div style={{ flex: 1 }}>
+        <RouterInfo />
       </div>
     </>
   );

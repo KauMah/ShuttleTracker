@@ -17,7 +17,7 @@ const ShuttleInfo = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/api/shuttles');
+      const response = await fetch('/shuttles');
       const data = await response.json();
       setshuttles(data);
     };
