@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import TextInput from '../TextInput';
 import _ from 'lodash';
 import { api } from '../../utils/api';
+import axios from 'axios';
 import { css } from '@emotion/react';
 import { toast } from 'react-toastify';
 
@@ -59,6 +60,7 @@ const LoginForm = (): JSX.Element => {
             // console.log(_.get(data, 'data.user.access_token', ''));
             setUser(_.get(data, 'data.user', ''));
             localStorage.setItem('user', JSON.stringify(_.get(data, 'data.user', '')));
+            axios.defaults.headers.common.Authorization = `Bearer ${_.get(data, 'data.user.access_token', '')}`;
             redirect('/');
           })
           .catch((err) => {

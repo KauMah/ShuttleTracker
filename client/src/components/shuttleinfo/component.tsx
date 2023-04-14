@@ -1,9 +1,37 @@
+import { useEffect, useState } from 'react';
+
 import { $red } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
+import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';
 import SendAlertButton from './sendAlertButton';
+import { api } from '../../utils/api';
+
+interface Stop {
+  _id: string;
+  name: string;
+  loc: {
+    type: string;
+    coordinates: [number, number];
+  };
+}
 
 const ShuttleInfo = () => {
+  const [stops, setStops] = useState<Stop[]>([]);
+
+  const fetchStops = async () => {
+    try {
+      const response = await api.get('/stop/');
+      setStops(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchStops();
+  }, []);
+
   const handleSendAlert = () => {
     console.log('Alert sent');
     // We still need to implement our alert sending logic here !!
@@ -23,7 +51,7 @@ const ShuttleInfo = () => {
     },
     {
       title: 'Available Stops',
-      content: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+      content: stops.map((stop) => stop.name),
     },
   ];
 
