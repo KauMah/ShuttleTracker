@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { $red } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
@@ -16,8 +16,37 @@ interface Stop {
   };
 }
 
+// Add interfaces for other data types
+interface Route {
+  _id: string;
+  name: string;
+  stops: Stop[];
+}
+
+interface Bus {
+  _id: string;
+  name: string;
+  route: Route;
+}
+
+interface Operator {
+  _id: string;
+  name: string;
+  bus: Bus;
+}
+
+interface Admin {
+  _id: string;
+  name: string;
+}
+
 const ShuttleInfo = () => {
+  const { user } = useContext(AuthContext);
   const [stops, setStops] = useState<Stop[]>([]);
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [buses, setBuses] = useState<Bus[]>([]);
+  const [operators, setOperators] = useState<Operator[]>([]);
+  const [admins, setAdmins] = useState<Admin[]>([]);
 
   const fetchStops = async () => {
     try {
@@ -28,9 +57,52 @@ const ShuttleInfo = () => {
     }
   };
 
+  // Add fetch functions for other data types
+  const fetchRoutes = async () => {
+    try {
+      const response = await api.get('/route/');
+      setRoutes(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchBuses = async () => {
+    try {
+      const response = await api.get('/shuttle/');
+      setBuses(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchOperators = async () => {
+    try {
+      const response = await api.get('/user/');
+      setOperators(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchAdmins = async () => {
+    try {
+      const response = await api.get('/admin/');
+      setAdmins(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    fetchStops();
-  }, []);
+    if (user) {
+      fetchStops();
+      fetchRoutes(); // Fetch routes data
+      fetchBuses(); // Fetch buses data
+      fetchOperators(); // Fetch operators data
+      fetchAdmins(); // Fetch admins data
+    }
+  }, [user]);
 
   const handleSendAlert = () => {
     console.log('Alert sent');
@@ -40,14 +112,14 @@ const ShuttleInfo = () => {
   const box1Options = [
     {
       title: 'Current Routes',
-      content: ['A-C, E, F-I', 'A-F', 'F-I', 'A-I'],
+      content: routes.map((route) => route.name), // Display route names
     },
   ];
 
   const box2Options = [
     {
       title: 'Current Buses',
-      content: ['Bus 235326 (Route 1)', 'Bus 133766 (Route 2)', 'Bus 424242 (Route 3)', 'Bus 444222 (Route 4)'],
+      content: buses.map((bus) => `${bus.name} (Route ${bus.route.name})`), // Display bus and route information
     },
     {
       title: 'Available Stops',
@@ -58,11 +130,11 @@ const ShuttleInfo = () => {
   const box3Options = [
     {
       title: 'Bus Operators',
-      content: ['Lucian (Bus 235326)', 'Varus (Bus 133766)', 'Ashe (Bus 424242)', 'Lulu (Bus 444222)'],
+      content: operators.map((operator) => `${operator.name} (${operator.bus.name})`), // Display operator and bus information
     },
     {
       title: 'Admins',
-      content: ['Bryson', 'Nazia', 'Kaushik', 'Dennis', 'Nick'],
+      content: admins.map((admin) => admin.name), // Display admin names
     },
   ];
 
@@ -98,4 +170,5 @@ const ShuttleInfo = () => {
     </>
   );
 };
+
 export default ShuttleInfo;
