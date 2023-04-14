@@ -1,4 +1,5 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
+import './styles.css';
 
 import { ComponentProps, SetStateAction, useState } from 'react';
 import Map, { Marker } from 'react-map-gl';
@@ -7,6 +8,7 @@ import MapEvent from 'react-map-gl';
 import Navbar from '../navBar';
 import { NavigationControl } from 'react-map-gl';
 import ReactMapGL from 'react-map-gl';
+import ShuttleInfo from './viewShuttleInfo';
 import ViewState from 'react-map-gl';
 import dotenv from 'dotenv';
 import envConfig from '../../../env-config.json';
@@ -32,17 +34,18 @@ const Home = () => {
     <>
       <Navbar />
       <div style={{ width: '100vw', height: '100vh' }}>
-        <ReactMapGL
-          {...viewState}
-          onMove={(event) => setViewState(event.viewState)}
-          mapboxAccessToken={mapboxToken} // replace with your access token
-          mapStyle="mapbox://styles/mapbox/streets-v11"
-          onLoad={(event) => setMap(event.target)}
-        >
-          <Marker latitude={40.864872} longitude={-74.1995669}>
-            <div>Marker here</div>
-          </Marker>
-        </ReactMapGL>
+        <div className="map-container1">
+          <ReactMapGL
+            {...viewState}
+            onMove={(event) => setViewState(event.viewState)}
+            mapboxAccessToken={mapboxToken} // replace with your access token
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            onLoad={(event) => setMap(event.target)}
+          ></ReactMapGL>
+        </div>
+      </div>
+      <div style={{ flex: 1 }}>
+        <ShuttleInfo />
       </div>
     </>
   );

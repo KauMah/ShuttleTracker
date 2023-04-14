@@ -8,3 +8,15 @@ body,
   height: 100vh;
   width: 100vw;
 }
+
+.map-container1 {
+  position: fixed;
+  top: 0;
+  left: -430px;
+  width: 58vw;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 12px;
+ 
+}
