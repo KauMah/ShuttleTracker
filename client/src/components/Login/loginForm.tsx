@@ -60,6 +60,10 @@ const LoginForm = (): JSX.Element => {
           .then((data) => {
             setUser(_.get(data, 'data.user', ''));
             localStorage.setItem('user', JSON.stringify(_.get(data, 'data.user', '')));
+<<<<<<< Updated upstream
+=======
+            api.defaults.headers.common.Authorization = `Bearer ${_.get(data, 'data.user.access_token', '')}`;
+>>>>>>> Stashed changes
             redirect('/');
           })
           .catch((err) => {
