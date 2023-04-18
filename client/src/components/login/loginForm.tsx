@@ -7,7 +7,6 @@ import { Formik } from 'formik';
 import TextInput from '../TextInput';
 import _ from 'lodash';
 import { api } from '../../utils/api';
-import axios from 'axios';
 import { css } from '@emotion/react';
 import { toast } from 'react-toastify';
 
