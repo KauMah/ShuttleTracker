@@ -72,6 +72,11 @@ const styles = {
     fontSize: '1.3em',
     fontWeight: '600',
   },
+  faqHeadFont: {
+    fontFamily: 'Helvetica',
+    fontSize: '1.7em',
+    fontWeight: '400',
+  },
   contactHeader: {
     //display: 'flex',
     sjustifyContent: 'space-between',
@@ -155,6 +160,11 @@ const HelpPg = () => {
               </div>
             </div>
             <div>
+              <div>
+                <p style={styles.faqHeadFont}>
+                  Please find answers to commonly asked questions about shuttle operation below:
+                </p>
+              </div>
               <div>
                 <p style={styles.bolderFont}>Q. How often do the buses run?</p>
                 <p style={styles.font}>
