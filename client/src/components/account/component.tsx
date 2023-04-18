@@ -1,9 +1,11 @@
-import { $black, $lightGrey, $msured } from '../../assets/colors';
-import { useEffect, useState } from 'react';
+import { NavLink, Navigate, redirect } from 'react-router-dom';
 
+import { $lightGrey } from '../../assets/colors';
+import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
+import { useContext } from 'react';
 
 const styles = {
   infoBox: css({
@@ -15,25 +17,40 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
   }),
-  text: css({
+  button: css({
+    background: $lightGrey,
+    height: '7vh',
+    width: '80vw',
+    border: '1px solid black',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '5px',
+    cursor: 'pointer',
+    '&:hover': {
+      background: '#fff',
+      color: 'black',
+    },
   }),
 };
 const Account = () => {
-  const [data, setData] = useState({ email: '', password: '' });
+  const { user, setUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    api
-      .get('/user/')
-      .then((response) => {
-        console.log('response', response.data);
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching user data: ${error.message');
-      });
-  }, []);
+  const handleLogout = () => {
+    setUser(null);
+    api.defaults.headers.common.Authorization = null;
+    localStorage.removeItem('user');
+    redirect('/login');
+  };
+
+  const handleNoti = () => {
+    console.log('redirects to noti changes');
+  };
+
+  const handlePass = () => {
+    console.log('redirects to pass change');
+  };
+
   return (
     <div style={{ marginTop: '100px' }}>
       <MsuNav />
@@ -42,20 +59,32 @@ const Account = () => {
         <div className="col d-flex justify-content-center">
           <div style={{ flexDirection: 'column' }}>
             <div css={styles.infoBox}>
-              <div style={{ margin: '1.5vh 1vw' }}>Email:</div>
-              <div className="col d-flex justify-content-end" style={{ margin: '1.5vh 1vw' }}>
-                {data.email}test
-              </div>
-            </div>
-            <div css={styles.infoBox}>
-              <div style={{ margin: '1.5vh 1vw' }}>Password: </div>
-              <div className="col d-flex justify-content-end" style={{ margin: '1.5vh 1vw' }}>
-                {data.password}test
-              </div>
-            </div>
-            <div css={styles.infoBox}>
               <div style={{ margin: '1.5vh 1vw' }}>Role:</div>
+              <div className="col d-flex justify-content-end" style={{ margin: '1.5vh 1vw' }}>
+                {user?.role}
+              </div>
             </div>
+            <div css={styles.infoBox}>
+              <div style={{ margin: '1.5vh 1vw' }}>Email: </div>
+              <div className="col d-flex justify-content-end" style={{ margin: '1.5vh 1vw' }}>
+                {user?.email}
+              </div>
+            </div>
+            <div css={styles.infoBox}>
+              <div style={{ margin: '1.5vh 1vw' }}>Name:</div>
+              <div className="col d-flex justify-content-end" style={{ margin: '1.5vh 1vw' }}>
+                {user?.name}
+              </div>
+            </div>
+            <button onClick={handleNoti} css={styles.button}>
+              Manage Notifications
+            </button>
+            <button onClick={handlePass} css={styles.button}>
+              Change Password
+            </button>
+            <button onClick={handleLogout} css={styles.button}>
+              Logout
+            </button>
           </div>
         </div>
       </div>
