@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../utils/AuthContext';
 import { NavLink } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
+import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 import msuNav from '../../assets/img/MsuNav.jpg';
 
@@ -172,6 +173,7 @@ const MsuNav = () => {
                       css={styles.linksCondensed}
                       onClick={() => {
                         setUser(null);
+                        api.defaults.headers.common.Authorization = null;
                         localStorage.removeItem('user');
                       }}
                     >
