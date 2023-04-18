@@ -42,12 +42,19 @@ const Account = () => {
         <div className="col d-flex justify-content-center">
           <div style={{ flexDirection: 'column' }}>
             <div css={styles.infoBox}>
-              <div>Email</div>
-              <div className="col d-flex justify-content-end">{data.email}tessdt</div>
+              <div style={{ margin: '1.5vh 1vw' }}>Email:</div>
+              <div className="col d-flex justify-content-end" style={{ margin: '1.5vh 1vw' }}>
+                {data.email}test
+              </div>
             </div>
             <div css={styles.infoBox}>
-              <div>Password </div>
-              <div className="col d-flex justify-content-end">{data.password}dsd</div>
+              <div style={{ margin: '1.5vh 1vw' }}>Password: </div>
+              <div className="col d-flex justify-content-end" style={{ margin: '1.5vh 1vw' }}>
+                {data.password}test
+              </div>
+            </div>
+            <div css={styles.infoBox}>
+              <div style={{ margin: '1.5vh 1vw' }}>Role:</div>
             </div>
           </div>
         </div>
