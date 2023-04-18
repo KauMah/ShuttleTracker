@@ -1,4 +1,4 @@
-import { $black, $msured, $red, $transparent, $white } from '../../assets/colors';
+import { $black, $msured, $transparent, $white } from '../../assets/colors';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
@@ -145,7 +145,6 @@ const MsuNav = () => {
           <div className="row" style={{ flexWrap: 'nowrap' }}>
             {expanded ? (
               <div className="col-12">
-                {/* style={{ background: $transparent }}> */}
                 <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div css={styles.buttonCondensed}>
                     <NavLink to="/home" css={styles.linksCondensed}>

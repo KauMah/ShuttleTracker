@@ -15,14 +15,14 @@ interface ShuttleData {
 const ShuttleInfo = () => {
   const [shuttles, setshuttles] = useState<ShuttleData[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('/shuttles');
-      const data = await response.json();
-      setshuttles(data);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch('/shuttles');
+  //     const data = await response.json();
+  //     setshuttles(data);
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <div>

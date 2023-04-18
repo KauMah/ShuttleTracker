@@ -5,6 +5,7 @@ import { AuthContext } from './utils/AuthContext';
 import HelpPg from './components/helpPg';
 import Home from './components/home';
 import Login from './components/login';
+import Register from './components/register';
 import ShuttleInfo from './components/shuttleinfo';
 import { useContext } from 'react';
 
@@ -20,7 +21,7 @@ const LocalRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/help" element={<HelpPg />} />
         <Route path="/account" element={<Account />} />
-        {/* <Route path="/logout" element={<Logout />} /> */}
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );

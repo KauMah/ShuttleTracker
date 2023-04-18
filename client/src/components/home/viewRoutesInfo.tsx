@@ -5,37 +5,36 @@ import React, { useEffect, useState } from 'react';
 import GridLayout from 'react-grid-layout';
 import { api } from '../../utils/api';
 
-interface RouterData {
-  id: string;
-  name: string;
-  capacity: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// interface RouterData {
+//   id: string;
+//   name: string;
+//   capacity: number;
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
 
 const RouterInfo = () => {
-  const [routes, setRoutes] = useState<RouterData[]>([]);
+  const [route, setRoute] = useState({ stops: ' ' });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/route');
-        const data = await response.json();
-        setRoutes(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
+    api
+      .get('/route')
+      .then((response) => {
+        setRoute(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data: ${error.message');
+      });
   }, []);
 
   return (
     <div>
       <h1>All Routes</h1>
       <ul>
-        {routes.map((route) => (
-          <li key={route.id}>{route.name}</li>
-        ))}
+        {route.stops}
+        {/* {route.map((route) => (
+          // <li key={route.id}>{route.name}</li>
+        ))} */}
       </ul>
     </div>
   );

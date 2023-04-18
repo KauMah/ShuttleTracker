@@ -13,6 +13,7 @@ import ShuttleInfo from './viewShuttleInfo';
 import ViewState from 'react-map-gl';
 import dotenv from 'dotenv';
 import envConfig from '../../../env-config.json';
+import mapboxgl from 'mapbox-gl';
 import { viewport } from '@popperjs/core';
 
 const mapboxToken = envConfig.REACT_APP_MAPBOX_TOKEN;
@@ -29,8 +30,6 @@ const Home = () => {
     padding: { top: 0, right: 0, bottom: 0, left: 0 },
   });
 
-  const [map, setMap] = useState<null | mapboxgl.Map>(null);
-
   return (
     <>
       <Navbar />
@@ -38,10 +37,8 @@ const Home = () => {
         <div className="map-container1">
           <ReactMapGL
             {...viewState}
-            onMove={(event) => setViewState(event.viewState)}
-            mapboxAccessToken={mapboxToken} // replace with your access token
+            mapboxAccessToken={mapboxToken}
             mapStyle="mapbox://styles/mapbox/streets-v11"
-            onLoad={(event) => setMap(event.target)}
           ></ReactMapGL>
         </div>
       </div>
