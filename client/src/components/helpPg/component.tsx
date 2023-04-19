@@ -19,6 +19,11 @@ const styles = {
   card: {
     width: '100%',
     marginBottom: '20px',
+    border: '1px solid rgba(0,0,0,0.6',
+    padding: '6px',
+    margin: '10px',
+    marginLeft: '-3px',
+    borderRadius: '10px',
   },
   colRight: {
     backgroundColor: $white,
@@ -26,9 +31,10 @@ const styles = {
     marginTop: '98px',
   },
   header: css({
-    display: 'flex',
+    //display: 'flex',
     justifyContent: 'center',
     textAlign: 'center',
+    //fontFamily: 'Helvetica',
   }),
   //title: css({}),
   dropdownMenu: css({
@@ -165,19 +171,19 @@ const HelpPg = () => {
                   Please find answers to commonly asked questions about shuttle operation below:
                 </p>
               </div>
-              <div>
+              <div style={styles.card}>
                 <p style={styles.bolderFont}>Q. How often do the buses run?</p>
                 <p style={styles.font}>
                   A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours.
                 </p>
               </div>
-              <div>
+              <div style={styles.card}>
                 <p style={styles.bolderFont}>Q. How can I track the bus in real-time?</p>
                 <p style={styles.font}>
                   A. Navigate to the shuttle info page, find your shuttle, and you will see the information there.
                 </p>
               </div>
-              <div>
+              <div style={styles.card}>
                 <p style={styles.bolderFont}>
                   Q. Are there any restrictions on items or pets that can be brought onto the shuttle buses?
                 </p>
@@ -186,7 +192,7 @@ const HelpPg = () => {
                   6:00AM-1:00AM on weekdays.
                 </p>
               </div>
-              <div className="drawerContiner">
+              <div className="drawerContiner" style={styles.card}>
                 <p style={styles.bolderFont}>
                   Q. How accessible are the shuttle buses for individuals with disabilities?
                 </p>
@@ -194,26 +200,26 @@ const HelpPg = () => {
                   A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours.
                 </p>
               </div>
-              <div>
+              <div style={styles.card}>
                 <p style={styles.bolderFont}>Q. Can non-students or non-faculty members use the shuttle system?</p>
                 <p style={styles.font}>
                   A. Navigate to the shuttle info page, find your shuttle, and you will see the information there.
                 </p>
               </div>
-              <div>
+              <div style={styles.card}>
                 <p style={styles.bolderFont}>Q. Can a student or faculty member bring a visitor?</p>
                 <p style={styles.font}>
                   A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
                   6:00AM-1:00AM on weekdays.
                 </p>
               </div>
-              <div className="drawerContiner">
+              <div className="drawerContiner" style={styles.card}>
                 <p style={styles.bolderFont}>Q. What should I do if I left something on the shuttle?</p>
                 <p style={styles.font}>
                   A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours.
                 </p>
               </div>
-              <div>
+              <div style={styles.card}>
                 <p style={styles.bolderFont}>
                   Q. How can I provide feedback or report an issue with the shuttle service?
                 </p>
@@ -221,7 +227,7 @@ const HelpPg = () => {
                   A. Navigate to the shuttle info page, find your shuttle, and you will see the information there.
                 </p>
               </div>
-              <div>
+              <div style={styles.card}>
                 <p style={styles.bolderFont}>Q. Does the shuttle operate on weekends?</p>
                 <p style={styles.font}>
                   A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
