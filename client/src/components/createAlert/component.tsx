@@ -1,5 +1,6 @@
-import { $black, $grey, $lightGrey, $msured, $red, $white } from '../../assets/colors';
+import { $grey, $msured, $white } from '../../assets/colors';
 
+import AlertForm from './alertForm';
 import { css } from '@emotion/react';
 
 const styles = {
@@ -21,16 +22,6 @@ const styles = {
       width: '100%',
     },
   }),
-  title: css({
-    fontSize: '5rem',
-    fontFamily: 'Helvetica',
-    color: $msured,
-    height: '30vh',
-    background: $lightGrey,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }),
   titleBus: css({
     color: $white,
     fontFamily: 'Helvetica',
@@ -46,6 +37,15 @@ const styles = {
       textAlign: 'center',
     },
   }),
+  title: css({
+    fontSize: '6.3rem',
+    fontFamily: 'Helvetica',
+    color: $msured,
+    height: '30vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'end',
+  }),
 };
 
 const Create = () => {
@@ -57,7 +57,9 @@ const Create = () => {
         </div>
       </div>
       <div css={styles.title}>Alert</div>
-      <></>
+      <>
+        <AlertForm />
+      </>
     </>
   );
 };
