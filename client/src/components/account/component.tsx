@@ -1,6 +1,6 @@
+import { $black, $flash, $lightGrey, $msured, $salmon } from '../../assets/colors';
 import { NavLink, Navigate, redirect } from 'react-router-dom';
 
-import { $lightGrey } from '../../assets/colors';
 import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';
 import { api } from '../../utils/api';
@@ -8,28 +8,39 @@ import { css } from '@emotion/react';
 import { useContext } from 'react';
 
 const styles = {
+  title: css({
+    color: $msured,
+    fontSize: '4.3rem',
+    fontFamily: 'Helvetica',
+    fontWeight: 500,
+  }),
   infoBox: css({
-    background: $lightGrey,
     height: '7vh',
     width: '80vw',
-    marginTop: '5px',
+    color: $msured,
+    fontFamily: 'Helvetica',
+    fontWeight: 700,
+    marginTop: '.5rem',
     border: '1px solid black',
     display: 'flex',
     justifyContent: 'space-between',
   }),
   button: css({
-    background: $lightGrey,
+    background: $salmon,
+    color: $black,
     height: '7vh',
     width: '80vw',
+    fontFamily: 'Helvetica',
     border: '1px solid black',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '5px',
+    marginTop: '.5rem',
     cursor: 'pointer',
     '&:hover': {
-      background: '#fff',
-      color: 'black',
+      // background: '#fff',
+      background: $flash,
+      color: $salmon,
     },
   }),
 };
@@ -54,8 +65,10 @@ const Account = () => {
   return (
     <div style={{ marginTop: '100px' }}>
       <MsuNav />
-      <h1>Account</h1>
-      <div className="row">
+      <h1 className="d-flex justify-content-center" css={styles.title}>
+        Account
+      </h1>
+      <div className="row" style={{ marginTop: '2rem' }}>
         <div className="col d-flex justify-content-center">
           <div style={{ flexDirection: 'column' }}>
             <div css={styles.infoBox}>
