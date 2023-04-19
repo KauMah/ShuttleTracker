@@ -1,10 +1,10 @@
-import { $black, $flash, $lightGrey, $msured, $salmon } from '../../assets/colors';
-import { NavLink, Navigate, redirect } from 'react-router-dom';
+import { $black, $flash, $msured, $salmon } from '../../assets/colors';
 
 import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
+import { redirect } from 'react-router-dom';
 import { useContext } from 'react';
 
 const styles = {
