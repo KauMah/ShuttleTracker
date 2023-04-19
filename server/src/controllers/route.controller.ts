@@ -1,11 +1,5 @@
-import {
-  CreateRouteInput,
-  EditRouteNameInput,
-  EditRouteStopsInput,
-  RouteIdInput,
-  editRouteNameSchema,
-} from '../schemas/route.schema';
-import { MongoError, MongoServerError, ObjectId } from 'mongodb';
+import { CreateRouteInput, EditRouteNameInput, EditRouteStopsInput, RouteIdInput } from '../schemas/route.schema';
+import { MongoError, MongoServerError } from 'mongodb';
 import { NextFunction, Request, Response } from 'express';
 import {
   addRouteStops,
@@ -17,8 +11,6 @@ import {
   removeRouteStops,
 } from '../service/route.service';
 
-import { DocumentType } from '@typegoose/typegoose';
-import { Route } from '../models/route.model';
 import { Types } from 'mongoose';
 
 export const createRouteHandler = async (

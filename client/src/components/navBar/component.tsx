@@ -1,9 +1,10 @@
-import { $black, $msured, $red, $transparent, $white } from '../../assets/colors';
+import { $black, $msured, $transparent, $white } from '../../assets/colors';
 import { useContext, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
 import { NavLink } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
+import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 import msuNav from '../../assets/img/MsuNav.jpg';
 
@@ -145,7 +146,6 @@ const MsuNav = () => {
           <div className="row" style={{ flexWrap: 'nowrap' }}>
             {expanded ? (
               <div className="col-12">
-                {/* style={{ background: $transparent }}> */}
                 <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div css={styles.buttonCondensed}>
                     <NavLink to="/home" css={styles.linksCondensed}>
@@ -173,6 +173,7 @@ const MsuNav = () => {
                       css={styles.linksCondensed}
                       onClick={() => {
                         setUser(null);
+                        api.defaults.headers.common.Authorization = null;
                         localStorage.removeItem('user');
                       }}
                     >

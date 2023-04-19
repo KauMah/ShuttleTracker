@@ -1,7 +1,6 @@
 import { Ref, Severity, getModelForClass, index, modelOptions, prop } from '@typegoose/typegoose';
 
 import { Stop } from './stop.model';
-import { Types } from 'mongoose';
 
 @index({ name: 1 }, { unique: true })
 @modelOptions({

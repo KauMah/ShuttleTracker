@@ -1,10 +1,4 @@
-import {
-  RouteIdInput,
-  createRouteSchema,
-  editRouteNameSchema,
-  editRouteStopsSchema,
-  routeIdSchema,
-} from '../schemas/route.schema';
+import { createRouteSchema, editRouteNameSchema, editRouteStopsSchema, routeIdSchema } from '../schemas/route.schema';
 import {
   addRouteStopHandler,
   createRouteHandler,
