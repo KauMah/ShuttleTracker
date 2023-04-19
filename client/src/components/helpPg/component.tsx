@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { $black, $grey, $lightGrey, $white } from '../../assets/colors';
+import { $black, $grey, $lightGrey, $msured, $white } from '../../assets/colors';
 
 import FAQImg from '../../assets/img/FAQImg-4.jpg';
 import MsuNav from '../navBar';
@@ -12,9 +12,12 @@ const styles = {
     justifyContent: 'center',
   },
   colLeft: {
-    backgroundColor: $lightGrey,
+    backgroundColor: $white,
     height: '100vh',
     marginTop: '640px',
+    '@media (max-width: 906px)': {
+      marginLeft: '30%',
+    },
   },
   card: {
     width: '100%',
@@ -49,7 +52,7 @@ const styles = {
     width: '100%',
   }),
   headerImage: css({
-    background: `url(${FAQImg}) no-repeat 50% 50%`,
+    background: `url(${FAQImg}) no-repeat 50% 50% fixed`,
     width: '100%',
     height: 'auto',
     marginLeft: '-921px',
@@ -58,11 +61,12 @@ const styles = {
     alignItems: 'center',
     backgroundPosition: '50% 30%',
     backgroundSize: 'cover',
+    boxSizing: 'border-box',
   }),
   headerTitle: css({
     position: 'absolute',
     top: '30%',
-    left: '55%',
+    left: '53%',
     transform: 'translate(-50%, -50%)',
     color: $white,
     fontFamily: 'Helvetica',
@@ -73,10 +77,25 @@ const styles = {
     fontSize: '1.3em',
     fontWeight: '100',
   },
-  bolderFont: {
+  questionFont: {
     fontFamily: 'Helvetica',
     fontSize: '1.3em',
-    fontWeight: '600',
+    color: $msured,
+  },
+  personFont: {
+    fontFamily: 'Helvetica',
+    fontSize: '1.3em',
+    color: $black,
+  },
+  personFont2: {
+    fontFamily: 'Helvetica',
+    fontSize: '1.3em',
+    color: $black,
+  },
+  contactHeadFont: {
+    fontFamily: 'Helvetica',
+    fontSize: '1.3em',
+    color: $msured,
   },
   faqHeadFont: {
     fontFamily: 'Helvetica',
@@ -98,6 +117,22 @@ const styles = {
     paddingBottom: '10px',
     borderBottom: `1px solid ${$grey}`,
   },
+  imageContainer: css({
+    height: '542px',
+    width: '2511px',
+    marginLeft: '-922px',
+    overflow: 'hidden',
+    border: '1px solid black',
+  }),
+  image: css({
+    height: 'auto',
+    width: '100%',
+    display: 'block',
+    //position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-44%)',
+    opacity: '0.9',
+  }),
 };
 
 const HelpPg = () => {
@@ -126,7 +161,7 @@ const HelpPg = () => {
                 </div>
               </div>
               <div css={styles.contactHeader}>
-                <h3>Executive Director, Facilities Technology</h3>
+                <p style={styles.contactHeadFont}>Executive Director, Facilities Technology</p>
                 <h4>John Bonin</h4>
                 <div style={styles.font}>
                   <p>Location: 150 Clove Road</p>
@@ -158,8 +193,8 @@ const HelpPg = () => {
               <h1>FAQ</h1>
             </div> */}
             <div className="container">
-              <div css={styles.headerImage}>
-                <img src="src/assets/img/FAQImg-4.jpg" alt="Header" />
+              <div css={styles.imageContainer}>
+                <img src="src/assets/img/FAQImg-4.jpg" alt="Header" css={styles.image} />
               </div>
               <div css={styles.headerTitle}>
                 <p>Frequently Asked Questions</p>
@@ -172,19 +207,19 @@ const HelpPg = () => {
                 </p>
               </div>
               <div style={styles.card}>
-                <p style={styles.bolderFont}>Q. How often do the buses run?</p>
+                <p style={styles.questionFont}>Q. How often do the buses run?</p>
                 <p style={styles.font}>
                   A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours.
                 </p>
               </div>
               <div style={styles.card}>
-                <p style={styles.bolderFont}>Q. How can I track the bus in real-time?</p>
+                <p style={styles.questionFont}>Q. How can I track the bus in real-time?</p>
                 <p style={styles.font}>
                   A. Navigate to the shuttle info page, find your shuttle, and you will see the information there.
                 </p>
               </div>
               <div style={styles.card}>
-                <p style={styles.bolderFont}>
+                <p style={styles.questionFont}>
                   Q. Are there any restrictions on items or pets that can be brought onto the shuttle buses?
                 </p>
                 <p style={styles.font}>
@@ -193,7 +228,7 @@ const HelpPg = () => {
                 </p>
               </div>
               <div className="drawerContiner" style={styles.card}>
-                <p style={styles.bolderFont}>
+                <p style={styles.questionFont}>
                   Q. How accessible are the shuttle buses for individuals with disabilities?
                 </p>
                 <p style={styles.font}>
@@ -201,26 +236,26 @@ const HelpPg = () => {
                 </p>
               </div>
               <div style={styles.card}>
-                <p style={styles.bolderFont}>Q. Can non-students or non-faculty members use the shuttle system?</p>
+                <p style={styles.questionFont}>Q. Can non-students or non-faculty members use the shuttle system?</p>
                 <p style={styles.font}>
                   A. Navigate to the shuttle info page, find your shuttle, and you will see the information there.
                 </p>
               </div>
               <div style={styles.card}>
-                <p style={styles.bolderFont}>Q. Can a student or faculty member bring a visitor?</p>
+                <p style={styles.questionFont}>Q. Can a student or faculty member bring a visitor?</p>
                 <p style={styles.font}>
                   A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
                   6:00AM-1:00AM on weekdays.
                 </p>
               </div>
               <div className="drawerContiner" style={styles.card}>
-                <p style={styles.bolderFont}>Q. What should I do if I left something on the shuttle?</p>
+                <p style={styles.questionFont}>Q. What should I do if I left something on the shuttle?</p>
                 <p style={styles.font}>
                   A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours.
                 </p>
               </div>
               <div style={styles.card}>
-                <p style={styles.bolderFont}>
+                <p style={styles.questionFont}>
                   Q. How can I provide feedback or report an issue with the shuttle service?
                 </p>
                 <p style={styles.font}>
@@ -228,7 +263,7 @@ const HelpPg = () => {
                 </p>
               </div>
               <div style={styles.card}>
-                <p style={styles.bolderFont}>Q. Does the shuttle operate on weekends?</p>
+                <p style={styles.questionFont}>Q. Does the shuttle operate on weekends?</p>
                 <p style={styles.font}>
                   A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
                   6:00AM-1:00AM on weekdays.
