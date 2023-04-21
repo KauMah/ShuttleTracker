@@ -14,7 +14,7 @@ const styles = {
   colLeft: {
     backgroundColor: $white,
     height: '100vh',
-    marginTop: '640px',
+    //marginTop: '640px',
     '@media (max-width: 906px)': {
       marginLeft: '30%',
     },
@@ -34,10 +34,14 @@ const styles = {
     marginTop: '98px',
   },
   header: css({
-    //display: 'flex',
+    display: 'flex',
     justifyContent: 'center',
     textAlign: 'center',
-    //fontFamily: 'Helvetica',
+    fontFamily: 'Helvetica',
+    fontSize: '3em',
+    margin: '0px',
+    padding: '0px',
+    fontWeight: '700',
   }),
   //title: css({}),
   dropdownMenu: css({
@@ -87,15 +91,23 @@ const styles = {
     fontSize: '1.3em',
     color: $black,
   },
-  personFont2: {
+  execFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.3em',
+    fontSize: '1.2em',
+    fontWeight: '600',
     color: $black,
   },
   contactHeadFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.3em',
+    fontSize: '1.6em',
+    fontWeight: '600',
     color: $msured,
+  },
+  contactBodyFont: {
+    fontFamily: 'Helvetica',
+    fontSize: '1.1em',
+    fontWeight: '300',
+    color: $black,
   },
   faqHeadFont: {
     fontFamily: 'Helvetica',
@@ -103,12 +115,11 @@ const styles = {
     fontWeight: '400',
   },
   contactHeader: {
-    //display: 'flex',
+    display: 'flex',
     sjustifyContent: 'space-between',
     borderBottom: `1px solid ${$black}`,
     marginBottom: '10px',
     paddingBottom: '10px',
-    //textAlign: 'center',
   },
   contact: {
     display: 'flex',
@@ -116,6 +127,11 @@ const styles = {
     marginBottom: '10px',
     paddingBottom: '10px',
     borderBottom: `1px solid ${$grey}`,
+  },
+  contactRow: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap',
   },
   imageContainer: css({
     height: '542px',
@@ -143,17 +159,17 @@ const HelpPg = () => {
         <div className="row">
           <div className="col-3" style={styles.colLeft}>
             <div css={styles.header}>
-              <h1>Important</h1>
+              <p>Important</p>
             </div>
             <div css={styles.header}>
               <div style={styles.contactHeader}>
-                <h1>Contacts</h1>
+                <p>Contacts</p>
               </div>
             </div>
             <div>
               <div css={styles.contactHeader}>
-                <h3>Shuttle Services</h3>
-                <div style={styles.font}>
+                <p style={styles.contactHeadFont}>Shuttle Services</p>
+                <div style={styles.contactBodyFont}>
                   <p>Location: 145 Clove Rd.</p>
                   <p>Phone: 973-655-3326</p>
                   <p>Fax: 973-655-4494</p>
@@ -162,26 +178,26 @@ const HelpPg = () => {
               </div>
               <div css={styles.contactHeader}>
                 <p style={styles.contactHeadFont}>Executive Director, Facilities Technology</p>
-                <h4>John Bonin</h4>
-                <div style={styles.font}>
+                <p style={styles.execFont}>John Bonin</p>
+                <div style={styles.contactBodyFont}>
                   <p>Location: 150 Clove Road</p>
                   <p>Phone: 973-655-7868</p>
                   <p>E-mail: boninj@montclair.edu</p>
                 </div>
               </div>
               <div css={styles.contactHeader}>
-                <h3>Supervisor, Shuttle Services</h3>
-                <h4>Cheryl Ofoha</h4>
-                <div style={styles.font}>
+                <p style={styles.contactHeadFont}>Supervisor, Shuttle Services</p>
+                <p style={styles.execFont}>Cheryl Ofoha</p>
+                <div style={styles.contactBodyFont}>
                   <p>Location: 35 Clove Road</p>
                   <p>Phone: 973-655-3326</p>
                   <p>E-mail: lebertc@montclair.edu</p>
                 </div>
               </div>
               <div css={styles.contactHeader}>
-                <h3>Coordinator, Commuter Life</h3>
-                <h4>Antonio Talamo</h4>
-                <div style={styles.font}>
+                <p style={styles.contactHeadFont}>Coordinator, Commuter Life</p>
+                <p style={styles.execFont}>Antonio Talamo</p>
+                <div style={styles.contactBodyFont}>
                   <p>Phone: 973-655-3377</p>
                   <p>E-mail: talamoa@montclair.edu</p>
                 </div>
