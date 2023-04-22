@@ -110,6 +110,33 @@ export const getShuttleByIdHandler = async (
   }
 };
 
+export const getShuttlePositionByIdHandler = async (
+  req: Request<object, object, ShuttleIdInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const shuttle = await getShuttle(req.body.id);
+    res.status(200).json({
+      status: 'success',
+      data: _.pick(shuttle, ['loc']),
+    });
+  } catch (err: unknown) {
+    if (err instanceof MongoError || err instanceof MongoServerError) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'Something went wrong getting Shuttle by Id',
+      });
+    }
+    res.status(500).json({
+      status: 'fail',
+      message: 'Unknown Internal Error occurred',
+      err,
+    });
+    next(err);
+  }
+};
+
 export const deleteShuttleByIdHandler = async (
   req: Request<object, object, ShuttleIdInput>,
   res: Response,
