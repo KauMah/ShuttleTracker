@@ -57,9 +57,9 @@ const Create = () => {
         </div>
       </div>
       <div css={styles.title}>Alert</div>
-      <>
+      <div style={{ marginTop: '3rem' }}>
         <AlertForm />
-      </>
+      </div>
     </>
   );
 };

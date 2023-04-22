@@ -1,5 +1,5 @@
 import { $black, $msured, $transparent, $white } from '../../assets/colors';
-import { NavLink, redirect, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
