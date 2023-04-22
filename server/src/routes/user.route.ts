@@ -1,4 +1,10 @@
-import { getAllUserHandler, getMeHandler } from '../controllers/user.controller';
+import {
+  getAllAdminHandler,
+  getAllDriverHandler,
+  getAllRiderHandler,
+  getAllUserHandler,
+  getMeHandler,
+} from '../controllers/user.controller';
 
 import { deserializeUser } from '../middleware/deserializeUser';
 import express from 'express';
@@ -10,6 +16,9 @@ const userRouter = express.Router();
 userRouter.use(deserializeUser, requireUser);
 
 userRouter.get('/', restrictTo('admin'), getAllUserHandler);
+userRouter.get('/riders', restrictTo('admin'), getAllRiderHandler);
+userRouter.get('/drivers', restrictTo('admin'), getAllDriverHandler);
+userRouter.get('/admins', restrictTo('admin'), getAllAdminHandler);
 
 userRouter.get('/me', getMeHandler);
 
