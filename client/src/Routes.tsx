@@ -12,7 +12,6 @@ import { useContext } from 'react';
 
 const LocalRoutes = () => {
   const user = useContext(AuthContext);
-  console.log(user.user);
   return (
     <BrowserRouter>
       <Routes>
