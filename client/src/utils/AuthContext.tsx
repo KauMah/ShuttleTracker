@@ -1,8 +1,8 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
+import { redirect, useNavigate } from 'react-router-dom';
 
 import _ from 'lodash';
 import { api } from './api';
-import { redirect } from 'react-router-dom';
 
 export interface User {
   name: string;
@@ -37,11 +37,11 @@ export const AuthProvider = ({ children }: AuthProps) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
   useEffect(() => {
-    if (!user) {
-      redirect('/login');
-    } else {
-      redirect('/help');
-    }
-  }, [user]);
+    // if (!user) {
+    //   navigate('/login');
+    // } else {
+    //   navigate('/home');
+    // }
+  }, []);
   return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
 };

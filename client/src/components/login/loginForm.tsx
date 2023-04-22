@@ -1,5 +1,4 @@
 import { $msured, $salmon, $white } from '../../assets/colors';
-import { redirect, useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
@@ -9,6 +8,7 @@ import _ from 'lodash';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginValues {
   email?: string;
@@ -61,7 +61,7 @@ const LoginForm = (): JSX.Element => {
             setUser(_.get(data, 'data.user', ''));
             localStorage.setItem('user', JSON.stringify(_.get(data, 'data.user', '')));
             api.defaults.headers.common.Authorization = `Bearer ${_.get(data, 'data.user.access_token', '')}`;
-            redirect('/');
+            navigate('/');
           })
           .catch((err) => {
             toast(_.get(err, 'response.data.error[0].message', 'Failed unexpectedly, check connection'), {
