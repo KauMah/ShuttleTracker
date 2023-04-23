@@ -37,6 +37,7 @@ const styles = {
     display: 'flex',
     alignContent: 'center',
     textAlignLast: 'center',
+    cursor: 'pointer',
   }),
   textBox: css({
     height: '3rem',
