@@ -26,7 +26,7 @@ const styles = {
     justifyContent: 'space-between',
   }),
   button: css({
-    background: $salmon,
+    background: $msured,
     color: $black,
     height: '7vh',
     width: '80vw',
