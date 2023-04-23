@@ -42,6 +42,7 @@ const styles = {
     fontFamily: 'Helvetica',
     color: $msured,
     height: '30vh',
+    marginTop: '2rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'end',

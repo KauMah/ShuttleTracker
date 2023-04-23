@@ -1,4 +1,4 @@
-import { $msured, $salmon } from '../../assets/colors';
+import { $flash, $salmon } from '../../assets/colors';
 import { Field, Form, Formik } from 'formik';
 
 import { css } from '@emotion/react';
@@ -23,6 +23,9 @@ const styles = {
     fontWeight: 500,
     position: 'absolute',
     marginTop: '-2.5rem',
+    '@media (max-width: 650px)': {
+      fontSize: '1.3rem',
+    },
   }),
   dropDown: css({
     height: '2rem',
@@ -42,8 +45,21 @@ const styles = {
     padding: '0.5rem',
     borderRadius: '0.3rem',
     border: '1px solid #D1190D',
-    // alignContent: 'center',
     textAlignLast: 'center',
+  }),
+  submitButton: css({
+    backgroundColor: $salmon,
+    height: '5vh 100%',
+    width: '10vw 100%',
+    fontSize: '22px',
+    fontWeight: 700,
+    borderRadius: '13px',
+    marginTop: '3vh',
+    padding: 'auto',
+    transition: 'background-color 0.25s',
+    '&:hover': {
+      backgroundColor: $flash,
+    },
   }),
 };
 const AlertForm = () => {
@@ -103,7 +119,7 @@ const AlertForm = () => {
               />
             </div>
             <div style={{ textAlign: 'center', marginTop: '3vh' }}>
-              <button type="submit" disabled={isSubmitting}>
+              <button type="submit" disabled={isSubmitting} css={styles.submitButton}>
                 {isSubmitting ? 'Submitting...' : 'Submit'}
               </button>
             </div>
