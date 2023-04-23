@@ -16,7 +16,7 @@ const styles = {
     backgroundColor: $white,
     height: '50vh',
     //marginTop: '580px',
-    '@media (max-width: 906px)': {
+    '@media (max-width: 700px)': {
       marginLeft: '30%',
     },
   },
@@ -30,7 +30,7 @@ const styles = {
     borderRadius: '10px',
   },
   questionLine: {
-    borderTop: '1px solid rgba(0,0,0,0.6)',
+    borderBottom: '3px solid rgba(0,0,0,0.3)',
     marginTop: '20px',
     marginBottom: '10px',
   },
@@ -49,34 +49,10 @@ const styles = {
     padding: '0px',
     fontWeight: '700',
   }),
-  //title: css({}),
-  dropdownMenu: css({
-    //display: 'none',
-    //position: 'absolute',
-    backgroundColor: $white,
-    boxShadow: '0 8px 16px 0 rgba(0, 0, 0, 0.2)',
-    padding: '12px 16px',
-    zIndex: 1,
-    //top: '100%',
-    //left: '0',
-    width: '100%',
-  }),
-  headerImage: css({
-    background: `url(${FAQImg}) no-repeat 50% 50% fixed`,
-    width: '100%',
-    height: 'auto',
-    marginLeft: '-921px',
-    marginTop: '-900px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundPosition: '50% 30%',
-    backgroundSize: 'cover',
-    boxSizing: 'border-box',
-  }),
   headerTitle: css({
     position: 'absolute',
-    top: '30%',
-    left: '53%',
+    top: '25%',
+    left: '51%',
     transform: 'translate(-50%, -50%)',
     color: $msured,
     fontFamily: 'Helvetica',
@@ -85,8 +61,10 @@ const styles = {
   font: {
     fontFamily: 'Helvetica',
     fontSize: '1.3em',
-    fontWeight: '100',
-    padding: '10px',
+    //fontWeight: '100',
+    marginTop: '.75rem',
+    marginBottom: '1.25rem',
+    padding: '7.5px',
     color: $msured,
   },
   questionFont: {
@@ -119,8 +97,9 @@ const styles = {
   },
   faqHeadFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.7em',
+    fontSize: '1.6em',
     fontWeight: '400',
+    marginTop: '20rem',
   },
   contactHeader: {
     //display: 'flex',
@@ -142,22 +121,6 @@ const styles = {
     //flexWrap: 'wrap',
     width: '100%',
     marginTop: '20px',
-  }),
-  imageContainer: css({
-    height: '542px',
-    width: '1985px',
-    marginLeft: '-345px',
-    overflow: 'hidden',
-    //border: '1px solid black',
-  }),
-  image: css({
-    height: 'auto',
-    width: '100%',
-    display: 'block',
-    //position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-34%)',
-    opacity: '0.9',
   }),
   contactsContainer: css({
     display: 'flex',
@@ -188,22 +151,37 @@ const styles = {
     textAlign: 'center',
     textDecoration: 'none',
     display: 'inline-block',
-    fontSize: '28.5px',
+    fontSize: '28px',
     //margin: '4px 2px',
     cursor: 'pointer',
     borderRadius: '4px',
+    transition: 'background-color 0.15s ease',
+    ':hover': {
+      backgroundColor: $flash,
+    },
+    ':active': {
+      backgroundColor: $white,
+    },
   }),
   questionButton: css({
-    //backgroundColor: $red,
+    backgroundColor: $white,
+    height: '5rem',
+    width: '100%',
     border: 'none',
     cursor: 'pointer',
     outline: 'none',
     textAlign: 'left',
-    width: '100rem',
-    padding: '10px',
+    //padding: '14px',
     fontFamily: 'Helvetica',
     fontSize: '1.3em',
-    fontWeight: '400',
+    color: $black,
+    transition: 'background-color 0.15s ease',
+    ':hover': {
+      backgroundColor: $flash,
+    },
+    ':active': {
+      backgroundColor: $white,
+    },
   }),
   arrow: {
     marginLeft: '10px',
@@ -212,10 +190,11 @@ const styles = {
   answerContainer: {
     overflow: 'hidden',
     maxHeight: 0,
-    transition: 'max-height 0.5s ease-out',
+    transition: 'max-height 0.5s ease',
   },
   answerVisible: {
-    maxHeight: '200px',
+    maxHeight: '500px',
+    //overflow: 'hidden',
   },
 };
 
@@ -240,7 +219,7 @@ const QuestionAnswer = ({ question, answer, updateExpandedHeight }) => {
           <span
             style={{
               ...styles.arrow,
-              transform: isAnswerVisible ? 'rotate(180deg)' : 'rotate(0deg)',
+              transform: isAnswerVisible ? 'rotate(0deg)' : 'rotate(180deg)',
             }}
           >
             ^
@@ -271,9 +250,9 @@ const HelpPg = () => {
                 <h1>FAQ</h1>
               </div> */}
               <div className="container">
-                <div css={styles.imageContainer}>
+                {/* <div css={styles.imageContainer}>
                   <img src="src/assets/img/FAQImg-4.jpg" alt="Header" css={styles.image} />
-                </div>
+                </div> */}
                 <div css={styles.headerTitle}>
                   <p>Frequently Asked Questions</p>
                 </div>
@@ -282,8 +261,8 @@ const HelpPg = () => {
                 <div>
                   <p style={styles.faqHeadFont}>
                     <span>
-                      Please find answers to commonly asked questions about shuttle operation below. If you cannot find
-                      the answer to your question here, please refer to the Important Contacts
+                      Please find answers to common questions about shuttle operation below. If you cannot find the
+                      answer to your question here, please refer to the Important Contacts
                       <button css={styles.button} onClick={scrollToBottom}>
                         Below
                       </button>
@@ -291,6 +270,10 @@ const HelpPg = () => {
                     </span>
                   </p>
                 </div>
+                {/* <div className="row">
+                  <div className="col-6">test1</div>
+                  <div className="col-6">test2</div>
+                </div> */}
                 <QuestionAnswer
                   question="Q. How often do the buses run?"
                   answer="A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours."
