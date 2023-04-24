@@ -6,20 +6,21 @@ import React, { useState } from 'react';
 import FAQImg from '../../assets/img/FAQImg-4.jpg';
 import MsuNav from '../navBar';
 import { css } from '@emotion/react';
+import { transform } from 'lodash';
 
 const styles = {
   container: {
     display: 'flex',
     justifyContent: 'center',
   },
-  colLeft: {
+  colLeft: css({
     backgroundColor: $white,
     height: '50vh',
     //marginTop: '580px',
     '@media (max-width: 700px)': {
       marginLeft: '30%',
     },
-  },
+  }),
   card: {
     width: '100%',
     marginBottom: '20px',
@@ -326,7 +327,11 @@ const HelpPg = () => {
               </div>
             </div>
             <div className="row">
-              <div className="col-12" style={{ ...styles.colLeft, marginTop: 250 + expandedHeight }}>
+              <div
+                className="col-12"
+                css={styles.colLeft}
+                style={{ marginTop: 250 + expandedHeight, transition: 'height 0.3s ease' }}
+              >
                 <div css={styles.header}>
                   <div style={styles.contactHeader}>
                     <p> Important Contacts</p>
