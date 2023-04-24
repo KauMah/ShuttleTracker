@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { $grey, $msured, $red, $white } from '../../assets/colors';
 
 import LoginForm from './loginForm';
@@ -105,8 +104,7 @@ const Login = (): JSX.Element => {
             </NavLink>
           </p>
           <p className="d-flex justify-content-center" style={{ marginTop: '-3vh' }}>
-            {/* &nbsp; makes it so that it skips a space */}
-            Don't have an account?&nbsp;
+            Dont have an account?&nbsp
             <NavLink to="/register" css={styles.link}>
               Click Here
             </NavLink>
