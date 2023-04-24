@@ -23,8 +23,16 @@ interface Route {
 
 interface Bus {
   _id: string;
-  name: string;
+  name?: string;
+  capacity: number;
   route: Route;
+  active: boolean;
+  driver: string;
+  loc: {
+    type: string;
+    coordinates: [number, number];
+  };
+  occupancy: number;
 }
 
 interface Operator {
@@ -58,7 +66,7 @@ const useFetchBuses = (routes: Route[]) => {
     const fetchBuses = async () => {
       try {
         const response = await api.get('/shuttle/');
-        console.log('Buses:', response.data);
+        // console.log('Buses:', response.data);
         if (response.data && Array.isArray(response.data.data)) {
           const updatedBuses = response.data.data.map((bus: any) => ({
             ...bus,
@@ -102,7 +110,7 @@ const ShuttleInfo = () => {
   const fetchRoutes = async () => {
     try {
       const response = await api.get('/route/');
-      console.log('Routes:', response.data);
+      // console.log('Routes:', response.data);
       if (response.data.data) {
         setRoutes(response.data.data);
         setRoutesFetched(true);
@@ -167,7 +175,19 @@ const ShuttleInfo = () => {
   const box1Options = [
     {
       title: 'Current Routes',
-      content: routes.map((route) => ({ id: route._id, text: route.name })),
+      content: routes.map((route) => ({
+        id: route._id,
+        text: (
+          <>
+            {route.name}
+            <ol style={{ fontSize: '0.8rem', paddingLeft: '1rem' }}>
+              {route.stops.map((stop) => (
+                <li key={stop._id}>{stop.name}</li>
+              ))}
+            </ol>
+          </>
+        ),
+      })),
     },
   ];
 
@@ -175,10 +195,16 @@ const ShuttleInfo = () => {
     {
       title: 'Current Buses',
       content: buses
-        ? buses.map((bus) => ({
-            id: bus._id,
-            text: bus.route ? `${bus.name} (Route ${bus.route.name})` : bus.name,
-          }))
+        ? buses.map((bus) => {
+            const driver = operators.find((operator) => operator._id === bus.driver);
+            const driverName = driver ? driver.name : 'unknown';
+            return {
+              id: bus._id,
+              text: bus.route
+                ? `Bus ID: ${bus._id} (Route: ${bus.route.name}, Driver: ${driverName})`
+                : `Bus: ${bus._id} (Driver: ${driverName})`,
+            };
+          })
         : [],
     },
     {

@@ -2,7 +2,13 @@ import { $red, $white } from '../../assets/colors';
 import React, { useEffect, useState } from 'react';
 
 interface AdminPanelBoxProps {
-  options: { title: string; content: { id: string; text: string }[] }[];
+  options: {
+    title: string;
+    content: {
+      id: string;
+      text: string | JSX.Element;
+    }[];
+  }[];
 }
 
 const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options }) => {
