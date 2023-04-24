@@ -1,8 +1,8 @@
 import { $black, $msured, $transparent, $white } from '../../assets/colors';
-import { useContext, useState } from 'react';
+import { NavLink, redirect, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
-import { NavLink } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
@@ -112,8 +112,16 @@ const styles = {
 };
 
 const MsuNav = () => {
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      console.log('hello there');
+      navigate('/login');
+    }
+  });
 
   const handleNavbarToggle = () => {
     setExpanded(!expanded);
