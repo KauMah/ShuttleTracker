@@ -51,6 +51,7 @@ const ShuttleInfo = () => {
   const fetchStops = async () => {
     try {
       const response = await api.get('/stop/');
+      console.log('Stops:', response.data.data); // Log the fetched stops data
       setStops(response.data.data);
     } catch (err) {
       console.log(err);
@@ -61,6 +62,7 @@ const ShuttleInfo = () => {
   const fetchRoutes = async () => {
     try {
       const response = await api.get('/route/');
+      console.log('Routes:', response.data.data); // Log the fetched routes data
       setRoutes(response.data.data);
     } catch (err) {
       console.log(err);
@@ -70,6 +72,7 @@ const ShuttleInfo = () => {
   const fetchBuses = async () => {
     try {
       const response = await api.get('/shuttle/');
+      console.log('Buses:', response.data.data); // Log the fetched buses data
       setBuses(response.data.data);
     } catch (err) {
       console.log(err);
@@ -79,6 +82,7 @@ const ShuttleInfo = () => {
   const fetchOperators = async () => {
     try {
       const response = await api.get('/user/');
+      console.log('Operators:', response.data.data); // Log the fetched operators data
       setOperators(response.data.data);
     } catch (err) {
       console.log(err);
@@ -88,6 +92,7 @@ const ShuttleInfo = () => {
   const fetchAdmins = async () => {
     try {
       const response = await api.get('/admin/');
+      console.log('Admins:', response.data.data); // Log the fetched admins data
       setAdmins(response.data.data);
     } catch (err) {
       console.log(err);
@@ -112,29 +117,29 @@ const ShuttleInfo = () => {
   const box1Options = [
     {
       title: 'Current Routes',
-      content: routes.map((route) => route.name), // Display route names
+      content: routes.map((route) => ({ id: route._id, text: route.name })), // Display route names
     },
   ];
 
   const box2Options = [
     {
       title: 'Current Buses',
-      content: buses.map((bus) => `${bus.name} (Route ${bus.route.name})`), // Display bus and route information
+      content: buses.map((bus) => ({ id: bus._id, text: `${bus.name} (Route ${bus.route.name})` })), // Display bus and route information
     },
     {
       title: 'Available Stops',
-      content: stops.map((stop) => stop.name),
+      content: stops.map((stop) => ({ id: stop._id, text: stop.name })),
     },
   ];
 
   const box3Options = [
     {
       title: 'Bus Operators',
-      content: operators.map((operator) => `${operator.name} (${operator.bus.name})`), // Display operator and bus information
+      content: operators.map((operator) => ({ id: operator._id, text: `${operator.name} (${operator.bus.name})` })), // Display operator and bus information
     },
     {
       title: 'Admins',
-      content: admins.map((admin) => admin.name), // Display admin names
+      content: admins.map((admin) => ({ id: admin._id, text: admin.name })), // Display admin names
     },
   ];
 

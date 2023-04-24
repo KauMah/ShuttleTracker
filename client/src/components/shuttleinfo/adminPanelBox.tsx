@@ -2,11 +2,11 @@ import { $red, $white } from '../../assets/colors';
 import React, { useState } from 'react';
 
 interface AdminPanelBoxProps {
-  options: { title: string; content: string[] }[];
+  options: { title: string; content: { id: string; text: string }[] }[];
 }
 
 const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options }) => {
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState(options.length > 0 ? options[0] : { title: '', content: [] });
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTitle = event.target.value;
@@ -41,14 +41,13 @@ const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options }) => {
               </option>
             ))}
           </select>
-          {selectedOption.content.map((text, index) => (
-            <React.Fragment key={index}>
-              <span style={textStyle}>
-                {index + 1}. {text}
-              </span>
-              {index < selectedOption.content.length - 1 && <br />}
-            </React.Fragment>
-          ))}
+          <ol>
+            {selectedOption.content.map((item) => (
+              <li key={item.id} style={textStyle}>
+                {item.text}
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </div>
