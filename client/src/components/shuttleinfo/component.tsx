@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { $red } from '../../assets/colors';
+import { $msured } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
 import MsuNav from '../navBar';
 import SendAlertButton from './sendAlertButton';
@@ -236,7 +236,7 @@ const ShuttleInfo = () => {
 
   const currentViewTextStyle = {
     fontSize: '1.25rem',
-    color: $red,
+    color: $msured,
   };
 
   const mainContainerStyle = {
@@ -258,7 +258,7 @@ const ShuttleInfo = () => {
           </div>
         </div>
         <div className="row">
-          <AdminPanelBox options={box1Options} />
+          <AdminPanelBox options={box1Options} showSelect={false} />
           <AdminPanelBox options={box2Options} />
           <AdminPanelBox options={box3Options} />
         </div>

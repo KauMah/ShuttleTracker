@@ -1,4 +1,4 @@
-import { $red, $white } from '../../assets/colors';
+import { $msured, $white } from '../../assets/colors';
 import React, { useEffect, useState } from 'react';
 
 interface AdminPanelBoxProps {
@@ -9,9 +9,10 @@ interface AdminPanelBoxProps {
       text: string | JSX.Element;
     }[];
   }[];
+  showSelect?: boolean;
 }
 
-const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options }) => {
+const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options, showSelect = true }) => {
   const [selectedOption, setSelectedOption] = useState(options.length > 0 ? options[0] : { title: '', content: [] });
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,29 +31,35 @@ const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options }) => {
 
   const cardStyle = {
     backgroundColor: $white,
-    borderColor: $red,
+    borderColor: $msured,
   };
 
   const textStyle = {
-    color: $red,
+    color: $msured,
   };
 
   return (
     <div className="col-12 col-sm-6 col-md-4">
       <div className="card mb-3" style={cardStyle}>
         <div className="card-body">
-          <select
-            value={selectedOption.title}
-            onChange={handleSelectChange}
-            className="form-select mb-2"
-            style={textStyle}
-          >
-            {options.map((option, index) => (
-              <option key={index} value={option.title}>
-                {option.title}
-              </option>
-            ))}
-          </select>
+          {showSelect ? (
+            <select
+              value={selectedOption.title}
+              onChange={handleSelectChange}
+              className="form-select mb-2"
+              style={textStyle}
+            >
+              {options.map((option, index) => (
+                <option key={index} value={option.title}>
+                  {option.title}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <h5 className="mb-2" style={textStyle}>
+              {selectedOption.title}
+            </h5>
+          )}
           <ol>
             {selectedOption.content.length > 0 &&
               selectedOption.content.map((item) => (

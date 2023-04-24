@@ -1,4 +1,4 @@
-import { $red, $white } from '../../assets/colors';
+import { $msured, $white } from '../../assets/colors';
 
 import React from 'react';
 
@@ -9,13 +9,13 @@ interface SendAlertButtonProps {
 const SendAlertButton: React.FC<SendAlertButtonProps> = ({ onClick }) => {
   const buttonStyle = {
     backgroundColor: $white,
-    color: $red,
-    borderColor: $red,
+    color: $msured,
+    borderColor: $msured,
     marginBottom: '0.5rem',
   };
 
   const buttonHoverStyle = {
-    backgroundColor: $red,
+    backgroundColor: $msured,
     color: $white,
   };
 
