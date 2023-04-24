@@ -1,10 +1,11 @@
-import { createShuttleSchema, editShuttleParamsSchema, shuttleByIDSchema } from '../schemas/shuttle.schema';
 import {
   createShuttleHandler,
   editShuttleHandler,
   getAllShuttlesHandler,
   getShuttleByIdHandler,
+  getShuttlePositionByIdHandler,
 } from '../controllers/shuttle.controller';
+import { createShuttleSchema, editShuttleParamsSchema, shuttleByIDSchema } from '../schemas/shuttle.schema';
 
 import { deserializeUser } from '../middleware/deserializeUser';
 import express from 'express';
@@ -20,5 +21,6 @@ shuttleRouter.post('/edit', restrictTo('admin'), validate(editShuttleParamsSchem
 shuttleRouter.post('/', validate(shuttleByIDSchema), getShuttleByIdHandler);
 shuttleRouter.post('/delete', restrictTo('admin'), validate(shuttleByIDSchema), getShuttleByIdHandler);
 shuttleRouter.get('/', getAllShuttlesHandler);
+shuttleRouter.post('/position', validate(shuttleByIDSchema), getShuttlePositionByIdHandler);
 
 export default shuttleRouter;
