@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { $red } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
-import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';
 import SendAlertButton from './sendAlertButton';
 import { api } from '../../utils/api';
@@ -16,7 +15,6 @@ interface Stop {
   };
 }
 
-// Add interfaces for other data types
 interface Route {
   _id: string;
   name: string;
@@ -32,82 +30,134 @@ interface Bus {
 interface Operator {
   _id: string;
   name: string;
-  bus: Bus;
+  email: string;
+  role: string;
+  createdAt: string;
 }
 
 interface Admin {
   _id: string;
   name: string;
+  email: string;
+  role: string;
+  createdAt: string;
 }
 
+interface Rider {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+}
+
+const useFetchBuses = (routes: Route[]) => {
+  const [buses, setBuses] = useState<Bus[] | null>(null);
+
+  useEffect(() => {
+    const fetchBuses = async () => {
+      try {
+        const response = await api.get('/shuttle/');
+        console.log('Buses:', response.data);
+        if (response.data && Array.isArray(response.data.data)) {
+          const updatedBuses = response.data.data.map((bus: any) => ({
+            ...bus,
+            route: routes.find((route) => route._id === bus.route) || null,
+          }));
+          setBuses(updatedBuses);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (routes.length > 0) {
+      fetchBuses();
+    }
+  }, [routes]);
+
+  return buses;
+};
+
 const ShuttleInfo = () => {
-  const { user } = useContext(AuthContext);
   const [stops, setStops] = useState<Stop[]>([]);
   const [routes, setRoutes] = useState<Route[]>([]);
-  const [buses, setBuses] = useState<Bus[]>([]);
   const [operators, setOperators] = useState<Operator[]>([]);
   const [admins, setAdmins] = useState<Admin[]>([]);
+  const [riders, setRiders] = useState<Rider[]>([]);
+  const [, setRoutesFetched] = useState(false);
+  const buses = useFetchBuses(routes);
 
   const fetchStops = async () => {
     try {
       const response = await api.get('/stop/');
-      console.log('Stops:', response.data.data); // Log the fetched stops data
+      // console.log('Stops:', response.data.data); // Log the fetched stops data
       setStops(response.data.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // Add fetch functions for other data types
+  // Route fetching
   const fetchRoutes = async () => {
     try {
       const response = await api.get('/route/');
-      console.log('Routes:', response.data.data); // Log the fetched routes data
-      setRoutes(response.data.data);
+      console.log('Routes:', response.data);
+      if (response.data.data) {
+        setRoutes(response.data.data);
+        setRoutesFetched(true);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const fetchBuses = async () => {
-    try {
-      const response = await api.get('/shuttle/');
-      console.log('Buses:', response.data.data); // Log the fetched buses data
-      setBuses(response.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  // Operator fetching
   const fetchOperators = async () => {
     try {
-      const response = await api.get('/user/');
-      console.log('Operators:', response.data.data); // Log the fetched operators data
-      setOperators(response.data.data);
+      const response = await api.get('/user/drivers');
+      // console.log('Operators:', response.data);
+      if (response.data.data.users) {
+        setOperators(response.data.data.users);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
+  // Rider fetching
+  const fetchRiders = async () => {
+    try {
+      const response = await api.get('/user/riders');
+      // console.log('Riders:', response.data);
+      if (response.data.data.users) {
+        setRiders(response.data.data.users);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Admin fetching
   const fetchAdmins = async () => {
     try {
-      const response = await api.get('/admin/');
-      console.log('Admins:', response.data.data); // Log the fetched admins data
-      setAdmins(response.data.data);
+      const response = await api.get('/user/admins');
+      // console.log('Admins:', response.data);
+      if (response.data.data.users) {
+        setAdmins(response.data.data.users);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    if (user) {
-      fetchStops();
-      fetchRoutes(); // Fetch routes data
-      fetchBuses(); // Fetch buses data
-      fetchOperators(); // Fetch operators data
-      fetchAdmins(); // Fetch admins data
-    }
-  }, [user]);
+    fetchStops();
+    fetchRoutes();
+    fetchOperators();
+    fetchAdmins();
+    fetchRiders();
+  }, []);
 
   const handleSendAlert = () => {
     console.log('Alert sent');
@@ -117,14 +167,19 @@ const ShuttleInfo = () => {
   const box1Options = [
     {
       title: 'Current Routes',
-      content: routes.map((route) => ({ id: route._id, text: route.name })), // Display route names
+      content: routes.map((route) => ({ id: route._id, text: route.name })),
     },
   ];
 
   const box2Options = [
     {
       title: 'Current Buses',
-      content: buses.map((bus) => ({ id: bus._id, text: `${bus.name} (Route ${bus.route.name})` })), // Display bus and route information
+      content: buses
+        ? buses.map((bus) => ({
+            id: bus._id,
+            text: bus.route ? `${bus.name} (Route ${bus.route.name})` : bus.name,
+          }))
+        : [],
     },
     {
       title: 'Available Stops',
@@ -135,11 +190,21 @@ const ShuttleInfo = () => {
   const box3Options = [
     {
       title: 'Bus Operators',
-      content: operators.map((operator) => ({ id: operator._id, text: `${operator.name} (${operator.bus.name})` })), // Display operator and bus information
+      content: operators
+        .filter((operator) => operator.role === 'driver')
+        .map((operator) => ({ id: operator._id, text: `${operator.name} (${operator.email})` })),
     },
     {
       title: 'Admins',
-      content: admins.map((admin) => ({ id: admin._id, text: admin.name })), // Display admin names
+      content: admins
+        .filter((operator) => operator.role === 'admin')
+        .map((admin) => ({ id: admin._id, text: `${admin.name} (${admin.email})` })),
+    },
+    {
+      title: 'Riders',
+      content: riders
+        .filter((operator) => operator.role === 'rider')
+        .map((rider) => ({ id: rider._id, text: `${rider.name} (${rider.email})` })),
     },
   ];
 

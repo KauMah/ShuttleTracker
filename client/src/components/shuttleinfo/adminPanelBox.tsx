@@ -1,5 +1,5 @@
 import { $red, $white } from '../../assets/colors';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface AdminPanelBoxProps {
   options: { title: string; content: { id: string; text: string }[] }[];
@@ -15,6 +15,12 @@ const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options }) => {
       setSelectedOption(newSelectedOption);
     }
   };
+
+  useEffect(() => {
+    if (options.length > 0) {
+      setSelectedOption(options[0]);
+    }
+  }, [options]);
 
   const cardStyle = {
     backgroundColor: $white,
@@ -42,11 +48,12 @@ const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options }) => {
             ))}
           </select>
           <ol>
-            {selectedOption.content.map((item) => (
-              <li key={item.id} style={textStyle}>
-                {item.text}
-              </li>
-            ))}
+            {selectedOption.content.length > 0 &&
+              selectedOption.content.map((item) => (
+                <li key={item.id} style={textStyle}>
+                  {item.text}
+                </li>
+              ))}
           </ol>
         </div>
       </div>
