@@ -12,7 +12,7 @@ interface Account {
   lastName: string;
   password: string;
   passwordConfirm: string;
-  role: 'admin' | 'busOP' | 'rider';
+  role: 'admin' | 'driver' | 'rider';
 }
 
 const Values: Account = {
@@ -127,7 +127,7 @@ const RegisterForm = (): JSX.Element => {
             <label htmlFor="role">What are you?&nbsp;</label>
             <Field component="select" name="role" id="role" css={styles.userRole} style={{ textAlign: 'center' }}>
               <option value="admin">Admin</option>
-              <option value="busOP">Bus-operator</option>
+              <option value="driver">Bus-operator</option>
               <option value="rider">Student</option>
             </Field>
             <div style={{ textAlign: 'center', marginTop: '3vh' }}>
