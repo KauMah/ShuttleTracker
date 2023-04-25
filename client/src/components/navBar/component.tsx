@@ -1,4 +1,4 @@
-import { $black, $msured, $transparent, $white } from '../../assets/colors';
+import { $black, $burgerbtn, $flash, $msured, $transparent, $white } from '../../assets/colors';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
@@ -59,14 +59,14 @@ const styles = {
   }),
   links: css({
     color: $white,
-    fontSize: 20,
+    fontSize: '1.3rem',
     fontFamily: 'Helvetica',
     textDecoration: 'none',
-    fontWeight: '900',
-    padding: '30px 30px',
+    fontWeight: '500',
+    marginTop: '8px',
   }),
   linksCondensed: css({
-    color: $white,
+    color: $flash,
     fontSize: 20,
     fontFamily: 'Helvetica',
     textDecoration: 'none',
@@ -76,13 +76,13 @@ const styles = {
   buttonCondensed: css({
     height: '50px',
     width: '100vw',
-    backgroundColor: $transparent,
+    backgroundColor: $burgerbtn,
     marginLeft: '-10px',
     padding: '10px',
     textAlign: 'center',
     '&:hover': {
       transition: '0.5s',
-      background: $white,
+      background: $msured,
       opacity: 0.9,
       //creates a child that makes the text dark when hovering
       '& a': {
@@ -91,12 +91,13 @@ const styles = {
     },
   }),
   button: css({
-    height: '50px',
-    width: '120px',
-    backgroundColor: $transparent,
-    borderRadius: '20px',
+    height: '3rem',
+    width: '7rem',
+    backgroundColor: $burgerbtn,
+    borderRadius: '15px',
     marginRight: '15px',
-    padding: '10px 0px',
+    display: 'flex',
+    justifyContent: 'center',
     textAlign: 'center',
     '&:hover': {
       transition: '0.5s',
@@ -201,7 +202,7 @@ const MsuNav = () => {
                 </div>
               </div>
             ) : (
-              <div className="col-9 justify-content-end" css={styles.msuimg}>
+              <div className="col-12 justify-content-end" css={styles.msuimg}>
                 <div css={styles.button}>
                   <NavLink to="/home" css={styles.links}>
                     Home
