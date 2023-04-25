@@ -1,4 +1,4 @@
-import { $black, $flash, $lightGrey, $msured, $salmon } from '../../assets/colors';
+import { $black, $flash, $msured, $salmon } from '../../assets/colors';
 
 import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';

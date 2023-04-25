@@ -58,20 +58,26 @@ const LoginForm = (): JSX.Element => {
         api
           .post('/auth/login', values)
           .then((data) => {
-            setUser(_.get(data, 'data.user', ''));
-            localStorage.setItem('user', JSON.stringify(_.get(data, 'data.user', '')));
+            const role = _.get(data, 'data.user', '');
+            setUser(role);
+            localStorage.setItem('user', JSON.stringify(role));
             api.defaults.headers.common.Authorization = `Bearer ${_.get(data, 'data.user.access_token', '')}`;
-            navigate('/');
+            if (role?.role === 'admin') {
+              navigate('/shuttleInfo');
+            } else if (role?.role === 'driver') {
+              navigate('/account');
+            } else {
+              navigate('/home');
+            }
           })
           .catch((err) => {
             toast(_.get(err, 'response.data.error[0].message', 'Failed unexpectedly, check connection'), {
               type: 'error',
             });
+          })
+          .finally(() => {
+            setSubmitting(false);
           });
-
-        setTimeout(() => {
-          setSubmitting(false);
-        }, 400);
       }}
     >
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
