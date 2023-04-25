@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { $msured } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
+import EditRouteModal from './editRouteModal';
+import EditShuttleModal from './editShuttleModal';
 import MsuNav from '../navBar';
 import SendAlertButton from './sendAlertButton';
 import { api } from '../../utils/api';
 
-interface Stop {
+export interface Stop {
   _id: string;
   name: string;
   loc: {
@@ -15,13 +17,13 @@ interface Stop {
   };
 }
 
-interface Route {
+export interface Route {
   _id: string;
   name: string;
   stops: Stop[];
 }
 
-interface Bus {
+export interface Bus {
   _id: string;
   name?: string;
   capacity: number;
@@ -35,7 +37,7 @@ interface Bus {
   occupancy: number;
 }
 
-interface Operator {
+export interface Operator {
   _id: string;
   name: string;
   email: string;
@@ -43,7 +45,7 @@ interface Operator {
   createdAt: string;
 }
 
-interface Admin {
+export interface Admin {
   _id: string;
   name: string;
   email: string;
@@ -51,7 +53,7 @@ interface Admin {
   createdAt: string;
 }
 
-interface Rider {
+export interface Rider {
   _id: string;
   name: string;
   email: string;
@@ -68,11 +70,7 @@ const useFetchBuses = (routes: Route[]) => {
         const response = await api.get('/shuttle/');
         // console.log('Buses:', response.data);
         if (response.data && Array.isArray(response.data.data)) {
-          const updatedBuses = response.data.data.map((bus: any) => ({
-            ...bus,
-            route: routes.find((route) => route._id === bus.route) || null,
-          }));
-          setBuses(updatedBuses);
+          setBuses(response.data.data);
         }
       } catch (err) {
         console.log(err);
@@ -84,7 +82,7 @@ const useFetchBuses = (routes: Route[]) => {
     }
   }, [routes]);
 
-  return buses;
+  return { buses, setBuses };
 };
 
 const ShuttleInfo = () => {
@@ -94,8 +92,35 @@ const ShuttleInfo = () => {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [riders, setRiders] = useState<Rider[]>([]);
   const [, setRoutesFetched] = useState(false);
-  const buses = useFetchBuses(routes);
+  const { buses, setBuses } = useFetchBuses(routes);
+  const [showEditRouteModal, setShowEditRouteModal] = useState(false);
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
+  const [selectedBus, setSelectedBus] = useState<Bus | null>(null);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
+  const handleEditRoute = (route: Route) => {
+    setSelectedRoute(route);
+    setShowEditRouteModal(true);
+  };
+
+  const handleEditShuttle = (shuttle: Bus) => {
+    setSelectedBus(shuttle);
+    setShowEditModal(true);
+  };
+
+  // Bus refreshing
+  const refreshBuses = async () => {
+    try {
+      const response = await api.get('/shuttle/');
+      if (response.data && Array.isArray(response.data.data)) {
+        setBuses(response.data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Stop fetching
   const fetchStops = async () => {
     try {
       const response = await api.get('/stop/');
@@ -118,6 +143,10 @@ const ShuttleInfo = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleEditRouteSuccess = () => {
+    fetchRoutes();
   };
 
   // Operator fetching
@@ -185,6 +214,9 @@ const ShuttleInfo = () => {
                 <li key={stop._id}>{stop.name}</li>
               ))}
             </ol>
+            <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditRoute(route)}>
+              Edit
+            </button>
           </>
         ),
       })),
@@ -200,9 +232,16 @@ const ShuttleInfo = () => {
             const driverName = driver ? driver.name : 'unknown';
             return {
               id: bus._id,
-              text: bus.route
-                ? `Bus ID: ${bus._id} (Route: ${bus.route.name}, Driver: ${driverName})`
-                : `Bus: ${bus._id} (Driver: ${driverName})`,
+              text: (
+                <>
+                  {bus.route
+                    ? `Bus ID: ${bus._id} (Route: ${bus.route.name}, Driver: ${driverName})`
+                    : `Bus: ${bus._id} (Driver: ${driverName})`}
+                  <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
+                    Edit
+                  </button>
+                </>
+              ),
             };
           })
         : [],
@@ -262,6 +301,19 @@ const ShuttleInfo = () => {
           <AdminPanelBox options={box2Options} />
           <AdminPanelBox options={box3Options} />
         </div>
+        <EditRouteModal
+          show={showEditRouteModal}
+          route={selectedRoute}
+          onHide={() => setShowEditRouteModal(false)}
+          onEditSuccess={handleEditRouteSuccess}
+        />
+        <EditShuttleModal
+          show={showEditModal}
+          bus={selectedBus}
+          routes={routes}
+          onHide={() => setShowEditModal(false)}
+          onEditSuccess={refreshBuses}
+        />
       </div>
     </>
   );
