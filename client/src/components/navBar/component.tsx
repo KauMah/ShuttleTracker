@@ -1,5 +1,5 @@
 import { $black, $msured, $transparent, $white } from '../../assets/colors';
-import { NavLink, redirect, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
@@ -77,7 +77,6 @@ const styles = {
     height: '50px',
     width: '100vw',
     backgroundColor: $transparent,
-    // borderRadius: '10px',
     marginLeft: '-10px',
     padding: '10px',
     textAlign: 'center',
@@ -126,6 +125,17 @@ const MsuNav = () => {
   const handleNavbarToggle = () => {
     setExpanded(!expanded);
   };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setExpanded(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
     <Navbar
       className="fixed-top"
