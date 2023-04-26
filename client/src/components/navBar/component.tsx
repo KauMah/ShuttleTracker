@@ -92,7 +92,7 @@ const styles = {
   }),
   button: css({
     height: '3rem',
-    width: '7rem',
+    width: '6.8rem',
     backgroundColor: $burgerbtn,
     borderRadius: '15px',
     marginRight: '15px',
@@ -141,7 +141,7 @@ const MsuNav = () => {
     <Navbar
       className="fixed-top"
       collapseOnSelect
-      expand="lg"
+      expand="md"
       bg={$transparent}
       variant={$transparent}
       expanded={expanded}
@@ -211,16 +211,6 @@ const MsuNav = () => {
                 <div css={styles.button}>
                   <NavLink to="/home" css={styles.links}>
                     Home
-                  </NavLink>
-                </div>
-                <div css={styles.button}>
-                  <NavLink to="/create" css={styles.links}>
-                    Alert
-                  </NavLink>
-                </div>
-                <div css={styles.button}>
-                  <NavLink to="/shuttleInfo" css={styles.links}>
-                    Shuttle
                   </NavLink>
                 </div>
                 <div css={styles.button}>

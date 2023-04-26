@@ -2,6 +2,7 @@ import { $grey, $msured, $white } from '../../assets/colors';
 
 import AlertForm from './alertForm';
 import ClearForm from './clearForm';
+import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
 
 const styles = {
@@ -9,6 +10,9 @@ const styles = {
     height: '15vh',
     width: '20vw',
     backgroundColor: $msured,
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
     transform: 'skew(-9deg)',
     transition: 'color 0.25s',
     border: '1px solid white',
@@ -21,6 +25,9 @@ const styles = {
     },
     '@media (max-width: 765px)': {
       width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   }),
   titleBus: css({
@@ -28,8 +35,7 @@ const styles = {
     fontFamily: 'Helvetica',
     fontSize: 30,
     fontWeight: 700,
-    marginTop: '3vh',
-    textAlign: 'center',
+    textDecoration: 'none',
     transform: 'skew(5deg)',
     '&:hover': {
       color: $grey,
@@ -48,6 +54,15 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'end',
   }),
+  alerts: css({
+    fontSize: '3rem',
+    fontFamily: 'Helvetica',
+    marginTop: '3rem',
+    marginBottom: '6rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'end',
+  }),
 };
 
 const Create = () => {
@@ -55,15 +70,19 @@ const Create = () => {
     <>
       <div className="row fixed-top">
         <div className="col-12" css={styles.msuLogo}>
-          <h1 css={styles.titleBus}>MSU Shuttle Tracker</h1>
+          {/* <h1 css={styles.titleBus}>MSU Shuttle Tracker</h1> */}
+          <NavLink to="/shuttleInfo" css={styles.titleBus}>
+            MSU Shuttle Tracker
+          </NavLink>
         </div>
       </div>
-      <div css={styles.title}>Create Alert</div>
-      <div style={{ marginTop: '3rem' }}>
+      <div css={styles.title}>Alerts</div>
+      <div>
+        <div css={styles.alerts}>Create Alerts</div>
         <AlertForm />
       </div>
-      <div css={styles.title}>Clear Alert</div>
-      <div style={{ marginTop: '3rem' }}>
+      <div style={{ marginBottom: '7rem' }}>
+        <div css={styles.alerts}>Delete Alerts</div>
         <ClearForm />
       </div>
     </>

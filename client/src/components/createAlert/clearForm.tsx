@@ -14,7 +14,7 @@ const Values: Account = {
 
 const styles = {
   text: css({
-    fontSize: '1.5rem',
+    fontSize: '1.4rem',
     fontFamily: 'Helvetica',
     fontWeight: 500,
     position: 'absolute',
@@ -22,18 +22,6 @@ const styles = {
     '@media (max-width: 650px)': {
       fontSize: '1.3rem',
     },
-  }),
-  dropDown: css({
-    height: '2rem',
-    width: '50rem',
-    fontWeight: 700,
-    fontSize: '1.2rem',
-    borderRadius: '100px',
-    border: '1px solid #D1190D',
-    display: 'flex',
-    alignContent: 'center',
-    textAlignLast: 'center',
-    cursor: 'pointer',
   }),
   textBox: css({
     height: '3rem',

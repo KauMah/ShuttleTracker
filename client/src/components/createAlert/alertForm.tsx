@@ -24,7 +24,7 @@ const validation = Yup.object().shape({
 
 const styles = {
   text: css({
-    fontSize: '1.5rem',
+    fontSize: '1.4rem',
     fontFamily: 'Helvetica',
     fontWeight: 500,
     position: 'absolute',
