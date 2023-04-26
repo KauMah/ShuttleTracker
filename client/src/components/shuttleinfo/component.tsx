@@ -209,19 +209,27 @@ const ShuttleInfo = () => {
   async function loadData() {
     try {
       setLoading(true);
-      const [routesResponse, busesResponse] = await Promise.all([api.get('/route/'), api.get('/shuttle/')]);
 
+      const routesResponse = await api.get('/route/');
       if (routesResponse.status === 200 && routesResponse.data && Array.isArray(routesResponse.data.data)) {
         setRoutes(routesResponse.data.data);
       } else {
         setRoutes([]);
       }
 
+      const busesResponse = await api.get('/shuttle/');
       if (busesResponse.status === 200 && busesResponse.data && Array.isArray(busesResponse.data.data)) {
-        const fetchedBuses = busesResponse.data.data.map((bus: Bus) => {
-          const associatedRoute = routesResponse.data.data.find((r: Route) => r && r._id === bus.route?._id);
-          return { ...bus, route: associatedRoute || null };
-        });
+        const fetchedBuses = await Promise.all(
+          busesResponse.data.data.map(async (bus: Bus) => {
+            if (bus.route && bus.route._id) {
+              const routeResponse = await api.post('/route/', { id: bus.route._id });
+              if (routeResponse.status === 200 && routeResponse.data) {
+                return { ...bus, route: routeResponse.data };
+              }
+            }
+            return { ...bus, route: null };
+          })
+        );
         setBuses(fetchedBuses);
       } else {
         setBuses([]);
@@ -273,24 +281,25 @@ const ShuttleInfo = () => {
   const box2Options = [
     {
       title: 'Current Buses',
-      content: buses
-        ? buses.map((bus) => {
-            const driver = operators.find((operator) => operator?._id === bus.driver);
-            const driverName = driver ? driver.name : 'unknown';
-            const routeName = routes.find((route) => route?._id === bus.route?._id)?.name || 'Not found';
-            return {
-              id: bus._id,
-              text: (
-                <>
-                  {`Bus ID: ${bus._id} (Route: ${routeName}, Driver: ${driverName})`}
-                  <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
-                    Edit
-                  </button>
-                </>
-              ),
-            };
-          })
-        : [],
+      content:
+        buses && routes
+          ? buses.map((bus) => {
+              const driver = operators.find((operator) => operator?._id === bus.driver);
+              const driverName = driver ? driver.name : 'unknown';
+              const routeName = bus.route ? routes.find((route) => route._id === bus.route._id)?.name : 'Not found';
+              return {
+                id: bus._id,
+                text: (
+                  <>
+                    {`Bus ID: ${bus._id} (Route: ${routeName}, Driver: ${driverName})`}
+                    <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
+                      Edit
+                    </button>
+                  </>
+                ),
+              };
+            })
+          : [],
     },
     {
       title: 'Available Stops',
