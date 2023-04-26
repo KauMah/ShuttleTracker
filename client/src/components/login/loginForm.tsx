@@ -1,4 +1,4 @@
-import { $msured, $salmon, $white } from '../../assets/colors';
+import { $flash, $salmon, $white } from '../../assets/colors';
 import { useContext, useEffect } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
@@ -17,7 +17,7 @@ interface LoginValues {
 
 const styles = {
   submitButton: css({
-    backgroundColor: $msured,
+    backgroundColor: $salmon,
     height: '5vh 100%',
     width: '10vw 100%',
     fontSize: '22px',
@@ -27,7 +27,7 @@ const styles = {
     padding: 'auto',
     transition: 'background-color 0.25s',
     '&:hover': {
-      backgroundColor: $salmon,
+      backgroundColor: $flash,
     },
   }),
   error: {
