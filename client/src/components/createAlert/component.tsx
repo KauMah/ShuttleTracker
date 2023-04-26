@@ -57,10 +57,12 @@ const Create = () => {
           <h1 css={styles.titleBus}>MSU Shuttle Tracker</h1>
         </div>
       </div>
-      <div css={styles.title}>Alert</div>
+      <div css={styles.title}>Create Alert</div>
       <div style={{ marginTop: '3rem' }}>
         <AlertForm />
       </div>
+      <div css={styles.title}>Clear Alert</div>
+      <div style={{ marginTop: '3rem' }}>{/* <AlertForm /> */}</div>
     </>
   );
 };

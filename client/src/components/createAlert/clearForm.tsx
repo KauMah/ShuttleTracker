@@ -1,26 +1,16 @@
-import * as Yup from 'yup';
-
 import { $flash, $salmon } from '../../assets/colors';
 import { Field, Form, Formik } from 'formik';
 
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 
-interface Questions {
-  title: string;
-  message: string;
-  expiresAt: string;
+interface Account {
+  id: string;
 }
-const Values: Questions = {
-  title: '',
-  message: '',
-  expiresAt: '',
+
+const Values: Account = {
+  id: '',
 };
-const validation = Yup.object().shape({
-  title: Yup.string().required('Type is required'),
-  message: Yup.string().required('Description is required'),
-  expiresAt: Yup.string().required('Notification duration is required'),
-});
 
 const styles = {
   text: css({
@@ -78,20 +68,16 @@ const styles = {
     },
   }),
 };
-const AlertForm = (): JSX.Element => {
+const ClearForm = (): JSX.Element => {
   return (
     <div>
       <Formik
         initialValues={Values}
-        validationSchema={validation}
         onSubmit={(values, { setSubmitting }) => {
-          const { title, message, expiresAt } = values;
-          const date = new Date();
-          date.setMinutes(date.getMinutes() + parseInt(expiresAt));
-          const expiresAtISO = date.toISOString();
+          const { id } = values;
 
           api
-            .post('/alerts/new', { title, message, expiresAt: expiresAtISO })
+            .post('/alerts/clear', { id })
             .then((data) => {
               console.log(data);
             })
@@ -149,4 +135,4 @@ const AlertForm = (): JSX.Element => {
   );
 };
 
-export default AlertForm;
+export default ClearForm;
