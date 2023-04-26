@@ -1,20 +1,26 @@
+import * as Yup from 'yup';
+
 import { $flash, $salmon } from '../../assets/colors';
 import { Field, Form, Formik } from 'formik';
 
+import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 
 interface Questions {
-  alertType: 'weather' | 'brokenBus' | 'Other';
-  delay: '5' | '10' | '15' | '30+';
-  canceled: 'no' | 'yes';
-  addText: string;
+  title: string;
+  message: string;
+  expiresAt: string;
 }
 const Values: Questions = {
-  alertType: 'weather',
-  delay: '5',
-  canceled: 'no',
-  addText: '',
+  title: '',
+  message: '',
+  expiresAt: '',
 };
+const validation = Yup.object().shape({
+  expiresAt: Yup.string()
+    .matches(/^[1-9]+$/, 'Time cannot have letters')
+    .required('Delay is Required'),
+});
 
 const styles = {
   text: css({
@@ -63,58 +69,59 @@ const styles = {
     },
   }),
 };
-const AlertForm = () => {
-  const handleSubmit = (values: Questions) => {
-    console.log('Submitting form data:', values);
-    //connect api either here or in formiks
-    setTimeout(() => {
-      console.log('Form is done submitting');
-    }, 1000);
-  };
+const AlertForm = (): JSX.Element => {
   return (
     <div>
-      <Formik initialValues={Values} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={Values}
+        validationSchema={validation}
+        onSubmit={(values, { setSubmitting }) => {
+          const { title, message } = values;
+          const expiresAt = new Date();
+
+          api
+            .post('alerts/new', { title, message, expiresAt })
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+            .finally(() => {
+              setSubmitting(false);
+            });
+        }}
+      >
         {({ isSubmitting }) => (
           <Form>
-            <div style={{ position: 'relative' }} className="d-flex justify-content-center">
-              <label htmlFor="alertType" css={styles.text}>
-                What type of alert is it?
+            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
+              <label htmlFor="title" css={styles.text}>
+                Please add any other information(Max Length .200)
               </label>
-              <Field component="select" name="alertType" id="alertType" css={styles.dropDown}>
-                <option value="weather">Weather</option>
-                <option value="brokenBus">Broken Bus</option>
-                <option value="Other">Other</option>
-              </Field>
+              <Field type="text" name="title" id="title" placeholder="Title" css={styles.textBox} maxLength={100} />
             </div>
             <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="alertType" css={styles.text}>
-                Est. delay time?
-              </label>
-              <Field component="select" name="delay" id="delay" css={styles.dropDown}>
-                <option value="5">5 mins</option>
-                <option value="10">10 mins</option>
-                <option value="15">15 mins</option>
-                <option value="30+">30+ mins</option>
-              </Field>
-            </div>
-            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="alertType" css={styles.text}>
-                Will there be a delay?
-              </label>
-              <Field component="select" name="canceled" id="canceled" css={styles.dropDown}>
-                <option value="no">No</option>
-                <option value="yes">Yes</option>
-              </Field>
-            </div>
-            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="addText" css={styles.text}>
+              <label htmlFor="message" css={styles.text}>
                 Please add any other information(Max Length .200)
               </label>
               <Field
                 type="text"
-                name="addText"
-                id="addText"
-                placeholder="Add Text"
+                name="message"
+                id="message"
+                placeholder="Add a Message"
+                css={styles.textBox}
+                maxLength={100}
+              />
+            </div>
+            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
+              <label htmlFor="expiresAt" css={styles.text}>
+                Please add any other information(Max Length .200)
+              </label>
+              <Field
+                type="text"
+                name="expiresAt"
+                id="expiresAt"
+                placeholder="Time"
                 css={styles.textBox}
                 maxLength={100}
               />

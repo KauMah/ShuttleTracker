@@ -110,13 +110,6 @@ const Login = (): JSX.Element => {
               Click Here
             </NavLink>
           </p>
-          <p className="d-flex justify-content-center" style={{ marginTop: '-3vh' }}>
-            {/* &nbsp; makes it so that it skips a space */}
-            Test for create
-            <NavLink to="/create" css={styles.link}>
-              Create
-            </NavLink>
-          </p>
         </div>
         <div />
       </div>

@@ -1,5 +1,5 @@
-import { $black, $msured, $transparent, $white } from '../../assets/colors';
-import { NavLink, redirect, useNavigate } from 'react-router-dom';
+import { $black, $burgerbtn, $flash, $msured, $transparent, $white } from '../../assets/colors';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
@@ -172,6 +172,11 @@ const MsuNav = () => {
                     </NavLink>
                   </div>
                   <div css={styles.buttonCondensed}>
+                    <NavLink to="/create" css={styles.linksCondensed}>
+                      Alert
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
                     <NavLink to="/shuttleInfo" css={styles.linksCondensed}>
                       Shuttle
                     </NavLink>
@@ -206,6 +211,11 @@ const MsuNav = () => {
                 <div css={styles.button}>
                   <NavLink to="/home" css={styles.links}>
                     Home
+                  </NavLink>
+                </div>
+                <div css={styles.button}>
+                  <NavLink to="/create" css={styles.links}>
+                    Alert
                   </NavLink>
                 </div>
                 <div css={styles.button}>
