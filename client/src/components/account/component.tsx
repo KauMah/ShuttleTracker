@@ -1,4 +1,4 @@
-import { $black, $flash, $lightGrey, $msured, $salmon } from '../../assets/colors';
+import { $black, $flash, $msured, $salmon } from '../../assets/colors';
 
 import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';
@@ -26,7 +26,7 @@ const styles = {
     justifyContent: 'space-between',
   }),
   button: css({
-    background: $salmon,
+    background: $msured,
     color: $black,
     height: '7vh',
     width: '80vw',
