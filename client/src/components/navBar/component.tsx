@@ -172,16 +172,6 @@ const MsuNav = () => {
                     </NavLink>
                   </div>
                   <div css={styles.buttonCondensed}>
-                    <NavLink to="/create" css={styles.linksCondensed}>
-                      Alert
-                    </NavLink>
-                  </div>
-                  <div css={styles.buttonCondensed}>
-                    <NavLink to="/shuttleInfo" css={styles.linksCondensed}>
-                      Shuttle
-                    </NavLink>
-                  </div>
-                  <div css={styles.buttonCondensed}>
                     <NavLink to="/help" css={styles.linksCondensed}>
                       Help
                     </NavLink>

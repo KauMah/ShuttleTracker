@@ -1,5 +1,6 @@
 import { $msured, $white } from '../../assets/colors';
 
+import { NavLink } from 'react-router-dom';
 import React from 'react';
 
 interface SendAlertButtonProps {
@@ -30,9 +31,16 @@ const SendAlertButton: React.FC<SendAlertButtonProps> = ({ onClick }) => {
   };
 
   return (
-    <button className="btn" style={style} onClick={onClick} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-      Send Alert
-    </button>
+    <NavLink
+      to="/create"
+      className="btn"
+      style={style}
+      onClick={onClick}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
+      Create/Delete Alert
+    </NavLink>
   );
 };
 
