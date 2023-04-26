@@ -114,6 +114,8 @@ const ShuttleInfo = () => {
   };
 
   // Bus refreshing
+  // Maybe make this function request both /shuttle/ and /route/ to display the
+  // correct combination of information
   const refreshBuses = async () => {
     try {
       const response = await api.get('/shuttle/');
