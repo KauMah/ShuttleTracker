@@ -99,7 +99,7 @@ const Login = (): JSX.Element => {
           <p className="d-flex justify-content-center" style={{ marginTop: '2vh' }}>
             {/* &nbsp; makes it so that it skips a space */}
             Forgot Password?&nbsp;
-            <NavLink to="/forgotPass" css={styles.link}>
+            <NavLink to="/forgot" css={styles.link}>
               Click Here
             </NavLink>
           </p>

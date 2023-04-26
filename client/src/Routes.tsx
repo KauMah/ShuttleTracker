@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Account from './components/account';
 import { AuthContext } from './utils/AuthContext';
 import Create from './components/createAlert';
+import Forgot from './components/forgot';
 import HelpPg from './components/helpPg';
 import Home from './components/home';
 import Login from './components/login';
@@ -23,6 +24,7 @@ const LocalRoutes = () => {
         <Route path="/account" element={<Account />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/forgot" element={<Forgot />} />
       </Routes>
     </BrowserRouter>
   );
