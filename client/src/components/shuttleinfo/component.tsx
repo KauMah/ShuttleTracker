@@ -221,13 +221,13 @@ const ShuttleInfo = () => {
       if (busesResponse.status === 200 && busesResponse.data && Array.isArray(busesResponse.data.data)) {
         const fetchedBuses = await Promise.all(
           busesResponse.data.data.map(async (bus: Bus) => {
-            if (bus.route && bus.route._id) {
-              const routeResponse = await api.post('/route/', { id: bus.route._id });
-              if (routeResponse.status === 200 && routeResponse.data) {
-                return { ...bus, route: routeResponse.data };
+            if (bus && bus.route) {
+              const routeResponse = await api.post('/route/', { id: bus.route });
+              if (routeResponse.status === 200 && routeResponse.data && routeResponse.data.data) {
+                return { ...bus, route: routeResponse.data.data };
               }
             }
-            return { ...bus, route: null };
+            return { ...bus, route: null }; // Set route to null if not found
           })
         );
         setBuses(fetchedBuses);
@@ -286,7 +286,7 @@ const ShuttleInfo = () => {
           ? buses.map((bus) => {
               const driver = operators.find((operator) => operator?._id === bus.driver);
               const driverName = driver ? driver.name : 'unknown';
-              const routeName = bus.route ? routes.find((route) => route._id === bus.route._id)?.name : 'Not found';
+              const routeName = bus.route ? routes.find((route) => route._id === bus.route._id)?.name : 'Not assigned';
               return {
                 id: bus._id,
                 text: (
