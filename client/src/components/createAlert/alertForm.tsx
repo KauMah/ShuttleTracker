@@ -76,11 +76,13 @@ const AlertForm = (): JSX.Element => {
         initialValues={Values}
         validationSchema={validation}
         onSubmit={(values, { setSubmitting }) => {
-          const { title, message } = values;
-          const expiresAt = new Date();
+          const { title, message, expiresAt } = values;
+          const date = new Date();
+          date.setMinutes(date.getMinutes() + parseInt(expiresAt));
+          const expiresAtISO = date.toISOString();
 
           api
-            .post('alerts/new', { title, message, expiresAt })
+            .post('/alerts/new', { title, message, expiresAt: expiresAtISO })
             .then((data) => {
               console.log(data);
             })
