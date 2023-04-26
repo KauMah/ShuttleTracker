@@ -61,29 +61,32 @@ export interface Rider {
   createdAt: string;
 }
 
-const useFetchBuses = (routes: Route[]) => {
-  const [buses, setBuses] = useState<Bus[] | null>(null);
+// const useFetchBuses = (routes: Route[]) => {
+//   const [buses, setBuses] = useState<Bus[] | null>(null);
 
-  useEffect(() => {
-    const fetchBuses = async () => {
-      try {
-        const response = await api.get('/shuttle/');
-        // console.log('Buses:', response.data);
-        if (response.data && Array.isArray(response.data.data)) {
-          setBuses(response.data.data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
+//   useEffect(() => {
+//     const fetchBuses = async () => {
+//       try {
+//         const response = await api.get('/shuttle/');
+//         if (response.data && Array.isArray(response.data.data)) {
+//           const fetchedBuses = response.data.data.map((bus: Bus) => {
+//             const associatedRoute = routes.find((r: Route) => r?._id === bus.route?._id) || null;
+//             return { ...bus, route: associatedRoute };
+//           });
+//           setBuses(fetchedBuses);
+//         }
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     };
 
-    if (routes.length > 0) {
-      fetchBuses();
-    }
-  }, [routes]);
+//     if (routes.length > 0) {
+//       fetchBuses();
+//     }
+//   }, [routes]);
 
-  return { buses, setBuses };
-};
+//   return { buses, setBuses };
+// };
 
 const ShuttleInfo = () => {
   const [stops, setStops] = useState<Stop[]>([]);
@@ -92,11 +95,13 @@ const ShuttleInfo = () => {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [riders, setRiders] = useState<Rider[]>([]);
   const [, setRoutesFetched] = useState(false);
-  const { buses, setBuses } = useFetchBuses(routes);
+  // const { buses, setBuses } = useFetchBuses(routes);
+  const [buses, setBuses] = useState<Bus[] | null>(null);
   const [showEditRouteModal, setShowEditRouteModal] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
   const [selectedBus, setSelectedBus] = useState<Bus | null>(null);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [, setLoading] = useState<boolean>(false);
 
   const handleEditRoute = (route: Route) => {
     setSelectedRoute(route);
@@ -104,7 +109,7 @@ const ShuttleInfo = () => {
   };
 
   const handleEditShuttle = (shuttle: Bus) => {
-    setSelectedBus(shuttle);
+    setSelectedBus(JSON.parse(JSON.stringify(shuttle)));
     setShowEditModal(true);
   };
 
@@ -113,7 +118,11 @@ const ShuttleInfo = () => {
     try {
       const response = await api.get('/shuttle/');
       if (response.data && Array.isArray(response.data.data)) {
-        setBuses(response.data.data);
+        const fetchedBuses = response.data.data.map((bus: Bus) => {
+          const associatedRoute = routes.find((r: Route) => r?._id === bus.route?._id);
+          return { ...bus, route: associatedRoute };
+        });
+        setBuses(fetchedBuses);
       }
     } catch (err) {
       console.log(err);
@@ -147,6 +156,13 @@ const ShuttleInfo = () => {
 
   const handleEditRouteSuccess = () => {
     fetchRoutes();
+  };
+
+  const handleEditShuttleSuccess = (updatedBus: Bus) => {
+    if (buses) {
+      const updatedBuses = buses.map((bus) => (bus._id === updatedBus._id ? updatedBus : bus));
+      setBuses(updatedBuses);
+    }
   };
 
   // Operator fetching
@@ -188,12 +204,41 @@ const ShuttleInfo = () => {
     }
   };
 
+  async function loadData() {
+    try {
+      setLoading(true);
+      const [routesResponse, busesResponse] = await Promise.all([api.get('/route/'), api.get('/shuttle/')]);
+
+      if (routesResponse.status === 200 && routesResponse.data && Array.isArray(routesResponse.data.data)) {
+        setRoutes(routesResponse.data.data);
+      } else {
+        setRoutes([]);
+      }
+
+      if (busesResponse.status === 200 && busesResponse.data && Array.isArray(busesResponse.data.data)) {
+        const fetchedBuses = busesResponse.data.data.map((bus: Bus) => {
+          const associatedRoute = routesResponse.data.data.find((r: Route) => r && r._id === bus.route?._id);
+          return { ...bus, route: associatedRoute || null };
+        });
+        setBuses(fetchedBuses);
+      } else {
+        setBuses([]);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
+    loadData();
+    refreshBuses();
     fetchStops();
-    fetchRoutes();
     fetchOperators();
     fetchAdmins();
     fetchRiders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSendAlert = () => {
@@ -228,15 +273,14 @@ const ShuttleInfo = () => {
       title: 'Current Buses',
       content: buses
         ? buses.map((bus) => {
-            const driver = operators.find((operator) => operator._id === bus.driver);
+            const driver = operators.find((operator) => operator?._id === bus.driver);
             const driverName = driver ? driver.name : 'unknown';
+            const routeName = routes.find((route) => route?._id === bus.route?._id)?.name || 'Not found';
             return {
               id: bus._id,
               text: (
                 <>
-                  {bus.route
-                    ? `Bus ID: ${bus._id} (Route: ${bus.route.name}, Driver: ${driverName})`
-                    : `Bus: ${bus._id} (Driver: ${driverName})`}
+                  {`Bus ID: ${bus._id} (Route: ${routeName}, Driver: ${driverName})`}
                   <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
                     Edit
                   </button>
@@ -312,7 +356,7 @@ const ShuttleInfo = () => {
           bus={selectedBus}
           routes={routes}
           onHide={() => setShowEditModal(false)}
-          onEditSuccess={refreshBuses}
+          onEditSuccess={handleEditShuttleSuccess}
         />
       </div>
     </>

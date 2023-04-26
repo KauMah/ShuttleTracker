@@ -1,5 +1,4 @@
 import { Bus, Route } from './component';
-// editShuttleModal.tsx
 import { Button, Form, Modal } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 
@@ -10,16 +9,16 @@ interface EditShuttleModalProps {
   bus: Bus | null;
   routes: Route[];
   onHide: () => void;
-  onEditSuccess: () => void;
+  onEditSuccess: (updatedBus: Bus) => void;
 }
 
 const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, onHide, onEditSuccess }) => {
-  const [capacity, setCapacity] = useState(bus ? bus.capacity : '');
+  const [capacity, setCapacity] = useState<string>(bus ? bus.capacity.toString() : '');
   const [routeId, setRouteId] = useState(bus && bus.route ? bus.route._id : '');
 
   useEffect(() => {
     if (bus) {
-      setCapacity(bus.capacity);
+      setCapacity(bus.capacity.toString());
       setRouteId(bus.route ? bus.route._id : '');
     }
   }, [bus]);
@@ -30,13 +29,20 @@ const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, 
       try {
         const response = await api.post('/shuttle/edit', {
           id: bus._id,
-          Bus: {
-            capacity,
+          shuttle: {
+            capacity: parseInt(capacity, 10),
             route: routeId,
+            driver: bus.driver,
+            active: bus.active,
+            loc: bus.loc,
           },
         });
         if (response.status === 200) {
-          onEditSuccess();
+          onEditSuccess({
+            ...bus,
+            capacity: parseInt(capacity, 10),
+            route: routes.find((r: Route) => r._id === routeId)!,
+          });
           onHide();
         }
       } catch (err) {
@@ -48,7 +54,7 @@ const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newCapacity = parseInt(e.target.value, 10);
     if (newCapacity >= 0) {
-      setCapacity(newCapacity);
+      setCapacity(e.target.value);
     }
   };
 
