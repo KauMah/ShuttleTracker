@@ -5,5 +5,6 @@ export const $black = '#000';
 export const $grey = '#888';
 export const $lightGrey = '#d9d9d9';
 export const $transparent = 'rgba(255,255,255,0.1)';
+export const $burgerbtn = 'rgba(80,75,75,0.5)';
 export const $salmon = '#FF6262';
 export const $flash = '#FFE2E6';
