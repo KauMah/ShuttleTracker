@@ -1,6 +1,7 @@
 import { $grey, $msured, $white } from '../../assets/colors';
 
 import AlertForm from './alertForm';
+import ClearForm from './clearForm';
 import { css } from '@emotion/react';
 
 const styles = {
@@ -8,7 +9,7 @@ const styles = {
     height: '15vh',
     width: '20vw',
     backgroundColor: $msured,
-    transform: 'skew(-10deg)',
+    transform: 'skew(-9deg)',
     transition: 'color 0.25s',
     border: '1px solid white',
     boxShadow: '5px 5px 5px grey',
@@ -62,7 +63,9 @@ const Create = () => {
         <AlertForm />
       </div>
       <div css={styles.title}>Clear Alert</div>
-      <div style={{ marginTop: '3rem' }}>{/* <AlertForm /> */}</div>
+      <div style={{ marginTop: '3rem' }}>
+        <ClearForm />
+      </div>
     </>
   );
 };

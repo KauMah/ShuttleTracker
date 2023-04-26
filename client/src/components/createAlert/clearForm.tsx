@@ -44,15 +44,6 @@ const styles = {
     border: '1px solid #D1190D',
     textAlignLast: 'center',
   }),
-  textboxTime: css({
-    height: '3rem',
-    width: '10rem',
-    fontSize: '1.2rem',
-    padding: '0.5rem',
-    borderRadius: '0.3rem',
-    border: '1px solid #D1190D',
-    textAlignLast: 'center',
-  }),
   submitButton: css({
     backgroundColor: $salmon,
     height: '5vh 100%',
@@ -92,36 +83,10 @@ const ClearForm = (): JSX.Element => {
         {({ isSubmitting }) => (
           <Form>
             <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="title" css={styles.text}>
-                Alert Type(Max Length 100)
+              <label htmlFor="id" css={styles.text}>
+                Alert ID
               </label>
-              <Field type="text" name="title" id="title" placeholder="Title" css={styles.textBox} maxLength={100} />
-            </div>
-            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="message" css={styles.text}>
-                Alert Description(Max Length 200)
-              </label>
-              <Field
-                type="text"
-                name="message"
-                id="message"
-                placeholder="Description"
-                css={styles.textBox}
-                maxLength={200}
-              />
-            </div>
-            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="expiresAt" css={styles.text}>
-                Alert Duration
-              </label>
-              <Field
-                type="time"
-                name="expiresAt"
-                id="expiresAt"
-                placeholder="Time"
-                css={styles.textboxTime}
-                maxLength={100}
-              />
+              <Field type="text" name="id" id="id" placeholder="ID" css={styles.textBox} maxLength={100} />
             </div>
             <div style={{ textAlign: 'center', marginTop: '3vh' }}>
               <button type="submit" disabled={isSubmitting} css={styles.submitButton}>

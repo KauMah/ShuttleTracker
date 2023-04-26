@@ -88,6 +88,7 @@ const AlertForm = (): JSX.Element => {
           const { title, message, expiresAt } = values;
           const date = new Date();
           date.setMinutes(date.getMinutes() + parseInt(expiresAt));
+          date.setHours(date.getHours() + parseInt(expiresAt));
           const expiresAtISO = date.toISOString();
 
           api
