@@ -6,7 +6,6 @@ import msuReg from '../../assets/img/MsuReg.jpg';
 const styles = {
   welcome: css({
     color: $msured,
-    // width: '18%',
     marginLeft: '18%',
     fontWeight: 700,
     fontSize: '3rem',
