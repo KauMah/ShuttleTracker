@@ -5,39 +5,48 @@ import React, { useEffect, useState } from 'react';
 import GridLayout from 'react-grid-layout';
 import { api } from '../../utils/api';
 
-// interface RouterData {
-//   id: string;
-//   name: string;
-//   capacity: number;
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
+interface Route {
+  id: number;
+  name: string;
+  description: string;
+}
 
-const RouterInfo = () => {
-  const [route, setRoute] = useState({ stops: ' ' });
+function MyComponent() {
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [routesFetched, setRoutesFetched] = useState(false);
 
   useEffect(() => {
-    api
-      .get('/route')
-      .then((response) => {
-        setRoute(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching user data: ${error.message');
-      });
+    const fetchRoutes = async () => {
+      try {
+        const response = await api.get('/route/');
+        if (response.data.data) {
+          setRoutes(response.data.data);
+          setRoutesFetched(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchRoutes();
   }, []);
 
   return (
     <div>
-      <h1>All Routes</h1>
-      <ul>
-        {route.stops}
-        {/* {route.map((route) => (
-          // <li key={route.id}>{route.name}</li>
-        ))} */}
-      </ul>
+      {routesFetched ? (
+        routes.map((route) => (
+          <div key={route.id}>
+            <p>Route ID: {route.id}</p>
+            <p>Route Name: {route.name}</p>
+            <p>Route Description: {route.description}</p>
+            {/* Add additional route information here */}
+          </div>
+        ))
+      ) : (
+        <div>Loading routes...</div>
+      )}
     </div>
   );
-};
+}
 
-export default RouterInfo;
+export default MyComponent;

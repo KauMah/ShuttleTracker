@@ -8,15 +8,31 @@ body,
   height: 100vh;
   width: 100vw;
 }
+.react-map-gl {
+  width: 70%;
+  height: 70%;
+  position: absolute;
+  /* margin-top: 10rem; */
+  margin-left: 13rem;
+  border: 5px solid black;
+  border-style: solid;
+  border-radius: 20px;
+}
 
-.map-container1 {
-  position: fixed;
-  top: 0;
-  left: -410px;
-  width: 58vw;
-  height: 100%;
-  border-radius: 10px;
+.message{
+  color: black;
+  padding: 10px;
+  /*display: block;*/
+  text-align: center;
+  font-size: 1.2rem;
+  z-index: 9999;
+  margin-top:150px;
+  left: 0;
+}
+.container{
+  padding-top: 50px;
+}
+canvas {
+  border-radius: 15px;
   overflow: hidden;
-  margin-top: 12px;
- 
 }

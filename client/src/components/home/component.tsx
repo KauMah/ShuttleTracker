@@ -9,6 +9,7 @@ import Navbar from '../navBar';
 import { NavigationControl } from 'react-map-gl';
 import ReactMapGL from 'react-map-gl';
 import RouterInfo from './viewRoutesInfo';
+import StopInfo from './viewStopsInfo';
 import ShuttleInfo from './viewShuttleInfo';
 import ViewState from 'react-map-gl';
 import dotenv from 'dotenv';
@@ -22,9 +23,9 @@ const mapboxToken = envConfig.REACT_APP_MAPBOX_TOKEN;
 
 const Home = () => {
   const [viewState, setViewState] = useState({
-    latitude: 40.864872,
-    longitude: -74.1995669,
-    zoom: 14.7,
+    latitude: 40.8634,
+    longitude: -74.199567,
+    zoom: 14.5,
     bearing: 0,
     pitch: 0,
     padding: { top: 0, right: 0, bottom: 0, left: 0 },
@@ -33,20 +34,18 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div style={{ width: '100vw', height: '100vh' }}>
-        <div className="map-container1">
-          <ReactMapGL
-            {...viewState}
-            mapboxAccessToken={mapboxToken}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
-          ></ReactMapGL>
-        </div>
+      <div className="message">
+        <p>View Route Information | View Shuttle Information </p>
       </div>
-      <div style={{ flex: 1 }}>
-        <ShuttleInfo />
-      </div>
-      <div style={{ flex: 1 }}>
-        <RouterInfo />
+      {/* <div className="react-map-gl">
+        <ReactMapGL
+          {...viewState}
+          mapboxAccessToken={mapboxToken}
+          mapStyle="mapbox://styles/mapbox/streets-v11"
+        ></ReactMapGL>
+      </div> */}
+      <div>
+        <StopInfo />
       </div>
     </>
   );
