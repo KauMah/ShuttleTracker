@@ -4,6 +4,7 @@ import { $msured } from '../../assets/colors';
 import AdminPanelBox from './adminPanelBox';
 import EditRouteModal from './editRouteModal';
 import EditShuttleModal from './editShuttleModal';
+import EditStopModal from './editStopModal';
 import MsuNav from '../navBar';
 import SendAlertButton from './sendAlertButton';
 import { api } from '../../utils/api';
@@ -61,33 +62,6 @@ export interface Rider {
   createdAt: string;
 }
 
-// const useFetchBuses = (routes: Route[]) => {
-//   const [buses, setBuses] = useState<Bus[] | null>(null);
-
-//   useEffect(() => {
-//     const fetchBuses = async () => {
-//       try {
-//         const response = await api.get('/shuttle/');
-//         if (response.data && Array.isArray(response.data.data)) {
-//           const fetchedBuses = response.data.data.map((bus: Bus) => {
-//             const associatedRoute = routes.find((r: Route) => r?._id === bus.route?._id) || null;
-//             return { ...bus, route: associatedRoute };
-//           });
-//           setBuses(fetchedBuses);
-//         }
-//       } catch (err) {
-//         console.log(err);
-//       }
-//     };
-
-//     if (routes.length > 0) {
-//       fetchBuses();
-//     }
-//   }, [routes]);
-
-//   return { buses, setBuses };
-// };
-
 const ShuttleInfo = () => {
   const [stops, setStops] = useState<Stop[]>([]);
   const [routes, setRoutes] = useState<Route[]>([]);
@@ -95,13 +69,18 @@ const ShuttleInfo = () => {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [riders, setRiders] = useState<Rider[]>([]);
   const [, setRoutesFetched] = useState(false);
-  // const { buses, setBuses } = useFetchBuses(routes);
   const [buses, setBuses] = useState<Bus[] | null>(null);
   const [showEditRouteModal, setShowEditRouteModal] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
   const [selectedBus, setSelectedBus] = useState<Bus | null>(null);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [, setLoading] = useState<boolean>(false);
+  const [showEditStopModal, setShowEditStopModal] = useState(false);
+  const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
+
+  const reloadPage = () => {
+    window.location.reload();
+  };
 
   const handleEditRoute = (route: Route) => {
     setSelectedRoute(route);
@@ -114,8 +93,6 @@ const ShuttleInfo = () => {
   };
 
   // Bus refreshing
-  // Maybe make this function request both /shuttle/ and /route/ to display the
-  // correct combination of information
   const refreshBuses = async () => {
     try {
       const response = await api.get('/shuttle/');
@@ -140,6 +117,16 @@ const ShuttleInfo = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const updateStopList = (updatedStop: Stop) => {
+    setStops((prevStops) => prevStops.map((stop) => (stop._id === updatedStop._id ? updatedStop : stop)));
+    fetchStops(); // Add this line
+  };
+
+  const handleEditStop = (stop: Stop) => {
+    setSelectedStop(stop);
+    setShowEditStopModal(true);
   };
 
   // Route fetching
@@ -303,7 +290,17 @@ const ShuttleInfo = () => {
     },
     {
       title: 'Available Stops',
-      content: stops.map((stop) => ({ id: stop._id, text: stop.name })),
+      content: stops.map((stop) => ({
+        id: stop._id,
+        text: (
+          <>
+            {stop.name}
+            <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditStop(stop)}>
+              Edit
+            </button>
+          </>
+        ),
+      })),
     },
   ];
 
@@ -360,14 +357,32 @@ const ShuttleInfo = () => {
           show={showEditRouteModal}
           route={selectedRoute}
           onHide={() => setShowEditRouteModal(false)}
-          onEditSuccess={handleEditRouteSuccess}
+          onEditSuccess={() => {
+            handleEditRouteSuccess();
+            fetchRoutes();
+          }}
         />
         <EditShuttleModal
           show={showEditModal}
           bus={selectedBus}
           routes={routes}
           onHide={() => setShowEditModal(false)}
-          onEditSuccess={handleEditShuttleSuccess}
+          onEditSuccess={(updatedBus: Bus) => {
+            handleEditShuttleSuccess(updatedBus);
+            refreshBuses();
+          }}
+        />
+        <EditStopModal
+          key={selectedStop?._id}
+          show={showEditStopModal}
+          stop={selectedStop}
+          onHide={() => setShowEditStopModal(false)}
+          onEditSuccess={(updatedStop: Stop) => {
+            updateStopList(updatedStop);
+            fetchStops();
+            setShowEditModal(false);
+          }}
+          reload={reloadPage} // Add this line
         />
       </div>
     </>

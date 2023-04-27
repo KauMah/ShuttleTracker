@@ -1,7 +1,7 @@
 // components/EditStopModal.tsx
 
 import { Button, Form, Modal } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'; // Import useEffect
 
 import { Stop } from './component';
 import { api } from '../../utils/api';
@@ -10,10 +10,11 @@ interface EditStopModalProps {
   show: boolean;
   stop: Stop | null;
   onHide: () => void;
-  onEditSuccess: () => void;
+  onEditSuccess: (updatedStop: Stop) => void;
+  reload: () => void; // Add this line
 }
 
-const EditStopModal: React.FC<EditStopModalProps> = ({ show, stop, onHide, onEditSuccess }) => {
+const EditStopModal: React.FC<EditStopModalProps> = ({ show, stop, onHide, onEditSuccess, reload }) => {
   const [name, setName] = useState(stop ? stop.name : '');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,8 +29,12 @@ const EditStopModal: React.FC<EditStopModalProps> = ({ show, stop, onHide, onEdi
           },
         });
         if (response.status === 200) {
-          onEditSuccess();
-          onHide();
+          const updatedStop = {
+            ...stop,
+            name,
+          };
+          onEditSuccess(updatedStop);
+          reload(); // Add this line
         }
       } catch (err) {
         console.error(err);
@@ -40,6 +45,13 @@ const EditStopModal: React.FC<EditStopModalProps> = ({ show, stop, onHide, onEdi
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+
+  useEffect(() => {
+    setName(stop ? stop.name : '');
+    if (!show) {
+      onHide(); // Add this line here
+    }
+  }, [stop, show, onHide]);
 
   return (
     <Modal show={show} onHide={onHide}>
