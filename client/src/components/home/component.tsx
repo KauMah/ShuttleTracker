@@ -16,6 +16,7 @@ import dotenv from 'dotenv';
 import envConfig from '../../../env-config.json';
 import mapboxgl from 'mapbox-gl';
 import { viewport } from '@popperjs/core';
+import ViewRoutes from './viewRoutesInfo';
 
 const mapboxToken = envConfig.REACT_APP_MAPBOX_TOKEN;
 
@@ -46,6 +47,9 @@ const Home = () => {
       </div> */}
       <div>
         <StopInfo />
+      </div>
+      <div>
+        <ViewRoutes />
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { $lightGrey, $msured, $salmon } from '../../assets/colors';
+import { $flash, $lightGrey, $salmon } from '../../assets/colors';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import { api } from '../../utils/api';
@@ -12,7 +12,7 @@ interface Account {
   lastName: string;
   password: string;
   passwordConfirm: string;
-  role: 'admin' | 'busOP' | 'rider';
+  role: 'admin' | 'driver' | 'rider';
 }
 
 const Values: Account = {
@@ -40,13 +40,17 @@ const validation = Yup.object().shape({
 
 const styles = {
   submitButton: css({
-    backgroundColor: $msured,
-    height: '5vh',
-    width: '10vh',
-    fontWeight: 500,
+    backgroundColor: $salmon,
+    height: '5vh 100%',
+    width: '10vw 100%',
+    fontSize: '22px',
+    fontWeight: 700,
+    borderRadius: '13px',
+    marginTop: '3vh',
+    padding: 'auto',
     transition: 'background-color 0.25s',
     '&:hover': {
-      backgroundColor: $salmon,
+      backgroundColor: $flash,
     },
   }),
   input: css({
@@ -127,7 +131,7 @@ const RegisterForm = (): JSX.Element => {
             <label htmlFor="role">What are you?&nbsp;</label>
             <Field component="select" name="role" id="role" css={styles.userRole} style={{ textAlign: 'center' }}>
               <option value="admin">Admin</option>
-              <option value="busOP">Bus-operator</option>
+              <option value="driver">Bus-operator</option>
               <option value="rider">Student</option>
             </Field>
             <div style={{ textAlign: 'center', marginTop: '3vh' }}>

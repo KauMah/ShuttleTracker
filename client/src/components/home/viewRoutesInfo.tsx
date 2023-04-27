@@ -11,7 +11,7 @@ interface Route {
   description: string;
 }
 
-function MyComponent() {
+function ViewRoutes() {
   const [routes, setRoutes] = useState<Route[]>([]);
   const [routesFetched, setRoutesFetched] = useState(false);
 
@@ -49,4 +49,4 @@ function MyComponent() {
   );
 }
 
-export default MyComponent;
+export default ViewRoutes;
