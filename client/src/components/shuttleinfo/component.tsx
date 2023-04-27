@@ -151,6 +151,7 @@ const ShuttleInfo = () => {
     if (buses) {
       const updatedBuses = buses.map((bus) => (bus._id === updatedBus._id ? updatedBus : bus));
       setBuses(updatedBuses);
+      reloadPage();
     }
   };
 
@@ -373,7 +374,7 @@ const ShuttleInfo = () => {
           }}
         />
         <EditStopModal
-          key={selectedStop?._id}
+          key={`edit-stop-modal-${selectedStop?._id}`} // Change this line
           show={showEditStopModal}
           stop={selectedStop}
           onHide={() => setShowEditStopModal(false)}
@@ -382,7 +383,7 @@ const ShuttleInfo = () => {
             fetchStops();
             setShowEditModal(false);
           }}
-          reload={reloadPage} // Add this line
+          reload={reloadPage}
         />
       </div>
     </>

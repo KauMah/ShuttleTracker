@@ -28,7 +28,7 @@ const EditStopModal: React.FC<EditStopModalProps> = ({ show, stop, onHide, onEdi
             loc: stop.loc,
           },
         });
-        if (response.status === 200) {
+        if (response.status === 201) {
           const updatedStop = {
             ...stop,
             name,
