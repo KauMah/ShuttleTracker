@@ -62,3 +62,8 @@ export const signToken = async (user: DocumentType<User>) => {
 
   return { access_token };
 };
+
+// Change user name by email
+export const changeName = async (email: string, name: string) => {
+  return await userModel.findOneAndUpdate({ email }, { $set: { name } }, { new: true });
+};
