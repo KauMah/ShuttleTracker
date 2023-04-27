@@ -6,10 +6,13 @@ import msuReg from '../../assets/img/MsuReg.jpg';
 const styles = {
   welcome: css({
     color: $msured,
-    textShadow: '1.5px 1.5px black',
-    fontWeight: '700',
-    fontSize: '50px',
+    // width: '18%',
     marginLeft: '18%',
+    fontWeight: 700,
+    fontSize: '3rem',
+    '@media (max-width: 800px)': {
+      marginLeft: '0%',
+    },
   }),
   leftCol: css({
     height: '120vh',
@@ -34,9 +37,7 @@ const Register = () => {
     <div className="row">
       <div className="col-7" css={styles.leftCol} style={{ border: '2px solid black' }}></div>
       <div className="col-5" css={styles.rightCol}>
-        <div className="d-flex justify-content-center" css={styles.welcome}>
-          MSU Shuttle Registration
-        </div>
+        <div css={styles.welcome}>MSU Shuttle Registration</div>
         <RegisterForm />
       </div>
     </div>
