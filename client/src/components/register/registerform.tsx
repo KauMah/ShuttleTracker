@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 interface Account {
   firstName: string;
   lastName: string;
+  email: string;
   password: string;
   passwordConfirm: string;
   role: 'admin' | 'driver' | 'rider';
@@ -18,6 +19,7 @@ interface Account {
 const Values: Account = {
   firstName: '',
   lastName: '',
+  email: '',
   password: '',
   passwordConfirm: '',
   role: 'rider',
@@ -32,6 +34,9 @@ const validation = Yup.object().shape({
     .matches(/^[a-zA-Z]+$/, 'Last name can only have letters')
     .max(32, 'Last name must be shorter than 32 characters')
     .required('Last name is required'),
+  email: Yup.string()
+    .matches(/^[\w-.]+@montclair\.edu$/, 'Must be a MSU email')
+    .required('Valid MSU email required'),
   password: Yup.string().min(8, 'Password requires at least 8 characters').required('Password is required'),
   passwordConfirm: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
@@ -88,9 +93,9 @@ const RegisterForm = (): JSX.Element => {
         initialValues={Values}
         validationSchema={validation}
         onSubmit={(values, { setSubmitting }) => {
-          const { firstName, lastName, password, passwordConfirm, role } = values;
+          const { firstName, lastName, email, password, passwordConfirm, role } = values;
           const name = `${firstName} ${lastName}`;
-          const email = `${lastName}${firstName.charAt(0)}@montclair.edu`;
+          // const email = `${lastName}${firstName.charAt(0)}@montclair.edu`;
 
           api
             .post('/auth/register', { name, email, password, passwordConfirm, role })
@@ -120,6 +125,11 @@ const RegisterForm = (): JSX.Element => {
               <label htmlFor="lastName">Last Name</label>
               <Field type="text" name="lastName" id="lastName" placeholder="Last Name" />
               <ErrorMessage name="lastName" component="div" />
+            </div>
+            <div css={styles.input}>
+              <label htmlFor="email">Email</label>
+              <Field type="text" name="email" id="email" placeholder="Email" />
+              <ErrorMessage name="email" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="password">Password</label>
