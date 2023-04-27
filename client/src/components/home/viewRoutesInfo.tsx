@@ -6,7 +6,7 @@ import GridLayout from 'react-grid-layout';
 import { api } from '../../utils/api';
 
 interface Route {
-  id: number;
+  _id: number;
   name: string;
   description: string;
 }
@@ -35,11 +35,8 @@ function ViewRoutes() {
     <div>
       {routesFetched ? (
         routes.map((route) => (
-          <div key={route.id}>
-            <p>Route ID: {route.id}</p>
+          <div key={route._id}>
             <p>Route Name: {route.name}</p>
-            <p>Route Description: {route.description}</p>
-            {/* Add additional route information here */}
           </div>
         ))
       ) : (
