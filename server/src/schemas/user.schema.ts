@@ -1,4 +1,4 @@
-import { TypeOf, nativeEnum, object, optional, string, z } from 'zod';
+import { TypeOf, nativeEnum, object, optional, string } from 'zod';
 
 import { Role } from '../models/user.model';
 
@@ -26,5 +26,12 @@ export const loginUserSchema = object({
   }),
 });
 
+export const changeNameSchema = object({
+  body: object({
+    name: string({ required_error: 'Name is required' }),
+  }),
+});
+
 export type RegisterUserInput = TypeOf<typeof registerUserSchema>['body'];
 export type LoginUserInput = TypeOf<typeof loginUserSchema>['body'];
+export type ChangeNameInput = TypeOf<typeof changeNameSchema>['body'];
