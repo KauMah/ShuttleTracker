@@ -3,11 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { $black, $flash, $grey, $msured, $white } from '../../assets/colors';
 import React, { useState } from 'react';
 
-import { Function } from 'lodash';
+//import { Function } from 'lodash';
 //import FAQImg from '../../assets/img/FAQImg-4.jpg';
 import MsuNav from '../navBar';
 import { css } from '@emotion/react';
-import { string } from 'yup';
+
+//import { string } from 'yup';
 
 //import { transform } from 'lodash';
 
@@ -236,7 +237,7 @@ const QuestionAnswer = (props: QA) => {
 };
 
 const HelpPg = () => {
-  const [totalExpandedHeight, setTotalExpandedHeight] = useState(0);
+  //const [totalExpandedHeight, setTotalExpandedHeight] = useState(0);
   const [expandedHeight, setExpandedHeight] = useState(0);
   const updateExpandedHeight = (height: number) => {
     //const { height } = prop;
