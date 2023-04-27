@@ -1,12 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { $black, $flash, $grey, $lightGrey, $msured, $red, $salmon, $white } from '../../assets/colors';
+import { $black, $flash, $grey, $msured, $white } from '../../assets/colors';
 import React, { useState } from 'react';
 
-import FAQImg from '../../assets/img/FAQImg-4.jpg';
+import { Function } from 'lodash';
+//import FAQImg from '../../assets/img/FAQImg-4.jpg';
 import MsuNav from '../navBar';
 import { css } from '@emotion/react';
-import { transform } from 'lodash';
+import { string } from 'yup';
+
+//import { transform } from 'lodash';
 
 const styles = {
   container: {
@@ -21,15 +24,6 @@ const styles = {
       marginLeft: '30%',
     },
   }),
-  card: {
-    width: '100%',
-    marginBottom: '20px',
-    border: '1px solid rgba(0,0,0,0.4)',
-    padding: '6px',
-    margin: '10px',
-    marginLeft: '-2px',
-    borderRadius: '10px',
-  },
   questionLine: {
     borderBottom: '3px solid rgba(0,0,0,0.3)',
     marginTop: '20px',
@@ -61,17 +55,12 @@ const styles = {
   }),
   font: {
     fontFamily: 'Helvetica',
-    fontSize: '1.3em',
+    fontSize: '1.5em',
     //fontWeight: '100',
     marginTop: '.75rem',
     marginBottom: '1.25rem',
     padding: '7.5px',
     color: $msured,
-  },
-  questionFont: {
-    fontFamily: 'Helvetica',
-    fontSize: '1.3em',
-    color: $black,
   },
   personFont: {
     fontFamily: 'Helvetica',
@@ -80,28 +69,32 @@ const styles = {
   },
   execFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.2em',
+    fontSize: '1.3em',
     fontWeight: '600',
     color: $black,
   },
   contactHeadFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.6em',
+    fontSize: '1.7em',
     fontWeight: '600',
     color: $msured,
   },
   contactBodyFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.1em',
+    fontSize: '1.2em',
     fontWeight: '300',
     color: $black,
   },
-  faqHeadFont: {
+  faqHeadFont: css({
     fontFamily: 'Helvetica',
-    fontSize: '1.6em',
+    fontSize: '1.5em',
     fontWeight: '400',
     marginTop: '20rem',
-  },
+    marginBottom: '0rem',
+    '@media (max-width: 700px)': {
+      marginTop: '20rem',
+    },
+  }),
   contactHeader: {
     //display: 'flex',
     justifyContent: 'space-between',
@@ -172,9 +165,9 @@ const styles = {
     cursor: 'pointer',
     outline: 'none',
     textAlign: 'left',
-    //padding: '14px',
     fontFamily: 'Helvetica',
-    fontSize: '1.3em',
+    fontSize: '1.5em',
+    //fontWeight: 600,
     color: $black,
     transition: 'background-color 0.15s ease',
     ':hover': {
@@ -203,7 +196,15 @@ const scrollToBottom = () => {
   window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 };
 
-const QuestionAnswer = ({ question, answer, updateExpandedHeight }) => {
+interface QA {
+  question: string;
+  answer: string;
+  updateExpandedHeight: (height: number) => void;
+}
+
+const QuestionAnswer = (props: QA) => {
+  const { question, answer, updateExpandedHeight } = props;
+
   const [isAnswerVisible, setIsAnswerVisible] = useState(false);
 
   const toggleAnswer = () => {
@@ -237,7 +238,8 @@ const QuestionAnswer = ({ question, answer, updateExpandedHeight }) => {
 const HelpPg = () => {
   const [totalExpandedHeight, setTotalExpandedHeight] = useState(0);
   const [expandedHeight, setExpandedHeight] = useState(0);
-  const updateExpandedHeight = (height) => {
+  const updateExpandedHeight = (height: number) => {
+    //const { height } = prop;
     setExpandedHeight(expandedHeight + height);
   };
   return (
@@ -260,7 +262,7 @@ const HelpPg = () => {
               </div>
               <div>
                 <div>
-                  <p style={styles.faqHeadFont}>
+                  <p css={styles.faqHeadFont}>
                     <span>
                       Please find answers to common questions about shuttle operation below. If you cannot find the
                       answer to your question here, please refer to the Important Contacts
@@ -302,12 +304,6 @@ const HelpPg = () => {
                   updateExpandedHeight={updateExpandedHeight}
                 />
                 <QuestionAnswer
-                  question="Q. Can a student or faculty member bring a visitor?"
-                  answer="A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
-                  6:00AM-1:00AM on weekdays."
-                  updateExpandedHeight={updateExpandedHeight}
-                />
-                <QuestionAnswer
                   question="Q. What should I do if I left something on the shuttle?"
                   answer="A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours."
                   updateExpandedHeight={updateExpandedHeight}
@@ -317,20 +313,19 @@ const HelpPg = () => {
                   answer="A. Navigate to the shuttle info page, find your shuttle, and you will see the information there."
                   updateExpandedHeight={updateExpandedHeight}
                 />
-                <div style={styles.card}>
-                  <p style={styles.questionFont}>Q. Does the shuttle operate on weekends?</p>
-                  <p style={styles.font}>
-                    A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
-                    6:00AM-1:00AM on weekdays.
-                  </p>
-                </div>
+                <QuestionAnswer
+                  question="Q. Does the shuttle operate on weekends?"
+                  answer="A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
+                  6:00AM-1:00AM on weekdays."
+                  updateExpandedHeight={updateExpandedHeight}
+                />
               </div>
             </div>
             <div className="row">
               <div
                 className="col-12"
                 css={styles.colLeft}
-                style={{ marginTop: 250 + expandedHeight, transition: 'height 0.3s ease' }}
+                style={{ marginTop: 150 + expandedHeight, transition: 'height 0.3s ease' }}
               >
                 <div css={styles.header}>
                   <div style={styles.contactHeader}>
