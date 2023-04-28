@@ -95,13 +95,15 @@ const RegisterForm = (): JSX.Element => {
         onSubmit={(values, { setSubmitting }) => {
           const { firstName, lastName, email, password, passwordConfirm, role } = values;
           const name = `${firstName} ${lastName}`;
-          // const email = `${lastName}${firstName.charAt(0)}@montclair.edu`;
 
           api
             .post('/auth/register', { name, email, password, passwordConfirm, role })
             .then((data) => {
               console.log(data);
               alert(
+                // toast(_.get(err, 'response.data.error[0].message', 'Failed unexpectedly, check connection'), {
+                // type: 'error',
+                // });
                 `Your new email is: ${email}. Please save this information. You will now be redirected to the login page`
               );
               nav('/login');

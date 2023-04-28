@@ -64,7 +64,7 @@ const styles = {
   titleLogin: css({
     fontFamily: 'Helvetica',
     fontSize: '8vh',
-    fontWeight: 550,
+    fontWeight: 500,
     textAlign: 'center',
     marginTop: '-5vh',
     color: $msured,
@@ -79,10 +79,11 @@ const styles = {
   clickHere: css({
     fontFamily: 'Helvetica',
     fontSize: '15px',
-    fontWeight: 520,
+    fontWeight: 500,
   }),
 };
 const Login = (): JSX.Element => {
+  // const toastify = new Toastify({});
   return (
     <div>
       <div className="row">
