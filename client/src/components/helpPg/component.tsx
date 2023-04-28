@@ -21,7 +21,7 @@ const styles = {
     backgroundColor: $white,
     height: '50vh',
     //marginTop: '580px',
-    '@media (max-width: 700px)': {
+    '@media (maxWidth: 700px)': {
       marginLeft: '30%',
     },
   }),
@@ -47,12 +47,16 @@ const styles = {
   }),
   headerTitle: css({
     position: 'absolute',
-    top: '25%',
+    top: '30%',
     left: '51%',
     transform: 'translate(-50%, -50%)',
     color: $msured,
     fontFamily: 'Helvetica',
     fontSize: '5em',
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    // justifyContent: 'center',
   }),
   font: {
     fontFamily: 'Helvetica',
@@ -129,7 +133,7 @@ const styles = {
     padding: '20px',
     // backgroundColor: '#fff', useless
     // boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', useless
-    width: '40rem',
+    width: '20rem',
     height: '20rem',
     // display: 'flex',
     // flexDirection: 'column', useless
@@ -258,7 +262,7 @@ const HelpPg = () => {
                 {/* <div css={styles.imageContainer}>
                   <img src="src/assets/img/FAQImg-4.jpg" alt="Header" css={styles.image} />
                 </div> */}
-                <div css={styles.headerTitle}>
+                <div className="d-flex justify-content-center" css={styles.headerTitle}>
                   <p>Frequently Asked Questions</p>
                 </div>
               </div>
@@ -323,7 +327,7 @@ const HelpPg = () => {
                 />
               </div>
             </div>
-            <div className="row" style={{ marginTop: '10rem' }}>
+            <div className="row" style={{ marginTop: '25rem' }}>
               <div
                 className="col-12"
                 css={styles.colLeft}
