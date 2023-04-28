@@ -76,13 +76,13 @@ const styles = {
   },
   contactHeadFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.7em',
+    fontSize: '1.5em',
     fontWeight: '600',
     color: $msured,
   },
   contactBodyFont: {
     fontFamily: 'Helvetica',
-    fontSize: '1.2em',
+    fontSize: '1em',
     fontWeight: '300',
     color: $black,
   },
@@ -97,27 +97,28 @@ const styles = {
     },
   }),
   contactHeader: {
-    //display: 'flex',
-    justifyContent: 'space-between',
+    // display: 'flex', //useless
+    // justifyContent: 'space-between', //useless
     borderBottom: `1px solid ${$black}`,
-    marginBottom: '10px',
-    paddingBottom: '10px',
+    marginBottom: '.5rem',
+    // paddingBottom: '10px', useless
   },
-  contact: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '10px',
-    paddingBottom: '10px',
-    borderBottom: `1px solid ${$grey}`,
-  },
+  // contact: { useless isnt used
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   marginBottom: '10px',
+  //   paddingBottom: '10px',
+  //   borderBottom: `1px solid ${$grey}`,
+  // },
   contactRow: css({
     display: 'flex',
     justifyContent: 'space-evenly',
-    //flexWrap: 'wrap',
+    //flexWrap: 'wrap', useless
     width: '100%',
     marginTop: '20px',
   }),
   contactsContainer: css({
+    //useless what does this do?
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
@@ -126,23 +127,23 @@ const styles = {
     border: '1px solid rgba(0, 0, 0, 0.5)',
     borderRadius: '15px',
     padding: '20px',
-    backgroundColor: '#fff',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-    width: '450px',
-    height: 'auto',
-    //display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    // backgroundColor: '#fff', useless
+    // boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', useless
+    width: '40rem',
+    height: '20rem',
+    // display: 'flex',
+    // flexDirection: 'column', useless
+    // justifyContent: 'space-between', useless
   }),
   mainContainer: css({
-    padding: '0 10%', // adjust the percentage as needed for the desired column size
+    padding: '0 10%',
     backgroundColor: $white,
   }),
   button: css({
     backgroundColor: $white,
     border: 'none',
     color: $msured,
-    //padding: '8px 16px',
+    // padding: '8px 16px',
     textAlign: 'center',
     textDecoration: 'none',
     display: 'inline-block',
@@ -322,7 +323,7 @@ const HelpPg = () => {
                 />
               </div>
             </div>
-            <div className="row">
+            <div className="row" style={{ marginTop: '10rem' }}>
               <div
                 className="col-12"
                 css={styles.colLeft}
@@ -335,41 +336,42 @@ const HelpPg = () => {
                 </div>
                 <div className="container-fluid">
                   <div className="row">
-                    <div css={styles.contactsContainer}></div>
-                    <div css={styles.contactRow}>
-                      <div css={[styles.contactHeader, styles.contactCard]}>
-                        <p style={styles.contactHeadFont}>Shuttle Services</p>
-                        <div style={styles.contactBodyFont}>
-                          <p>Location: 145 Clove Rd.</p>
-                          <p>Phone: 973-655-3326</p>
-                          <p>Fax: 973-655-4494</p>
-                          <p>Email: shuttle@montlcair.edu</p>
+                    <div css={styles.contactsContainer}>
+                      <div css={styles.contactRow}>
+                        <div css={[styles.contactHeader, styles.contactCard]}>
+                          <p style={styles.contactHeadFont}>Shuttle Services</p>
+                          <div style={styles.contactBodyFont}>
+                            <p>Location: 145 Clove Rd.</p>
+                            <p>Phone: 973-655-3326</p>
+                            <p>Fax: 973-655-4494</p>
+                            <p>Email: shuttle@montlcair.edu</p>
+                          </div>
                         </div>
-                      </div>
-                      <div css={[styles.contactHeader, styles.contactCard]}>
-                        <p style={styles.contactHeadFont}>Executive Director, Facilities {/*Technology*/}</p>
-                        <p style={styles.execFont}>John Bonin</p>
-                        <div style={styles.contactBodyFont}>
-                          <p>Location: 150 Clove Road</p>
-                          <p>Phone: 973-655-7868</p>
-                          <p>E-mail: boninj@montclair.edu</p>
+                        <div css={[styles.contactHeader, styles.contactCard]}>
+                          <p style={styles.contactHeadFont}>Executive Director, Facilities {/*Technology*/}</p>
+                          <p style={styles.execFont}>John Bonin</p>
+                          <div style={styles.contactBodyFont}>
+                            <p>Location: 150 Clove Road</p>
+                            <p>Phone: 973-655-7868</p>
+                            <p>E-mail: boninj@montclair.edu</p>
+                          </div>
                         </div>
-                      </div>
-                      <div css={[styles.contactHeader, styles.contactCard]}>
-                        <p style={styles.contactHeadFont}>Supervisor, Shuttle Services</p>
-                        <p style={styles.execFont}>Cheryl Ofoha</p>
-                        <div style={styles.contactBodyFont}>
-                          <p>Location: 35 Clove Road</p>
-                          <p>Phone: 973-655-3326</p>
-                          <p>E-mail: lebertc@montclair.edu</p>
+                        <div css={[styles.contactHeader, styles.contactCard]}>
+                          <p style={styles.contactHeadFont}>Supervisor, Shuttle Services</p>
+                          <p style={styles.execFont}>Cheryl Ofoha</p>
+                          <div style={styles.contactBodyFont}>
+                            <p>Location: 35 Clove Road</p>
+                            <p>Phone: 973-655-3326</p>
+                            <p>E-mail: lebertc@montclair.edu</p>
+                          </div>
                         </div>
-                      </div>
-                      <div css={[styles.contactHeader, styles.contactCard]}>
-                        <p style={styles.contactHeadFont}>Coordinator, Commuter Life</p>
-                        <p style={styles.execFont}>Antonio Talamo</p>
-                        <div style={styles.contactBodyFont}>
-                          <p>Phone: 973-655-3377</p>
-                          <p>E-mail: talamoa@montclair.edu</p>
+                        <div css={[styles.contactHeader, styles.contactCard]}>
+                          <p style={styles.contactHeadFont}>Coordinator, Commuter Life</p>
+                          <p style={styles.execFont}>Antonio Talamo</p>
+                          <div style={styles.contactBodyFont}>
+                            <p>Phone: 973-655-3377</p>
+                            <p>E-mail: talamoa@montclair.edu</p>
+                          </div>
                         </div>
                       </div>
                     </div>
