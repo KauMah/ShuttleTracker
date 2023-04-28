@@ -1,8 +1,8 @@
-import { $black, $msured, $transparent, $white } from '../../assets/colors';
-import { useContext, useState } from 'react';
+import { $black, $burgerbtn, $flash, $msured, $transparent, $white } from '../../assets/colors';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
-import { NavLink } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
@@ -59,14 +59,14 @@ const styles = {
   }),
   links: css({
     color: $white,
-    fontSize: 20,
+    fontSize: '1.3rem',
     fontFamily: 'Helvetica',
     textDecoration: 'none',
-    fontWeight: '900',
-    padding: '30px 30px',
+    fontWeight: '500',
+    marginTop: '8px',
   }),
   linksCondensed: css({
-    color: $white,
+    color: $flash,
     fontSize: 20,
     fontFamily: 'Helvetica',
     textDecoration: 'none',
@@ -76,14 +76,13 @@ const styles = {
   buttonCondensed: css({
     height: '50px',
     width: '100vw',
-    backgroundColor: $transparent,
-    // borderRadius: '10px',
+    backgroundColor: $burgerbtn,
     marginLeft: '-10px',
     padding: '10px',
     textAlign: 'center',
     '&:hover': {
       transition: '0.5s',
-      background: $white,
+      background: $msured,
       opacity: 0.9,
       //creates a child that makes the text dark when hovering
       '& a': {
@@ -92,12 +91,13 @@ const styles = {
     },
   }),
   button: css({
-    height: '50px',
-    width: '120px',
-    backgroundColor: $transparent,
-    borderRadius: '20px',
+    height: '3rem',
+    width: '6.8rem',
+    backgroundColor: $burgerbtn,
+    borderRadius: '15px',
     marginRight: '15px',
-    padding: '10px 0px',
+    display: 'flex',
+    justifyContent: 'center',
     textAlign: 'center',
     '&:hover': {
       transition: '0.5s',
@@ -112,17 +112,36 @@ const styles = {
 };
 
 const MsuNav = () => {
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      console.log('hello there');
+      navigate('/login');
+    }
+  });
 
   const handleNavbarToggle = () => {
     setExpanded(!expanded);
   };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setExpanded(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
     <Navbar
       className="fixed-top"
       collapseOnSelect
-      expand="lg"
+      expand="md"
       bg={$transparent}
       variant={$transparent}
       expanded={expanded}
@@ -150,6 +169,11 @@ const MsuNav = () => {
                   <div css={styles.buttonCondensed}>
                     <NavLink to="/home" css={styles.linksCondensed}>
                       Home
+                    </NavLink>
+                  </div>
+                  <div css={styles.buttonCondensed}>
+                    <NavLink to="/create" css={styles.linksCondensed}>
+                      Alert
                     </NavLink>
                   </div>
                   <div css={styles.buttonCondensed}>
@@ -183,15 +207,10 @@ const MsuNav = () => {
                 </div>
               </div>
             ) : (
-              <div className="col-9 justify-content-end" css={styles.msuimg}>
+              <div className="col-12 justify-content-end" css={styles.msuimg}>
                 <div css={styles.button}>
                   <NavLink to="/home" css={styles.links}>
                     Home
-                  </NavLink>
-                </div>
-                <div css={styles.button}>
-                  <NavLink to="/shuttleInfo" css={styles.links}>
-                    Shuttle
                   </NavLink>
                 </div>
                 <div css={styles.button}>

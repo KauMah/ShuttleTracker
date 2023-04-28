@@ -25,6 +25,21 @@ export const findAllUsers = async () => {
   return await userModel.find();
 };
 
+// find all users
+export const findAllRiders = async () => {
+  return await userModel.find({ role: 'rider' });
+};
+
+// find all users
+export const findAllDrivers = async () => {
+  return await userModel.find({ role: 'driver' });
+};
+
+// find all users
+export const findAllAdmins = async () => {
+  return await userModel.find({ role: 'admin' });
+};
+
 // Find a user by field
 export const findUser = async (query: FilterQuery<User>, options: QueryOptions = {}) => {
   return await userModel.findOne(query, {}, options).select('+password');
@@ -46,4 +61,9 @@ export const signToken = async (user: DocumentType<User>) => {
   });
 
   return { access_token };
+};
+
+// Change user name by email
+export const changeName = async (email: string, name: string) => {
+  return await userModel.findOneAndUpdate({ email }, { $set: { name } }, { new: true });
 };

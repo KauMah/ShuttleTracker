@@ -1,5 +1,4 @@
-import { $msured, $salmon, $white } from '../../assets/colors';
-import { redirect, useNavigate } from 'react-router-dom';
+import { $flash, $salmon, $white } from '../../assets/colors';
 import { useContext, useEffect } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
@@ -9,6 +8,7 @@ import _ from 'lodash';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginValues {
   email?: string;
@@ -17,7 +17,7 @@ interface LoginValues {
 
 const styles = {
   submitButton: css({
-    backgroundColor: $msured,
+    backgroundColor: $salmon,
     height: '5vh 100%',
     width: '10vw 100%',
     fontSize: '22px',
@@ -27,7 +27,7 @@ const styles = {
     padding: 'auto',
     transition: 'background-color 0.25s',
     '&:hover': {
-      backgroundColor: $salmon,
+      backgroundColor: $flash,
     },
   }),
   error: {
@@ -58,20 +58,26 @@ const LoginForm = (): JSX.Element => {
         api
           .post('/auth/login', values)
           .then((data) => {
-            setUser(_.get(data, 'data.user', ''));
-            localStorage.setItem('user', JSON.stringify(_.get(data, 'data.user', '')));
+            const role = _.get(data, 'data.user', '');
+            setUser(role);
+            localStorage.setItem('user', JSON.stringify(role));
             api.defaults.headers.common.Authorization = `Bearer ${_.get(data, 'data.user.access_token', '')}`;
-            redirect('/');
+            if (role?.role === 'admin') {
+              navigate('/shuttleInfo');
+            } else if (role?.role === 'driver') {
+              navigate('/account');
+            } else {
+              navigate('/home');
+            }
           })
           .catch((err) => {
             toast(_.get(err, 'response.data.error[0].message', 'Failed unexpectedly, check connection'), {
               type: 'error',
             });
+          })
+          .finally(() => {
+            setSubmitting(false);
           });
-
-        setTimeout(() => {
-          setSubmitting(false);
-        }, 400);
       }}
     >
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (

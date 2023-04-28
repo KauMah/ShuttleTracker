@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import express, { NextFunction, Request, Response } from 'express';
 
 import { ErrorStatus } from './utils/types';
+import alertRouter from './routes/alert.route';
 import authRouter from './routes/auth.route';
 import connectDB from './utils/connectDB';
 import cookieParser from 'cookie-parser';
@@ -43,6 +44,7 @@ app.use('/auth', authRouter);
 app.use('/stop', stopRouter);
 app.use('/route', routeRouter);
 app.use('/shuttle', shuttleRouter);
+app.use('/alerts', alertRouter);
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const err = new Error(`Route ${req.originalUrl} not found`) as ErrorStatus;

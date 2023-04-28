@@ -1,11 +1,11 @@
-import { $black, $flash, $lightGrey, $msured, $salmon } from '../../assets/colors';
-import { NavLink, Navigate, redirect } from 'react-router-dom';
+import { $black, $flash, $msured, $salmon } from '../../assets/colors';
 
 import { AuthContext } from '../../utils/AuthContext';
 import MsuNav from '../navBar';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const styles = {
   title: css({
@@ -26,7 +26,7 @@ const styles = {
     justifyContent: 'space-between',
   }),
   button: css({
-    background: $salmon,
+    background: $msured,
     color: $black,
     height: '7vh',
     width: '80vw',
@@ -38,7 +38,6 @@ const styles = {
     marginTop: '.5rem',
     cursor: 'pointer',
     '&:hover': {
-      // background: '#fff',
       background: $flash,
       color: $salmon,
     },
@@ -46,12 +45,13 @@ const styles = {
 };
 const Account = () => {
   const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setUser(null);
     api.defaults.headers.common.Authorization = null;
     localStorage.removeItem('user');
-    redirect('/login');
+    navigate('/login');
   };
 
   const handleNoti = () => {

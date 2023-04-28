@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import Account from './components/account';
 import { AuthContext } from './utils/AuthContext';
+import Create from './components/createAlert';
 import HelpPg from './components/helpPg';
 import Home from './components/home';
 import Login from './components/login';
@@ -11,7 +12,6 @@ import { useContext } from 'react';
 
 const LocalRoutes = () => {
   const user = useContext(AuthContext);
-  console.log(user.user);
   return (
     <BrowserRouter>
       <Routes>
@@ -22,6 +22,7 @@ const LocalRoutes = () => {
         <Route path="/help" element={<HelpPg />} />
         <Route path="/account" element={<Account />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/create" element={<Create />} />
       </Routes>
     </BrowserRouter>
   );
