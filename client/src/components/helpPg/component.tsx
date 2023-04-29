@@ -295,28 +295,27 @@ const HelpPg = () => {
                 />
                 <QuestionAnswer
                   question="Q. Are there any restrictions on items or pets that can be brought onto the shuttle buses?"
-                  answer="A. Yes! On weekends however, the shuttle operates from 8:00AM-1:00AM as opposed to the usual
-                  6:00AM-1:00AM on weekdays."
+                  answer="A. Pets may not be allowed unless they are service animals, and certain items such as hazardous materials or large luggage may be prohibited.  Please check with the shuttle system's policies for specific details."
                   updateExpandedHeight={updateExpandedHeight}
                 />
                 <QuestionAnswer
                   question="Q. How accessible are the shuttle buses for individuals with disabilities?"
-                  answer="A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours."
+                  answer="A. The shuttle system should be fully accessible for individuals with disabilities.  This includes features such as wheelchair ramps, low floors, and priority seating."
                   updateExpandedHeight={updateExpandedHeight}
                 />
                 <QuestionAnswer
                   question="Q. Can non-students or non-faculty members use the shuttle system?"
-                  answer="A. Navigate to the shuttle info page, find your shuttle, and you will see the information there."
+                  answer="A. If you are a non-student or non-faculty member, you may be able to use the shuttle system."
                   updateExpandedHeight={updateExpandedHeight}
                 />
                 <QuestionAnswer
                   question="Q. What should I do if I left something on the shuttle?"
-                  answer="A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours."
+                  answer="A. If you left semething on the shuttle, you should contact the shuttle system's lost and found department."
                   updateExpandedHeight={updateExpandedHeight}
                 />
                 <QuestionAnswer
                   question="Q. How can I provide feedback or report an issue with the shuttle service?"
-                  answer="A. Navigate to the shuttle info page, find your shuttle, and you will see the information there."
+                  answer="A. Please look below at the Important Contacts and reach out to the shuttle email for smaller questions, and any of the Executives and Coordinators for more serious inquiries."
                   updateExpandedHeight={updateExpandedHeight}
                 />
                 <QuestionAnswer
