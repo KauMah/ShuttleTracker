@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { $msured } from '../../assets/colors';
+import AddBusModal from './addShuttleModal';
+import AddRouteModal from './addRouteModal';
+import AddStopModal from './addStopModal';
+import AddUserModal from './addUserModal';
 import AdminPanelBox from './adminPanelBox';
 import EditRouteModal from './editRouteModal';
 import EditShuttleModal from './editShuttleModal';
@@ -77,9 +81,23 @@ const ShuttleInfo = () => {
   const [, setLoading] = useState<boolean>(false);
   const [showEditStopModal, setShowEditStopModal] = useState(false);
   const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showAddStopModal, setShowAddStopModal] = useState(false);
+  const [, setShowAddRouteModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<Operator | null>(null);
 
   const reloadPage = () => {
     window.location.reload();
+  };
+
+  const handleAddRoute = () => {
+    setSelectedRoute(null); // Change this line
+    setShowAddRouteModal(true); // Change this line
+  };
+
+  const handleAddStop = () => {
+    setSelectedStop(null);
+    setShowAddStopModal(true);
   };
 
   const handleEditRoute = (route: Route) => {
@@ -320,6 +338,9 @@ const ShuttleInfo = () => {
         text: (
           <>
             {stop.name}
+            <button className="btn btn-sm btn-success ms-2" onClick={handleAddStop}>
+              Add
+            </button>
             <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditStop(stop)}>
               Edit
             </button>
@@ -337,19 +358,51 @@ const ShuttleInfo = () => {
       title: 'Bus Operators',
       content: operators
         .filter((operator) => operator.role === 'driver')
-        .map((operator) => ({ id: operator._id, text: `${operator.name} (${operator.email})` })),
+        .map((operator) => ({
+          id: operator._id,
+          text: (
+            <>
+              {`${operator.name} (${operator.email})`}
+              <button
+                className="btn btn-sm btn-success ms-2"
+                onClick={() => {
+                  setSelectedUser(operator);
+                  setShowAddUserModal(true);
+                }}
+              >
+                Add
+              </button>
+            </>
+          ),
+        })),
+    },
+    {
+      title: 'Riders',
+      content: riders
+        .filter((operator) => operator.role === 'rider')
+        .map((rider) => ({
+          id: rider._id,
+          text: (
+            <>
+              {`${rider.name} (${rider.email})`}
+              <button
+                className="btn btn-sm btn-success ms-2"
+                onClick={() => {
+                  setSelectedUser(rider);
+                  setShowAddUserModal(true);
+                }}
+              >
+                Add
+              </button>
+            </>
+          ),
+        })),
     },
     {
       title: 'Admins',
       content: admins
         .filter((operator) => operator.role === 'admin')
         .map((admin) => ({ id: admin._id, text: `${admin.name} (${admin.email})` })),
-    },
-    {
-      title: 'Riders',
-      content: riders
-        .filter((operator) => operator.role === 'rider')
-        .map((rider) => ({ id: rider._id, text: `${rider.name} (${rider.email})` })),
     },
   ];
 
@@ -409,6 +462,28 @@ const ShuttleInfo = () => {
             updateStopList(updatedStop);
             fetchStops();
             setShowEditModal(false);
+          }}
+          reload={reloadPage}
+        />
+        <AddUserModal
+          show={showAddUserModal}
+          user={selectedUser}
+          onHide={() => setShowAddUserModal(false)}
+          loadData={loadData}
+          onAddSuccess={() => {
+            fetchOperators();
+            fetchAdmins();
+            fetchRiders();
+          }}
+          reload={reloadPage}
+        />
+        <AddStopModal
+          show={showAddStopModal}
+          stop={selectedStop}
+          onHide={() => setShowAddStopModal(false)}
+          loadData={loadData}
+          onAddSuccess={() => {
+            fetchStops();
           }}
           reload={reloadPage}
         />

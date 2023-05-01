@@ -10,9 +10,10 @@ interface AdminPanelBoxProps {
     }[];
   }[];
   showSelect?: boolean;
+  children?: React.ReactNode;
 }
 
-const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options, showSelect = true }) => {
+const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options, showSelect = true, children }) => {
   const [selectedOption, setSelectedOption] = useState(options.length > 0 ? options[0] : { title: '', content: [] });
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -60,6 +61,7 @@ const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options, showSelect = tru
               {selectedOption.title}
             </h5>
           )}
+          {children}
           <ol>
             {selectedOption.content.length > 0 &&
               selectedOption.content.map((item) => (
