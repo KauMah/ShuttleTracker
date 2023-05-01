@@ -239,6 +239,21 @@ const ShuttleInfo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleDelete = async (endpoint: string, id: string) => {
+    try {
+      await api.post(endpoint, { id });
+      // Refresh data after deletion
+      loadData();
+      refreshBuses();
+      fetchStops();
+      fetchOperators();
+      fetchAdmins();
+      fetchRiders();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleSendAlert = () => {
     console.log('Alert sent');
     // We still need to implement our alert sending logic here !!
@@ -259,6 +274,9 @@ const ShuttleInfo = () => {
             </ol>
             <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditRoute(route)}>
               Edit
+            </button>
+            <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/route/delete', route._id)}>
+              Delete
             </button>
           </>
         ),
@@ -283,6 +301,12 @@ const ShuttleInfo = () => {
                     <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
                       Edit
                     </button>
+                    <button
+                      className="btn btn-sm btn-danger ms-2"
+                      onClick={() => handleDelete('/shuttle/delete', bus._id)}
+                    >
+                      Delete
+                    </button>
                   </>
                 ),
               };
@@ -298,6 +322,9 @@ const ShuttleInfo = () => {
             {stop.name}
             <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditStop(stop)}>
               Edit
+            </button>
+            <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/stop/delete', stop._id)}>
+              Delete
             </button>
           </>
         ),
