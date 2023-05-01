@@ -30,7 +30,6 @@ export interface Route {
 
 export interface Bus {
   _id: string;
-  name?: string;
   capacity: number;
   route: Route;
   active: boolean;
@@ -83,16 +82,22 @@ const ShuttleInfo = () => {
   const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showAddStopModal, setShowAddStopModal] = useState(false);
+  const [showAddBusModal, setShowAddBusModal] = useState(false);
   const [, setShowAddRouteModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<Operator | null>(null);
+  const [selectedUser] = useState<Operator | null>(null);
 
   const reloadPage = () => {
     window.location.reload();
   };
 
+  const handleAddBus = () => {
+    setSelectedBus(null);
+    setShowAddBusModal(true);
+  };
+
   const handleAddRoute = () => {
-    setSelectedRoute(null); // Change this line
-    setShowAddRouteModal(true); // Change this line
+    setSelectedRoute(null);
+    setShowAddRouteModal(true);
   };
 
   const handleAddStop = () => {
@@ -316,6 +321,9 @@ const ShuttleInfo = () => {
                 text: (
                   <>
                     {`Bus ID: ${bus._id} (Route: ${routeName}, Driver: ${driverName})`}
+                    <button className="btn btn-sm btn-success ms-2" onClick={handleAddBus}>
+                      Add
+                    </button>
                     <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
                       Edit
                     </button>
@@ -363,13 +371,7 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${operator.name} (${operator.email})`}
-              <button
-                className="btn btn-sm btn-success ms-2"
-                onClick={() => {
-                  setSelectedUser(operator);
-                  setShowAddUserModal(true);
-                }}
-              >
+              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddBus}>
                 Add
               </button>
             </>
@@ -385,13 +387,7 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${rider.name} (${rider.email})`}
-              <button
-                className="btn btn-sm btn-success ms-2"
-                onClick={() => {
-                  setSelectedUser(rider);
-                  setShowAddUserModal(true);
-                }}
-              >
+              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddBus}>
                 Add
               </button>
             </>
@@ -484,6 +480,16 @@ const ShuttleInfo = () => {
           loadData={loadData}
           onAddSuccess={() => {
             fetchStops();
+          }}
+          reload={reloadPage}
+        />
+        <AddBusModal
+          show={showAddBusModal}
+          bus={selectedBus}
+          onHide={() => setShowAddBusModal(false)}
+          loadData={loadData}
+          onAddSuccess={() => {
+            refreshBuses();
           }}
           reload={reloadPage}
         />

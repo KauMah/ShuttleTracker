@@ -1,20 +1,60 @@
+import { Bus, Operator, Route } from './component';
 import { Button, Form, Modal } from 'react-bootstrap';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 import { api } from '../../utils/api';
-// import { Shuttle } from './component'; <- Remove this line
 
 interface AddShuttleModalProps {
   show: boolean;
+  bus: Bus | null;
   onHide: () => void;
   loadData: () => void;
+  onAddSuccess: () => void;
+  reload: () => void;
 }
 
-const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadData }) => {
+const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadData, onAddSuccess, reload }) => {
   const [capacity, setCapacity] = useState<number | ''>('');
-  const [route, setRoute] = useState('');
-  const [driver, setDriver] = useState('');
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [operators, setOperators] = useState<Operator[]>([]);
   const [active, setActive] = useState(true);
+  const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
+  const [selectedOperator, setSelectedOperator] = useState<Operator | null>(null);
+
+  const fetchRoutes = async () => {
+    try {
+      const response = await api.get('/route/');
+      setRoutes(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchDrivers = async () => {
+    try {
+      const response = await api.get('/user/drivers');
+      setOperators(response.data.data.users);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchRoutes();
+    fetchDrivers();
+  }, []);
+
+  const handleRouteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const routeId = e.target.value;
+    const selected = routes.find((route) => route._id === routeId);
+    setSelectedRoute(selected || null);
+  };
+
+  const handleOperatorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const operatorId = e.target.value;
+    const selected = operators.find((operator) => operator._id === operatorId);
+    setSelectedOperator(selected || null);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -22,14 +62,17 @@ const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadDat
     try {
       await api.post('/shuttle/new', {
         capacity,
-        route,
-        driver,
+        route: selectedRoute?._id,
+        driver: selectedOperator?._id,
         active,
       });
       loadData();
+      onAddSuccess();
+      reload();
       onHide();
     } catch (err) {
       console.log(err);
+      console.log(capacity, selectedRoute?._id, selectedOperator?._id, active);
     }
   };
 
@@ -45,12 +88,26 @@ const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadDat
             <Form.Control type="number" value={capacity} onChange={(e) => setCapacity(parseInt(e.target.value))} />
           </Form.Group>
           <Form.Group controlId="route">
-            <Form.Label>Route ID</Form.Label>
-            <Form.Control type="text" value={route} onChange={(e) => setRoute(e.target.value)} />
+            <Form.Label>Route</Form.Label>
+            <Form.Select value={selectedRoute?._id || ''} onChange={(e) => handleRouteChange(e)}>
+              <option value="">Select a route</option>
+              {routes.map((routeItem) => (
+                <option key={routeItem._id} value={routeItem._id}>
+                  {routeItem.name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
           <Form.Group controlId="driver">
-            <Form.Label>Driver ID</Form.Label>
-            <Form.Control type="text" value={driver} onChange={(e) => setDriver(e.target.value)} />
+            <Form.Label>Operator</Form.Label>
+            <Form.Select value={selectedOperator?._id || ''} onChange={(e) => handleOperatorChange(e)}>
+              <option value="">Select an operator</option>
+              {operators.map((operatorItem) => (
+                <option key={operatorItem._id} value={operatorItem._id}>
+                  {operatorItem.name}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
           <Form.Group>
             <Form.Label>Active</Form.Label>
