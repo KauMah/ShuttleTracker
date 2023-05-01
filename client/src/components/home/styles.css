@@ -3,35 +3,148 @@ body,
 #root {
   height: 100%;
 }
-
 .map-container {
-  height: 100vh;
+  height: 95vh;
   width: 100vw;
+  display: flex;
+  align-items: center;
 }
+
 .react-map-gl {
   width: 70%;
   height: 70%;
-  position: absolute;
-  /* margin-top: 10rem; */
-  margin-left: 13rem;
+  margin: 0 auto;
   border: 5px solid black;
   border-style: solid;
   border-radius: 20px;
 }
 
-.message{
+.message {
   color: black;
-  padding: 10px;
-  /*display: block;*/
   text-align: center;
   font-size: 1.2rem;
   z-index: 9999;
-  margin-top:150px;
+  margin-top: 8rem;
   left: 0;
 }
-.container{
+.container {
   padding-top: 50px;
 }
+.container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.stops {
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  columns: 2;
+}
+
+.stop {
+  display: inline-block;
+  width: 45%;
+  margin-right: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 800px;
+  text-align: center;
+  padding-left: 150px;
+  text-align: center;
+  white-space: nowrap;
+  margin-bottom: 30px;
+}
+
+.stop-name {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.stop-lat,
+.stop-long {
+  font-size: 18px;
+  margin: 5px 0;
+}
+.route {
+  display: inline-block;
+  width: 45%;
+  margin-right: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 800px;
+  text-align: center;
+  padding-left: 150px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+.routes {
+  text-align: center;
+  padding-bottom: 40px;
+}
+.shuttles {
+  text-align: center;
+  padding-bottom: 40px;
+}
+.shuttle {
+  display: inline-block;
+  width: 45%;
+  margin-right: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 800px;
+  text-align: center;
+  padding-left: 150px;
+  text-align: center;
+  white-space: nowrap;
+  padding-bottom: 40px;
+}
+.view-map-btn {
+  background-color: #d1190d;
+  font-size: 1.2rem;
+  margin: 9rem auto 0;
+  display: block;
+  margin-bottom: 30px;
+  height: 5vh;
+  width: 23vh;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: background-color 0.25s;
+}
+.view-map-btn:hover {
+  background-color: #ff6262;
+}
+
+.msuRed {
+  color: #d1190d;
+}
+.salmon {
+  color: #ff6262;
+}
+.flash {
+  color: #ffe2e6;
+}
+.lightGrey {
+  color: #d9d9d9;
+}
+.red {
+  color: rgb(141, 34, 18);
+}
+.transparent {
+  color: rgba(255, 255, 255, 0.1);
+}
+.burgerBtn {
+  color: rgba(80, 75, 75, 0.5);
+}
+
 canvas {
   border-radius: 15px;
   overflow: hidden;

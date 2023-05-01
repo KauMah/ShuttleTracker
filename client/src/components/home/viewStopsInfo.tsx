@@ -36,17 +36,19 @@ const StopInfo = () => {
     getStops();
   }, []);
 
-  console.log(stops); // Log the stops state
+  console.log(stops);
 
   return (
     <div>
-      <h1>List of Stops:</h1>
+      <h1 className="stops">List of Stops:</h1>
       <ul>
-        {stops.map((stop) => (
-          <li key={stop._id}>
-            <h2>{stop.name}</h2>
-            <p>Latitude: {stop.loc.coordinates[1]}</p>
-            <p>Longitude: {stop.loc.coordinates[0]}</p>
+        {stops.map((stop, index) => (
+          <li key={stop._id} className="stop">
+            <h2 className="stop-name">
+              Stop {index + 1}: {stop.name}
+            </h2>
+            <p className="stop-lat">Latitude: {stop.loc.coordinates[1]}</p>
+            <p className="stop-long">Longitude: {stop.loc.coordinates[0]}</p>
           </li>
         ))}
       </ul>
