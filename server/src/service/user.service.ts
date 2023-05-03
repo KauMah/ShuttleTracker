@@ -63,7 +63,11 @@ export const signToken = async (user: DocumentType<User>) => {
   return { access_token };
 };
 
-// Change user name by email
-export const changeName = async (email: string, name: string) => {
-  return await userModel.findOneAndUpdate({ email }, { $set: { name } }, { new: true });
+export const editUser = async (email: string, user: Partial<DocumentType<User>>) => {
+  return await userModel.findOneAndUpdate({ email }, { $set: { ...user } }, { new: true });
+};
+
+// Delete User
+export const deleteUser = async (id: string) => {
+  return await userModel.findByIdAndRemove(id);
 };
