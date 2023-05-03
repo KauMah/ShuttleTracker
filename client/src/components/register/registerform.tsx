@@ -5,6 +5,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 interface Account {
@@ -100,12 +101,9 @@ const RegisterForm = (): JSX.Element => {
             .post('/auth/register', { name, email, password, passwordConfirm, role })
             .then((data) => {
               console.log(data);
-              alert(
-                // toast(_.get(err, 'response.data.error[0].message', 'Failed unexpectedly, check connection'), {
-                // type: 'error',
-                // });
-                `Your new email is: ${email}. Please save this information. You will now be redirected to the login page`
-              );
+              toast.success('Your account has been created!', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
               nav('/login');
             })
             .catch((err) => {

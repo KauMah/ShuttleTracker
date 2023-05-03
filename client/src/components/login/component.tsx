@@ -104,7 +104,7 @@ const Login = (): JSX.Element => {
               Click Here
             </NavLink>
           </p>
-          <p className="d-flex justify-content-center" style={{ marginTop: '-3vh' }}>
+          <p className="d-flex justify-content-center" style={{ marginTop: '-2vh' }}>
             {/* &nbsp; makes it so that it skips a space */}
             Dont have an account?&nbsp;
             <NavLink to="/register" css={styles.link}>
