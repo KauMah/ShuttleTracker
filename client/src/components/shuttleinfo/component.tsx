@@ -76,6 +76,7 @@ const ShuttleInfo = () => {
   const [showEditRouteModal, setShowEditRouteModal] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState<Route | null>(null);
   const [selectedBus, setSelectedBus] = useState<Bus | null>(null);
+  const [selectedUser, setSelectedUser] = useState<Operator | null>(null);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [, setLoading] = useState<boolean>(false);
   const [showEditStopModal, setShowEditStopModal] = useState(false);
@@ -83,11 +84,15 @@ const ShuttleInfo = () => {
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [showAddStopModal, setShowAddStopModal] = useState(false);
   const [showAddBusModal, setShowAddBusModal] = useState(false);
-  const [, setShowAddRouteModal] = useState(false);
-  const [selectedUser] = useState<Operator | null>(null);
+  const [showAddRouteModal, setShowAddRouteModal] = useState(false);
 
   const reloadPage = () => {
     window.location.reload();
+  };
+
+  const handleAddUser = () => {
+    setSelectedUser(null);
+    setShowAddUserModal(true);
   };
 
   const handleAddBus = () => {
@@ -264,7 +269,6 @@ const ShuttleInfo = () => {
 
   const handleDelete = async (endpoint: string, id: string) => {
     try {
-      console.log('delete clicked');
       await api.post(endpoint, { id });
       // Refresh data after deletion
       loadData();
@@ -372,7 +376,7 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${operator.name} (${operator.email})`}
-              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddBus}>
+              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddUser}>
                 Add
               </button>
             </>
@@ -388,7 +392,7 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${rider.name} (${rider.email})`}
-              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddBus}>
+              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddUser}>
                 Add
               </button>
             </>
