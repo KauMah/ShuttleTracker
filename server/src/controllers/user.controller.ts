@@ -1,8 +1,16 @@
+import { DeleteUserInput, EditUserInput } from '../schemas/user.schema';
 import { NextFunction, Request, Response } from 'express';
-import { changeName, findAllAdmins, findAllDrivers, findAllRiders, findAllUsers } from '../service/user.service';
-
-import { ChangeNameInput } from '../schemas/user.schema';
+import {
+  deleteUser,
+  editUser,
+  findAllAdmins,
+  findAllDrivers,
+  findAllRiders,
+  findAllUsers,
+} from '../service/user.service';
 import { User } from '../models/user.model';
+
+import _ from 'lodash';
 
 export const getMeHandler = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -78,20 +86,58 @@ export const getAllAdminHandler = async (req: Request, res: Response, next: Next
   }
 };
 
-export const changeUserNameHandler = async (
-  req: Request<object, object, ChangeNameInput>,
+export const editUserHandler = async (
+  req: Request<object, object, EditUserInput>,
   res: Response,
   next: NextFunction
 ) => {
-  const { name } = req.body;
+  const { user } = req.body;
   const usr = res.locals.user as User;
   try {
-    const user = await changeName(usr.email, name);
+    const u = await editUser(usr.email, user);
     res.status(200).json({
       status: 'success',
       data: {
-        user,
+        u,
       },
+    });
+  } catch (err: unknown) {
+    next(err);
+  }
+};
+
+export const adminEditUserHandler = async (
+  req: Request<object, object, EditUserInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { user } = req.body;
+  try {
+    if (!user.id) {
+      throw 'no ID supplied';
+    }
+    const u = await editUser(user.id, _.omit(user, ['id']));
+    res.status(200).json({
+      status: 'success',
+      data: {
+        u,
+      },
+    });
+  } catch (err: unknown) {
+    next(err);
+  }
+};
+
+export const deleteUserHandler = async (
+  req: Request<object, object, DeleteUserInput>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.body;
+  try {
+    await deleteUser(id);
+    res.status(200).json({
+      status: 'success',
     });
   } catch (err: unknown) {
     next(err);
