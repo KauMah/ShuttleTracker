@@ -14,7 +14,6 @@ interface AddShuttleModalProps {
 }
 
 const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadData, onAddSuccess, reload }) => {
-  const [capacity, setCapacity] = useState<number | ''>('');
   const [routes, setRoutes] = useState<Route[]>([]);
   const [operators, setOperators] = useState<Operator[]>([]);
   const [active, setActive] = useState(true);
@@ -61,10 +60,11 @@ const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadDat
 
     try {
       await api.post('/shuttle/new', {
-        capacity,
+        capacity: 35,
         route: selectedRoute?._id,
         driver: selectedOperator?._id,
         active,
+        occupancy: 0,
       });
       loadData();
       onAddSuccess();
@@ -72,7 +72,7 @@ const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadDat
       onHide();
     } catch (err) {
       console.log(err);
-      console.log(capacity, selectedRoute?._id, selectedOperator?._id, active);
+      console.log(35, selectedRoute?._id, selectedOperator?._id, active);
     }
   };
 
@@ -83,10 +83,6 @@ const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadDat
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="capacity">
-            <Form.Label>Capacity</Form.Label>
-            <Form.Control type="number" value={capacity} onChange={(e) => setCapacity(parseInt(e.target.value))} />
-          </Form.Group>
           <Form.Group controlId="route">
             <Form.Label>Route</Form.Label>
             <Form.Select value={selectedRoute?._id || ''} onChange={(e) => handleRouteChange(e)}>

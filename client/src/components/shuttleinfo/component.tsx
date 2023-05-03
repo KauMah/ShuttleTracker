@@ -264,6 +264,7 @@ const ShuttleInfo = () => {
 
   const handleDelete = async (endpoint: string, id: string) => {
     try {
+      console.log('delete clicked');
       await api.post(endpoint, { id });
       // Refresh data after deletion
       loadData();
