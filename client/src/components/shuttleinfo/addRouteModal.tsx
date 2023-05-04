@@ -1,7 +1,7 @@
 import { Button, Form, Modal } from 'react-bootstrap';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { Route, Stop } from './component';
 
-import { Route } from './component';
 import { api } from '../../utils/api';
 
 interface AddRouteModalProps {
@@ -15,7 +15,17 @@ interface AddRouteModalProps {
 
 const AddRouteModal: React.FC<AddRouteModalProps> = ({ show, onHide, loadData }) => {
   const [name, setName] = useState('');
-  const [stops, setStops] = useState('');
+  const [allStops, setAllStops] = useState<Stop[]>([]);
+  const [selectedStops, setSelectedStops] = useState<string[]>([]);
+
+  const fetchStops = async () => {
+    try {
+      const response = await api.get('/stop/');
+      setAllStops(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -23,7 +33,7 @@ const AddRouteModal: React.FC<AddRouteModalProps> = ({ show, onHide, loadData })
     try {
       await api.post('/route/new', {
         name,
-        stops: stops.split(',').map((id) => id.trim()),
+        stops: selectedStops,
       });
       loadData();
       onHide();
@@ -31,6 +41,19 @@ const AddRouteModal: React.FC<AddRouteModalProps> = ({ show, onHide, loadData })
       console.log(err);
     }
   };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSelectedStops([...selectedStops, value]);
+    } else {
+      setSelectedStops(selectedStops.filter((stopId) => stopId !== value));
+    }
+  };
+
+  useEffect(() => {
+    fetchStops();
+  }, []);
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -40,12 +63,20 @@ const AddRouteModal: React.FC<AddRouteModalProps> = ({ show, onHide, loadData })
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Name:</Form.Label>
             <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
           </Form.Group>
           <Form.Group controlId="stops">
-            <Form.Label>Stops (comma separated IDs)</Form.Label>
-            <Form.Control type="text" value={stops} onChange={(e) => setStops(e.target.value)} />
+            <Form.Label>Stops:</Form.Label>
+            {allStops.map((stop) => (
+              <Form.Check
+                key={stop._id}
+                type="checkbox"
+                label={stop.name}
+                value={stop._id}
+                onChange={handleCheckboxChange}
+              />
+            ))}
           </Form.Group>
           <Button variant="primary" type="submit">
             Add Route

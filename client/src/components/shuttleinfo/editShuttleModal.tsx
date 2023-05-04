@@ -8,18 +8,23 @@ interface EditShuttleModalProps {
   show: boolean;
   bus: Bus | null;
   routes: Route[];
+  drivers: {
+    _id: string;
+    name: string;
+  }[];
   onHide: () => void;
   onEditSuccess: (updatedBus: Bus) => void;
+  reload: () => void;
 }
 
-const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, onHide, onEditSuccess }) => {
-  const [capacity, setCapacity] = useState<string>(bus ? bus.capacity.toString() : '');
+const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, drivers, onHide, onEditSuccess }) => {
   const [routeId, setRouteId] = useState(bus && bus.route ? bus.route._id : '');
+  const [driverId, setDriverId] = useState(bus && bus.driver ? bus.driver : '');
 
   useEffect(() => {
     if (bus) {
-      setCapacity(bus.capacity.toString());
       setRouteId(bus.route ? bus.route._id : '');
+      setDriverId(bus.driver ? bus.driver : '');
     }
   }, [bus]);
 
@@ -30,9 +35,8 @@ const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, 
         const response = await api.post('/shuttle/edit', {
           id: bus._id,
           shuttle: {
-            capacity: parseInt(capacity, 10),
             route: routeId,
-            driver: bus.driver,
+            driver: driverId,
             active: bus.active,
             loc: bus.loc,
           },
@@ -40,8 +44,8 @@ const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, 
         if (response.status === 200) {
           onEditSuccess({
             ...bus,
-            capacity: parseInt(capacity, 10),
             route: routes.find((r: Route) => r._id === routeId)!,
+            driver: driverId,
           });
           onHide();
         }
@@ -51,15 +55,12 @@ const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, 
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newCapacity = parseInt(e.target.value, 10);
-    if (newCapacity >= 0) {
-      setCapacity(e.target.value);
-    }
+  const handleRouteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRouteId(e.target.value);
   };
 
-  const handleRouteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRouteId(e.target.value);
+  const handleDriverChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDriverId(e.target.value);
   };
 
   return (
@@ -70,19 +71,26 @@ const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, 
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
-            <Form.Label>Capacity</Form.Label>
-            <Form.Control type="number" min="0" value={capacity} onChange={handleChange} required />
-          </Form.Group>
-          <Form.Group>
             <Form.Label>Route</Form.Label>
-            <Form.Control as="select" value={routeId} onChange={handleRouteChange} required>
+            <select value={routeId} onChange={handleRouteChange} required className="form-control">
               <option value="">Select Route</option>
               {routes.map((route) => (
                 <option key={route._id} value={route._id}>
                   {route.name}
                 </option>
               ))}
-            </Form.Control>
+            </select>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Driver</Form.Label>
+            <select value={driverId} onChange={handleDriverChange} required className="form-control">
+              <option value="">Select Driver</option>
+              {drivers.map((driver) => (
+                <option key={driver._id} value={driver._id}>
+                  {driver.name}
+                </option>
+              ))}
+            </select>
           </Form.Group>
           <Button variant="primary" type="submit">
             Save Changes

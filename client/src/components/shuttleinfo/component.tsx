@@ -326,9 +326,6 @@ const ShuttleInfo = () => {
                 text: (
                   <>
                     {`Bus ID: ${bus._id} (Route: ${routeName}, Driver: ${driverName})`}
-                    <button className="btn btn-sm btn-success ms-2" onClick={handleAddBus}>
-                      Add
-                    </button>
                     <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
                       Edit
                     </button>
@@ -351,9 +348,6 @@ const ShuttleInfo = () => {
         text: (
           <>
             {stop.name}
-            <button className="btn btn-sm btn-success ms-2" onClick={handleAddStop}>
-              Add
-            </button>
             <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditStop(stop)}>
               Edit
             </button>
@@ -376,8 +370,8 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${operator.name} (${operator.email})`}
-              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddUser}>
-                Add
+              <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/user/delete', operator._id)}>
+                Delete
               </button>
             </>
           ),
@@ -392,8 +386,8 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${rider.name} (${rider.email})`}
-              <button className="btn btn-sm btn-success ms-2" onClick={() => handleAddUser}>
-                Add
+              <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/user/delete', rider._id)}>
+                Delete
               </button>
             </>
           ),
@@ -403,7 +397,10 @@ const ShuttleInfo = () => {
       title: 'Admins',
       content: admins
         .filter((operator) => operator.role === 'admin')
-        .map((admin) => ({ id: admin._id, text: `${admin.name} (${admin.email})` })),
+        .map((admin) => ({
+          id: admin._id,
+          text: `${admin.name} (${admin.email})`,
+        })),
     },
   ];
 
@@ -431,6 +428,20 @@ const ShuttleInfo = () => {
           </div>
         </div>
         <div className="row">
+          <div className="col-12 d-flex justify-content-center">
+            <button className="btn btn-sm btn-success ms-2" onClick={handleAddRoute}>
+              Add Route
+            </button>
+            <button className="btn btn-sm btn-success ms-2" onClick={handleAddBus}>
+              Add Bus
+            </button>
+            <button className="btn btn-sm btn-success ms-2" onClick={handleAddStop}>
+              Add Stop
+            </button>
+            <button className="btn btn-sm btn-success ms-2" onClick={handleAddUser}>
+              Add User
+            </button>
+          </div>
           <AdminPanelBox options={box1Options} showSelect={false} />
           <AdminPanelBox options={box2Options} />
           <AdminPanelBox options={box3Options} />
@@ -448,11 +459,13 @@ const ShuttleInfo = () => {
           show={showEditModal}
           bus={selectedBus}
           routes={routes}
+          drivers={operators}
           onHide={() => setShowEditModal(false)}
           onEditSuccess={(updatedBus: Bus) => {
             handleEditShuttleSuccess(updatedBus);
             refreshBuses();
           }}
+          reload={reloadPage}
         />
         <EditStopModal
           key={`edit-stop-modal-${selectedStop?._id}`} // Change this line
@@ -495,6 +508,16 @@ const ShuttleInfo = () => {
           loadData={loadData}
           onAddSuccess={() => {
             refreshBuses();
+          }}
+          reload={reloadPage}
+        />
+        <AddRouteModal
+          show={showAddRouteModal}
+          route={selectedRoute}
+          onHide={() => setShowAddRouteModal(false)}
+          loadData={loadData}
+          onAddSuccess={() => {
+            fetchRoutes();
           }}
           reload={reloadPage}
         />
