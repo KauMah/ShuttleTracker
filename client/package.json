@@ -21,7 +21,10 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-fontawesome": "^1.7.1",
+=======
+>>>>>>> 88ea8a5217e34c67d1e729bb786b3022eea3aa67
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.8.2",
     "react-toastify": "9.1.1",

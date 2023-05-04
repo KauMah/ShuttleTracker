@@ -1,5 +1,6 @@
 import {
   createShuttleHandler,
+  deleteShuttleByIdHandler,
   editShuttleHandler,
   getAllShuttlesHandler,
   getShuttleByIdHandler,
@@ -19,7 +20,7 @@ shuttleRouter.use(deserializeUser);
 shuttleRouter.post('/new', restrictTo('admin'), validate(createShuttleSchema), createShuttleHandler);
 shuttleRouter.post('/edit', restrictTo('admin'), validate(editShuttleParamsSchema), editShuttleHandler);
 shuttleRouter.post('/', validate(shuttleByIDSchema), getShuttleByIdHandler);
-shuttleRouter.post('/delete', restrictTo('admin'), validate(shuttleByIDSchema), getShuttleByIdHandler);
+shuttleRouter.post('/delete', restrictTo('admin'), validate(shuttleByIDSchema), deleteShuttleByIdHandler);
 shuttleRouter.get('/', getAllShuttlesHandler);
 shuttleRouter.post('/position', validate(shuttleByIDSchema), getShuttlePositionByIdHandler);
 
