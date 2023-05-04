@@ -1,3 +1,4 @@
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 
 import { $msured } from '../../assets/colors';
@@ -308,10 +309,10 @@ const ShuttleInfo = () => {
               ))}
             </ol>
             <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditRoute(route)}>
-              Edit
+              <AiFillEdit size={16} />
             </button>
             <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/route/delete', route._id)}>
-              Delete
+              <AiFillDelete size={16} />
             </button>
           </>
         ),
@@ -334,13 +335,13 @@ const ShuttleInfo = () => {
                   <>
                     {`Bus ID: ${bus._id} (Route: ${routeName}, Driver: ${driverName})`}
                     <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditShuttle(bus)}>
-                      Edit
+                      <AiFillEdit size={16} />
                     </button>
                     <button
                       className="btn btn-sm btn-danger ms-2"
                       onClick={() => handleDelete('/shuttle/delete', bus._id)}
                     >
-                      Delete
+                      <AiFillDelete size={16} />
                     </button>
                   </>
                 ),
@@ -356,10 +357,10 @@ const ShuttleInfo = () => {
           <>
             {stop.name}
             <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditStop(stop)}>
-              Edit
+              <AiFillEdit size={16} />
             </button>
             <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/stop/delete', stop._id)}>
-              Delete
+              <AiFillDelete size={16} />
             </button>
           </>
         ),
@@ -378,10 +379,10 @@ const ShuttleInfo = () => {
             <>
               {`${operator.name} (${operator.email})`}
               <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditUser(operator)}>
-                Edit
+                <AiFillEdit size={16} />
               </button>
               <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/user/delete', operator._id)}>
-                Delete
+                <AiFillDelete size={16} />
               </button>
             </>
           ),
@@ -397,10 +398,10 @@ const ShuttleInfo = () => {
             <>
               {`${rider.name} (${rider.email})`}
               <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditUser(rider)}>
-                Edit
+                <AiFillEdit size={16} />
               </button>
               <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/user/delete', rider._id)}>
-                Delete
+                <AiFillDelete size={16} />
               </button>
             </>
           ),

@@ -42,7 +42,7 @@ const AdminPanelBox: React.FC<AdminPanelBoxProps> = ({ options, showSelect = tru
   return (
     <div className="col-12 col-sm-6 col-md-4">
       <div className="card mb-3" style={cardStyle}>
-        <div className="card-body">
+        <div className="card-body justifyContent: space-between">
           {showSelect ? (
             <select
               value={selectedOption.title}
