@@ -1,38 +1,48 @@
 import { Button, Form, Modal } from 'react-bootstrap';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 import { Operator } from './component';
 import { api } from '../../utils/api';
 
-interface AddUserModalProps {
+interface EditUserModalProps {
   show: boolean;
-  user: Operator | null; // Make sure this property exists
+  user: Operator | null;
   onHide: () => void;
-  loadData: () => void;
-  onAddSuccess: () => void;
+  onEditSuccess: () => void;
   reload: () => void;
 }
 
-const AddUserModal: React.FC<AddUserModalProps> = ({ show, onHide, loadData, onAddSuccess, reload }) => {
+const EditUserModal: React.FC<EditUserModalProps> = ({ show, user, onHide, onEditSuccess, reload }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [role, setRole] = useState('rider');
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+      setEmail(user.email);
+      setPassword('');
+      setRole(user.role);
+    }
+  }, [user]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!user) return;
+
     try {
-      await api.post('/auth/register', {
-        name,
-        email,
-        password,
-        passwordConfirm,
-        role,
+      await api.post('/user/adminEdit', {
+        user: {
+          id: user._id,
+          name,
+          email,
+          password: password || undefined,
+          role,
+        },
       });
-      loadData();
-      onAddSuccess();
+      onEditSuccess();
       reload();
       onHide();
     } catch (err) {
@@ -43,7 +53,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ show, onHide, loadData, onA
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Add New User</Modal.Title>
+        <Modal.Title>Edit User</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -56,16 +66,8 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ show, onHide, loadData, onA
             <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </Form.Group>
           <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Password (leave blank to keep unchanged)</Form.Label>
             <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </Form.Group>
-          <Form.Group controlId="passwordConfirm">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={passwordConfirm}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
-            />
           </Form.Group>
           <Form.Group controlId="role">
             <Form.Label>Role</Form.Label>
@@ -75,7 +77,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ show, onHide, loadData, onA
             </Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit" style={{ marginTop: '12px' }}>
-            Add User
+            Edit User
           </Button>
         </Form>
       </Modal.Body>
@@ -83,4 +85,4 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ show, onHide, loadData, onA
   );
 };
 
-export default AddUserModal;
+export default EditUserModal;

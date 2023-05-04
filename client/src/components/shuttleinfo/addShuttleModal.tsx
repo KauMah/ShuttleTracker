@@ -109,7 +109,7 @@ const AddShuttleModal: React.FC<AddShuttleModalProps> = ({ show, onHide, loadDat
             <Form.Label>Active</Form.Label>
             <Form.Check type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{ marginTop: '7px' }}>
             Add Shuttle
           </Button>
         </Form>

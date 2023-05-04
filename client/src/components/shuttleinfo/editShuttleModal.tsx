@@ -92,7 +92,7 @@ const EditShuttleModal: React.FC<EditShuttleModalProps> = ({ show, bus, routes, 
               ))}
             </select>
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{ marginTop: '12px' }}>
             Save Changes
           </Button>
         </Form>

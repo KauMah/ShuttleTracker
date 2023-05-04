@@ -9,6 +9,7 @@ import AdminPanelBox from './adminPanelBox';
 import EditRouteModal from './editRouteModal';
 import EditShuttleModal from './editShuttleModal';
 import EditStopModal from './editStopModal';
+import EditUserModal from './editUserModal';
 import MsuNav from '../navBar';
 import SendAlertButton from './sendAlertButton';
 import { api } from '../../utils/api';
@@ -82,6 +83,7 @@ const ShuttleInfo = () => {
   const [showEditStopModal, setShowEditStopModal] = useState(false);
   const [selectedStop, setSelectedStop] = useState<Stop | null>(null);
   const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showEditUserModal, setShowEditUserModal] = useState(false);
   const [showAddStopModal, setShowAddStopModal] = useState(false);
   const [showAddBusModal, setShowAddBusModal] = useState(false);
   const [showAddRouteModal, setShowAddRouteModal] = useState(false);
@@ -108,6 +110,11 @@ const ShuttleInfo = () => {
   const handleAddStop = () => {
     setSelectedStop(null);
     setShowAddStopModal(true);
+  };
+
+  const handleEditUser = (user: Operator) => {
+    setSelectedUser(user);
+    setShowEditUserModal(true);
   };
 
   const handleEditRoute = (route: Route) => {
@@ -370,6 +377,9 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${operator.name} (${operator.email})`}
+              <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditUser(operator)}>
+                Edit
+              </button>
               <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/user/delete', operator._id)}>
                 Delete
               </button>
@@ -386,6 +396,9 @@ const ShuttleInfo = () => {
           text: (
             <>
               {`${rider.name} (${rider.email})`}
+              <button className="btn btn-sm btn-secondary ms-2" onClick={() => handleEditUser(rider)}>
+                Edit
+              </button>
               <button className="btn btn-sm btn-danger ms-2" onClick={() => handleDelete('/user/delete', rider._id)}>
                 Delete
               </button>
@@ -423,12 +436,12 @@ const ShuttleInfo = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-12 d-flex justify-content-center">
+          <div className="col-12 d-flex justify-content-center" style={{ marginTop: '-12px' }}>
             <SendAlertButton onClick={handleSendAlert} />
           </div>
         </div>
         <div className="row">
-          <div className="col-12 d-flex justify-content-center">
+          <div className="col-12 d-flex justify-content-center" style={{ marginBottom: '8px' }}>
             <button className="btn btn-sm btn-success ms-2" onClick={handleAddRoute}>
               Add Route
             </button>
@@ -479,6 +492,16 @@ const ShuttleInfo = () => {
           }}
           reload={reloadPage}
         />
+        <EditUserModal
+          show={showEditUserModal}
+          user={selectedUser}
+          onHide={() => setShowEditUserModal(false)}
+          onEditSuccess={() => {
+            fetchOperators();
+            fetchRiders();
+          }}
+          reload={reloadPage}
+        />
         <AddUserModal
           show={showAddUserModal}
           user={selectedUser}
@@ -486,7 +509,6 @@ const ShuttleInfo = () => {
           loadData={loadData}
           onAddSuccess={() => {
             fetchOperators();
-            fetchAdmins();
             fetchRiders();
           }}
           reload={reloadPage}

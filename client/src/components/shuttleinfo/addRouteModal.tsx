@@ -78,7 +78,7 @@ const AddRouteModal: React.FC<AddRouteModalProps> = ({ show, onHide, loadData })
               />
             ))}
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{ marginTop: '12px' }}>
             Add Route
           </Button>
         </Form>

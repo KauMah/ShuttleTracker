@@ -54,7 +54,7 @@ const AddStopModal: React.FC<AddStopModalProps> = ({ show, onHide, loadData, onA
             <Form.Control type="text" placeholder="x" value={x} onChange={(e) => setX(e.target.value)} />
             <Form.Control type="text" placeholder="y" value={y} onChange={(e) => setY(e.target.value)} />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{ marginTop: '12px' }}>
             Add Stop
           </Button>
         </Form>

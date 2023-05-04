@@ -64,7 +64,7 @@ const EditStopModal: React.FC<EditStopModalProps> = ({ show, stop, onHide, onEdi
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" value={name} onChange={handleChange} required />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{ marginTop: '12px' }}>
             Save Changes
           </Button>
         </Form>
