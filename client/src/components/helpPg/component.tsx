@@ -78,7 +78,7 @@ const styles = {
       marginTop: '50px',
     },
   }),
-  answerFont: {
+  answerFont: css({
     fontFamily: 'Helvetica',
     fontSize: '1.5em',
     marginTop: '.75rem',
@@ -86,15 +86,15 @@ const styles = {
     padding: '7.5px',
     color: $msured,
     '@media (max-width: 777px)': {
-      fontSize: '1.4rem',
+      fontSize: '1.4em',
     },
     '@media (max-width: 516px)': {
-      fontSize: '1.3rem',
+      fontSize: '1.3em',
     },
     '@media (max-width: 480px)': {
-      fontSize: '1.2rem',
+      fontSize: '1.2em',
     },
-  },
+  }),
   execFont: {
     fontFamily: 'Helvetica',
     fontSize: '1.3em',
@@ -210,6 +210,7 @@ const styles = {
     overflow: 'hidden',
     maxHeight: 0,
     transition: 'max-height 0.5s ease',
+    fontSize: '1rem',
   },
   answerVisible: {
     maxHeight: '500px',
@@ -253,7 +254,7 @@ const QuestionAnswer = (props: QA) => {
         </div>
       </button>
       <div style={{ ...styles.answerContainer, ...(isAnswerVisible ? styles.answerVisible : {}) }}>
-        <p style={styles.answerFont}>{answer}</p>
+        <p css={styles.answerFont}>{answer}</p>
       </div>
     </div>
   );
