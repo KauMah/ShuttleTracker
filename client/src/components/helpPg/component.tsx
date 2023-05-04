@@ -13,7 +13,6 @@ const styles = {
   },
   colLeft: css({
     backgroundColor: $white,
-    //height: '100%',
     //marginTop: '580px',
   }),
   questionLine: {
@@ -299,7 +298,7 @@ const HelpPg = () => {
               <div
                 className="col-12"
                 css={styles.colLeft}
-                style={{ marginTop: 150 + expandedHeight, transition: 'margin-top 0.3s ease' }}
+                style={{ marginTop: 50 + expandedHeight, transition: 'margin-top 0.3s ease' }}
               >
                 <div css={styles.faqHeader}>
                   <div style={styles.contactHeader}>
