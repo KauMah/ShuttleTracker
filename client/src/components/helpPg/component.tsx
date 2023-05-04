@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { $black, $flash, $lightGrey, $msured, $red, $salmon, $white } from '../../assets/colors';
+import { $black, $flash, $msured, $white } from '../../assets/colors';
 import React, { useState } from 'react';
 
 import MsuNav from '../navBar';
@@ -39,13 +39,13 @@ const styles = {
     position: 'absolute',
     top: '33%',
     left: '46%',
-    transform: 'translate(-41%, -50%)',
+    transform: 'translate(-42%, -50%)',
     color: $msured,
     fontFamily: 'Helvetica',
     fontSize: '5em',
     display: 'flex',
     alignItems: 'center',
-    '@media (max-width: 1875dfpx)': {
+    '@media (max-width: 1875px)': {
       marginTop: '.3em',
       fontSize: '4.5em',
     },
@@ -60,6 +60,7 @@ const styles = {
     display: 'none',
     '@media (max-width: 1025px)': {
       display: 'block',
+      marginTop: '50px',
     },
   }),
   answerFont: {
@@ -69,6 +70,15 @@ const styles = {
     marginBottom: '1.25rem',
     padding: '7.5px',
     color: $msured,
+    '@media (max-width: 777px)': {
+      fontSize: '1.4rem',
+    },
+    '@media (max-width: 516px)': {
+      fontSize: '1.3rem',
+    },
+    '@media (max-width: 480px)': {
+      fontSize: '1.2rem',
+    },
   },
   execFont: {
     fontFamily: 'Helvetica',
@@ -120,8 +130,12 @@ const styles = {
     width: '130%',
     height: '90%',
     '@media (max-width: 1520px)': {
+      width: '130%',
+      height: '90%',
+    },
+    '@media (max-width: 995px)': {
       width: '90%',
-      height: '20rem',
+      height: '90%',
     },
   }),
   mainContainer: css({
@@ -159,6 +173,18 @@ const styles = {
     },
     ':active': {
       backgroundColor: $white,
+    },
+    '@media (max-width: 777px)': {
+      height: '7rem',
+      fontSize: '1.4rem',
+    },
+    '@media (max-width: 516px)': {
+      height: '7rem',
+      fontSize: '1.3rem',
+    },
+    '@media (max-width: 480px)': {
+      height: '7rem',
+      fontSize: '1.2rem',
     },
   }),
   arrow: {
@@ -220,7 +246,7 @@ const QuestionAnswer = (props: QA) => {
 
 const HelpPg = () => {
   const [expandedHeight, setExpandedHeight] = useState(0);
-  const updateExpandedHeight = (height: number) => {
+  const updateExpandedHeight = () => {
     setExpandedHeight(expandedHeight);
   };
   return (
@@ -294,7 +320,7 @@ const HelpPg = () => {
                 />
               </div>
             </div>
-            <div>
+            <div className="row">
               <div
                 className="col-12"
                 css={styles.colLeft}
