@@ -33,7 +33,22 @@ const styles = {
     fontSize: '3em',
     margin: '10px',
     fontWeight: '700',
-    //backgroundColor: 'red',
+    marginLeft: '4.5rem',
+    '@media (max-width: 1400x)': {
+      marginLeft: '4rem',
+    },
+    '@media (max-width: 1300x)': {
+      marginLeft: '3rem',
+    },
+    '@media (max-width: 1200x)': {
+      marginLeft: '2rem',
+    },
+    '@media (max-width: 1100x)': {
+      marginLeft: '1rem',
+    },
+    '@media (max-width: 995px)': {
+      marginLeft: '0rem',
+    },
   }),
   headerTitle: css({
     position: 'absolute',
