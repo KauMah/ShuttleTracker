@@ -58,7 +58,7 @@ const styles = {
     fontSize: '3rem',
     fontFamily: 'Helvetica',
     marginTop: '3rem',
-    marginBottom: '6rem',
+    marginBottom: '3rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'end',
@@ -82,7 +82,7 @@ const Create = () => {
         <AlertForm />
       </div>
       <div style={{ marginBottom: '7rem' }}>
-        <div css={styles.alerts}>Delete Alerts</div>
+        <div css={styles.alerts}>Active Alerts</div>
         <ClearForm />
       </div>
     </>

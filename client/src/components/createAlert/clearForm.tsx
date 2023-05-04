@@ -1,3 +1,4 @@
+import { $msured, $red, $salmon, $white } from '../../assets/colors';
 import { useEffect, useState } from 'react';
 
 import { api } from '../../utils/api';
@@ -6,20 +7,50 @@ import { css } from '@emotion/react';
 interface Alert {
   _id: string;
   message: string;
+  title: string;
 }
 
 const styles = {
+  form: css({
+    fontFamily: 'Helvetica',
+    fontSize: '1.3rem',
+    display: 'flex',
+    justifyContent: 'center',
+  }),
   clearButton: css({
-    backgroundColor: '#fff',
-    color: '#D1190D',
-    border: '1px solid #D1190D',
-    borderRadius: '0.3rem',
-    padding: '0.2rem 0.5rem',
+    backgroundColor: $white,
+    color: $msured,
+    border: 'none',
+    marginBottom: '2rem',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: '#D1190D',
-      color: '#fff',
+      color: $red,
     },
+  }),
+  title: css({
+    fontSize: '2.2rem',
+    fontFamily: 'Helvetica',
+    color: $white,
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+  message: css({
+    fontSize: '1.8rem',
+    fontFamily: 'Helvetica',
+    color: $salmon,
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+  text: css({
+    fontFamily: 'Helvetica',
+    fontSize: '1.4rem',
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+  borderTit: css({
+    background: $salmon,
+    borderRadius: '10px',
+    border: '1px solid black',
   }),
 };
 
@@ -52,16 +83,22 @@ const ClearForm = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <h1>Alerts:</h1>
+    <div css={styles.form}>
       <div>
         {alertsFetched
           ? alerts.map((alert) => (
               <div key={alert._id}>
-                <p>{alert.message}</p>
-                <button css={styles.clearButton} onClick={() => handleClearAlert(alert._id)}>
-                  Clear
-                </button>
+                <div css={styles.borderTit}>
+                  <div css={styles.title}>Title:</div>
+                  <p css={styles.text}>{alert.title}</p>
+                </div>
+                <div>
+                  <div css={styles.message}>Message:</div>
+                  <p css={styles.text}>{alert.message}</p>
+                  <button css={styles.clearButton} onClick={() => handleClearAlert(alert._id)}>
+                    Clear
+                  </button>
+                </div>
               </div>
             ))
           : null}
