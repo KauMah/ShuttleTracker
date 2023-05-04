@@ -1,6 +1,7 @@
-import { DeleteUserInput, EditUserInput } from '../schemas/user.schema';
+import { AdminEditUserInput, DeleteUserInput, EditUserInput } from '../schemas/user.schema';
 import { NextFunction, Request, Response } from 'express';
 import {
+  adminEditUser,
   deleteUser,
   editUser,
   findAllAdmins,
@@ -8,8 +9,8 @@ import {
   findAllRiders,
   findAllUsers,
 } from '../service/user.service';
-import { User } from '../models/user.model';
 
+import { User } from '../models/user.model';
 import _ from 'lodash';
 
 export const getMeHandler = (req: Request, res: Response, next: NextFunction) => {
@@ -107,7 +108,7 @@ export const editUserHandler = async (
 };
 
 export const adminEditUserHandler = async (
-  req: Request<object, object, EditUserInput>,
+  req: Request<object, object, AdminEditUserInput>,
   res: Response,
   next: NextFunction
 ) => {
@@ -116,7 +117,7 @@ export const adminEditUserHandler = async (
     if (!user.id) {
       throw 'no ID supplied';
     }
-    const u = await editUser(user.id, _.omit(user, ['id']));
+    const u = await adminEditUser(user.id, _.omit(user, ['id']));
     res.status(200).json({
       status: 'success',
       data: {
