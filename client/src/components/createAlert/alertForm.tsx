@@ -136,7 +136,6 @@ const AlertForm = (): JSX.Element => {
                 placeholder="Time"
                 css={styles.textboxTime}
                 maxLength={100}
-                step={60}
               />
             </div>
             <div style={{ textAlign: 'center', marginTop: '3vh' }}>

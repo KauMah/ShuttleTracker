@@ -1,89 +1,71 @@
-import { $flash, $salmon } from '../../assets/colors';
-import { Field, Form, Formik } from 'formik';
+import { useEffect, useState } from 'react';
 
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 
-interface Account {
-  id: string;
+interface Alert {
+  _id: string;
+  message: string;
 }
 
-const Values: Account = {
-  id: '',
+const styles = {
+  clearButton: css({
+    backgroundColor: '#fff',
+    color: '#D1190D',
+    border: '1px solid #D1190D',
+    borderRadius: '0.3rem',
+    padding: '0.2rem 0.5rem',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#D1190D',
+      color: '#fff',
+    },
+  }),
 };
 
-const styles = {
-  text: css({
-    fontSize: '1.4rem',
-    fontFamily: 'Helvetica',
-    fontWeight: 500,
-    position: 'absolute',
-    marginTop: '-2.5rem',
-    '@media (max-width: 650px)': {
-      fontSize: '1.3rem',
-    },
-  }),
-  textBox: css({
-    height: '3rem',
-    width: '30rem',
-    fontSize: '1.2rem',
-    padding: '0.5rem',
-    borderRadius: '0.3rem',
-    border: '1px solid #D1190D',
-    textAlignLast: 'center',
-  }),
-  submitButton: css({
-    backgroundColor: $salmon,
-    height: '5vh 100%',
-    width: '10vw 100%',
-    fontSize: '22px',
-    fontWeight: 700,
-    borderRadius: '13px',
-    marginTop: '3vh',
-    padding: 'auto',
-    transition: 'background-color 0.25s',
-    '&:hover': {
-      backgroundColor: $flash,
-    },
-  }),
-};
 const ClearForm = (): JSX.Element => {
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [alertsFetched, setAlertsFetched] = useState(false);
+
+  useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const response = await api.get('/alerts/');
+        if (response.data.data) {
+          setAlerts(response.data.data);
+          setAlertsFetched(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAlerts();
+  }, []);
+
+  const handleClearAlert = async (id: string) => {
+    try {
+      await api.post(`/alerts/clear`, { id });
+      setAlerts(alerts.filter((alert) => alert._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
-      <Formik
-        initialValues={Values}
-        onSubmit={(values, { setSubmitting }) => {
-          const { id } = values;
-
-          api
-            .post('/alerts/clear', { id })
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-            .finally(() => {
-              setSubmitting(false);
-            });
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="id" css={styles.text}>
-                Alert ID
-              </label>
-              <Field type="text" name="id" id="id" placeholder="ID" css={styles.textBox} maxLength={100} />
-            </div>
-            <div style={{ textAlign: 'center', marginTop: '3vh' }}>
-              <button type="submit" disabled={isSubmitting} css={styles.submitButton}>
-                {isSubmitting ? 'Submitting...' : 'Submit'}
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      <h1>Alerts:</h1>
+      <div>
+        {alertsFetched
+          ? alerts.map((alert) => (
+              <div key={alert._id}>
+                <p>{alert.message}</p>
+                <button css={styles.clearButton} onClick={() => handleClearAlert(alert._id)}>
+                  Clear
+                </button>
+              </div>
+            ))
+          : null}
+      </div>
     </div>
   );
 };
