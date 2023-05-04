@@ -42,15 +42,20 @@ const ShuttleInfo = () => {
 
   return (
     <div>
-      <h1 className="shuttles">All Shuttles:</h1>
-      <ul>
-        {activeShuttles.map((shuttle) => (
-          <li key={shuttle._id} className="shuttle">
-            {shuttle.name} {shuttle.driver.name && `(${shuttle.driver.name})`} - ({shuttle.capacity} seats) -{' '}
-            {shuttle.occupancy} passengers - {shuttle.active ? 'Active' : 'Inactive'}
-          </li>
-        ))}
-      </ul>
+      <div className="stops-header1">
+        <h1 className="shuttles">All Shuttles:</h1>
+      </div>
+      <div className="stops-container">
+        <div className="stops-list">
+          {activeShuttles.map((shuttle) => (
+            <li key={shuttle._id} className="stops-container1">
+              Seats: {shuttle.capacity} <br />
+              Passengers: {shuttle.occupancy} <br />
+              Status: {shuttle.active ? 'Active' : 'Inactive'}
+            </li>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

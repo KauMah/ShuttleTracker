@@ -26,21 +26,26 @@ function ViewRoutes() {
         console.log(err);
       }
     };
-
     fetchRoutes();
   }, []);
 
   return (
     <div>
-      <h1 className="routes">Route Information:</h1>
-      {routesFetched
-        ? routes.map((route) => (
-            <div key={route._id} className="stop">
-              <h2 className="stop-name">Route Name:</h2>
-              <p className="stop-info">{route.name}</p>
-            </div>
-          ))
-        : null}
+      <div className="stops-header1">
+        <h1 className="routes">Route Information:</h1>
+      </div>
+      <div className="stops-container">
+        <div className="stops-list">
+          {routesFetched
+            ? routes.map((route) => (
+                <div key={route._id} className="stop">
+                  <h2 className="stop-name">Route Name:</h2>
+                  <p className="stop-info">{route.name}</p>
+                </div>
+              ))
+            : null}
+        </div>
+      </div>
     </div>
   );
 }

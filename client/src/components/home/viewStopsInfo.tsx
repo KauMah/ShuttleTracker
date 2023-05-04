@@ -40,18 +40,21 @@ const StopInfo = () => {
 
   return (
     <div>
-      <h1 className="stops">List of Stops:</h1>
-      <ul>
-        {stops.map((stop, index) => (
-          <li key={stop._id} className="stop">
-            <h2 className="stop-name">
-              Stop {index + 1}: {stop.name}
-            </h2>
-            <p className="stop-lat">Latitude: {stop.loc.coordinates[1]}</p>
-            <p className="stop-long">Longitude: {stop.loc.coordinates[0]}</p>
-          </li>
-        ))}
-      </ul>
+      <div className="stops-header1">
+        <h1 className="stops">List of Stops:</h1>
+      </div>
+      <div className="stops-container">
+        <div className="stops-list">
+          <ul>
+            {stops.map((stop, index) => (
+              <li key={stop._id} className="stop">
+                <h2 className="stop-name">Stop {index + 1}:</h2>
+                <p className="stop-name-text">{stop.name}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
