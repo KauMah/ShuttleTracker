@@ -53,7 +53,7 @@ export const adminEditUserSchema = object({
         .min(8, 'Password must be longer than 8 characters')
         .max(32, 'Password must be shorter than 32 characters'),
       role: nativeEnum(Role),
-    }).partial({ id: true }),
+    }).partial({ name: true, email: true, password: true, role: true }),
   }),
 });
 

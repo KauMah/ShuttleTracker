@@ -64,7 +64,12 @@ export const signToken = async (user: DocumentType<User>) => {
 };
 
 export const editUser = async (email: string, user: Partial<DocumentType<User>>) => {
+  console.log(user);
   return await userModel.findOneAndUpdate({ email }, { $set: { ...user } }, { new: true });
+};
+
+export const adminEditUser = async (id: string, user: Partial<DocumentType<User>>) => {
+  return await userModel.findByIdAndUpdate(id, { $set: { ...user } }, { new: true });
 };
 
 // Delete User
