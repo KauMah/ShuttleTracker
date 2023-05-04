@@ -1,16 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { $black, $flash, $grey, $msured, $white } from '../../assets/colors';
+import { $black, $flash, $lightGrey, $msured, $red, $salmon, $white } from '../../assets/colors';
 import React, { useState } from 'react';
 
-//import { Function } from 'lodash';
-//import FAQImg from '../../assets/img/FAQImg-4.jpg';
 import MsuNav from '../navBar';
 import { css } from '@emotion/react';
-
-//import { string } from 'yup';
-
-//import { transform } from 'lodash';
 
 const styles = {
   container: {
@@ -19,11 +13,8 @@ const styles = {
   },
   colLeft: css({
     backgroundColor: $white,
-    height: '50vh',
+    //height: '100%',
     //marginTop: '580px',
-    '@media (maxWidth: 700px)': {
-      marginLeft: '30%',
-    },
   }),
   questionLine: {
     borderBottom: '3px solid rgba(0,0,0,0.3)',
@@ -32,18 +23,18 @@ const styles = {
   },
   colRight: {
     backgroundColor: $white,
-    height: '100vh',
+    height: '100%',
     marginTop: '98px',
   },
-  header: css({
+  faqHeader: css({
     display: 'flex',
     justifyContent: 'center',
     textAlign: 'center',
     fontFamily: 'Helvetica',
     fontSize: '3em',
     margin: '10px',
-    padding: '0px',
     fontWeight: '700',
+    //backgroundColor: 'red',
   }),
   headerTitle: css({
     position: 'absolute',
@@ -55,22 +46,30 @@ const styles = {
     fontSize: '5em',
     display: 'flex',
     alignItems: 'center',
-    //backgroundColor: 'red',
-    // justifyContent: 'center',
+    '@media (max-width: 1875dfpx)': {
+      marginTop: '.3em',
+      fontSize: '4.5em',
+    },
   }),
-  font: {
+  faqTitle: css({
+    display: 'block',
+    '@media (max-width: 1025px)': {
+      display: 'none',
+    },
+  }),
+  faqShortTitle: css({
+    display: 'none',
+    '@media (max-width: 1025px)': {
+      display: 'block',
+    },
+  }),
+  answerFont: {
     fontFamily: 'Helvetica',
     fontSize: '1.5em',
-    //fontWeight: '100',
     marginTop: '.75rem',
     marginBottom: '1.25rem',
     padding: '7.5px',
     color: $msured,
-  },
-  personFont: {
-    fontFamily: 'Helvetica',
-    fontSize: '1.3em',
-    color: $black,
   },
   execFont: {
     fontFamily: 'Helvetica',
@@ -90,7 +89,7 @@ const styles = {
     fontWeight: '300',
     color: $black,
   },
-  faqHeadFont: css({
+  faqStatementFont: css({
     fontFamily: 'Helvetica',
     fontSize: '1.5em',
     fontWeight: '400',
@@ -101,60 +100,41 @@ const styles = {
     },
   }),
   contactHeader: {
-    // display: 'flex', //useless
-    // justifyContent: 'space-between', //useless
     borderBottom: `1px solid ${$black}`,
-    marginBottom: '.5rem',
-    // paddingBottom: '10px', useless
+    marginBottom: '1rem',
   },
-  // contact: { useless isnt used
-  //   display: 'flex',
-  //   justifyContent: 'space-between',
-  //   marginBottom: '10px',
-  //   paddingBottom: '10px',
-  //   borderBottom: `1px solid ${$grey}`,
-  // },
   contactRow: css({
     display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: 'space-evenly',
-    //flexWrap: 'wrap', useless
     width: '100%',
     marginTop: '20px',
-  }),
-  contactsContainer: css({
-    //useless what does this do?
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    '@media screen and (max-width: 768px)': {
+      justifyContent: 'center',
+    },
   }),
   contactCard: css({
     border: '1px solid rgba(0, 0, 0, 0.5)',
     borderRadius: '15px',
     padding: '20px',
-    // backgroundColor: '#fff', useless
-    // boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', useless
-    width: '20rem',
-    height: '20rem',
-    // display: 'flex',
-    // flexDirection: 'column', useless
-    // justifyContent: 'space-between', useless
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.5)',
+    width: '130%',
+    height: '90%',
+    '@media (max-width: 1520px)': {
+      width: '90%',
+      height: '20rem',
+    },
   }),
   mainContainer: css({
     padding: '0 10%',
-    backgroundColor: $white,
+    //backgroundColor: $lightGrey,
   }),
-  button: css({
+  belowButton: css({
     backgroundColor: $white,
     border: 'none',
     color: $msured,
-    // padding: '8px 16px',
-    textAlign: 'center',
-    textDecoration: 'none',
-    display: 'inline-block',
-    fontSize: '27px',
-    //margin: '4px 2px',
+    fontSize: '1.5rem',
     cursor: 'pointer',
-    borderRadius: '4px',
     transition: 'background-color 0.2s ease',
     ':hover': {
       backgroundColor: $flash,
@@ -169,11 +149,10 @@ const styles = {
     width: '100%',
     border: 'none',
     cursor: 'pointer',
-    outline: 'none',
     textAlign: 'left',
     fontFamily: 'Helvetica',
-    fontSize: '1.5em',
-    //fontWeight: 600,
+    fontSize: '1.5rem',
+    fontWeight: 600,
     color: $black,
     transition: 'background-color 0.15s ease',
     ':hover': {
@@ -194,7 +173,6 @@ const styles = {
   },
   answerVisible: {
     maxHeight: '500px',
-    //overflow: 'hidden',
   },
 };
 
@@ -214,7 +192,7 @@ const QuestionAnswer = (props: QA) => {
   const [isAnswerVisible, setIsAnswerVisible] = useState(false);
 
   const toggleAnswer = () => {
-    const height = !isAnswerVisible ? answer.length * 1.1 : -answer.length * 1.1;
+    const height = !isAnswerVisible ? answer.length * 0.7 : -answer.length * 0.7;
     updateExpandedHeight(height);
     setIsAnswerVisible(!isAnswerVisible);
   };
@@ -235,54 +213,45 @@ const QuestionAnswer = (props: QA) => {
         </div>
       </button>
       <div style={{ ...styles.answerContainer, ...(isAnswerVisible ? styles.answerVisible : {}) }}>
-        <p style={styles.font}>{answer}</p>
+        <p style={styles.answerFont}>{answer}</p>
       </div>
     </div>
   );
 };
 
 const HelpPg = () => {
-  //const [totalExpandedHeight, setTotalExpandedHeight] = useState(0);
   const [expandedHeight, setExpandedHeight] = useState(0);
   const updateExpandedHeight = (height: number) => {
-    //const { height } = prop;
-    setExpandedHeight(expandedHeight + height);
+    setExpandedHeight(expandedHeight);
   };
   return (
     <div>
       <MsuNav />
       <div css={styles.mainContainer}>
-        <div className="container-fluid">
+        <div className="container">
           <div className="row">
             <div className="col-12" style={styles.colRight}>
-              {/* <div css={styles.header}>
-                <h1>FAQ</h1>
-              </div> */}
-              <div className="container">
-                {/* <div css={styles.imageContainer}>
-                  <img src="src/assets/img/FAQImg-4.jpg" alt="Header" css={styles.image} />
-                </div> */}
-                <div className="d-flex justify-content-center" css={styles.headerTitle}>
-                  <p>Frequently Asked Questions</p>
-                </div>
+              <div className="d-flex justify-content-center" css={styles.headerTitle}>
+                <p className="faq-title" css={styles.faqTitle}>
+                  Frequently Asked Questions
+                </p>
+                <p className="faq-short-title" css={styles.faqShortTitle}>
+                  FAQ
+                </p>
               </div>
               <div>
                 <div>
-                  <p css={styles.faqHeadFont}>
+                  <p css={styles.faqStatementFont}>
                     <span>
                       Please find answers to common questions about shuttle operation below. If you cannot find the
                       answer to your question here, please refer to the Important Contacts
-                      <button css={styles.button} onClick={scrollToBottom}>
+                      <button css={styles.belowButton} onClick={scrollToBottom}>
                         Below
                       </button>
                       {''}.
                     </span>
                   </p>
                 </div>
-                {/* <div className="row">
-                  <div className="col-6">test1</div>
-                  <div className="col-6">test2</div>
-                </div> */}
                 <QuestionAnswer
                   question="Q. How often do the buses run?"
                   answer="A. Every 8-15 mintues during peak ours, and every 20-30 mintues during off peak hours."
@@ -326,22 +295,22 @@ const HelpPg = () => {
                 />
               </div>
             </div>
-            <div className="row" style={{ marginTop: '25rem' }}>
+            <div>
               <div
                 className="col-12"
                 css={styles.colLeft}
-                style={{ marginTop: 150 + expandedHeight, transition: 'height 0.3s ease' }}
+                style={{ marginTop: 150 + expandedHeight, transition: 'margin-top 0.3s ease' }}
               >
-                <div css={styles.header}>
+                <div css={styles.faqHeader}>
                   <div style={styles.contactHeader}>
                     <p> Important Contacts</p>
                   </div>
                 </div>
-                <div className="container-fluid">
+                <div className="container">
                   <div className="row">
-                    <div css={styles.contactsContainer}>
-                      <div css={styles.contactRow}>
-                        <div css={[styles.contactHeader, styles.contactCard]}>
+                    <div css={styles.contactRow}>
+                      <div className="col-12 col-md-6 col-lg-2">
+                        <div className="card" css={[styles.contactHeader, styles.contactCard]}>
                           <p style={styles.contactHeadFont}>Shuttle Services</p>
                           <div style={styles.contactBodyFont}>
                             <p>Location: 145 Clove Rd.</p>
@@ -350,7 +319,9 @@ const HelpPg = () => {
                             <p>Email: shuttle@montlcair.edu</p>
                           </div>
                         </div>
-                        <div css={[styles.contactHeader, styles.contactCard]}>
+                      </div>
+                      <div className="col-12 col-md-6 col-lg-2">
+                        <div className="card" css={[styles.contactHeader, styles.contactCard]}>
                           <p style={styles.contactHeadFont}>Executive Director, Facilities {/*Technology*/}</p>
                           <p style={styles.execFont}>John Bonin</p>
                           <div style={styles.contactBodyFont}>
@@ -359,7 +330,9 @@ const HelpPg = () => {
                             <p>E-mail: boninj@montclair.edu</p>
                           </div>
                         </div>
-                        <div css={[styles.contactHeader, styles.contactCard]}>
+                      </div>
+                      <div className="col-12 col-md-6 col-lg-2">
+                        <div className="card" css={[styles.contactHeader, styles.contactCard]}>
                           <p style={styles.contactHeadFont}>Supervisor, Shuttle Services</p>
                           <p style={styles.execFont}>Cheryl Ofoha</p>
                           <div style={styles.contactBodyFont}>
@@ -368,7 +341,9 @@ const HelpPg = () => {
                             <p>E-mail: lebertc@montclair.edu</p>
                           </div>
                         </div>
-                        <div css={[styles.contactHeader, styles.contactCard]}>
+                      </div>
+                      <div className="col-12 col-md-6 col-lg-2">
+                        <div className="card" css={[styles.contactHeader, styles.contactCard]}>
                           <p style={styles.contactHeadFont}>Coordinator, Commuter Life</p>
                           <p style={styles.execFont}>Antonio Talamo</p>
                           <div style={styles.contactBodyFont}>
