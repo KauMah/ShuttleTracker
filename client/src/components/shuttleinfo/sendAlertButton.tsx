@@ -1,5 +1,6 @@
-import { $red, $white } from '../../assets/colors';
+import { $msured, $white } from '../../assets/colors';
 
+import { NavLink } from 'react-router-dom';
 import React from 'react';
 
 interface SendAlertButtonProps {
@@ -9,13 +10,13 @@ interface SendAlertButtonProps {
 const SendAlertButton: React.FC<SendAlertButtonProps> = ({ onClick }) => {
   const buttonStyle = {
     backgroundColor: $white,
-    color: $red,
-    borderColor: $red,
+    color: $msured,
+    borderColor: $msured,
     marginBottom: '0.5rem',
   };
 
   const buttonHoverStyle = {
-    backgroundColor: $red,
+    backgroundColor: $msured,
     color: $white,
   };
 
@@ -30,9 +31,16 @@ const SendAlertButton: React.FC<SendAlertButtonProps> = ({ onClick }) => {
   };
 
   return (
-    <button className="btn" style={style} onClick={onClick} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-      Send Alert
-    </button>
+    <NavLink
+      to="/create"
+      className="btn"
+      style={style}
+      onClick={onClick}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
+      Create/Delete Alert
+    </NavLink>
   );
 };
 
