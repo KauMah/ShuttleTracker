@@ -1,13 +1,16 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 import React, { FormEvent, useState } from 'react';
 
+import { Route } from './component';
 import { api } from '../../utils/api';
-// import { Route } from './component'; <- Remove this line
 
 interface AddRouteModalProps {
   show: boolean;
+  route: Route | null;
+  onAddSuccess: () => void;
   onHide: () => void;
   loadData: () => void;
+  reload: () => void;
 }
 
 const AddRouteModal: React.FC<AddRouteModalProps> = ({ show, onHide, loadData }) => {
