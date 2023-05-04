@@ -58,7 +58,7 @@ const styles = {
     fontSize: '3rem',
     fontFamily: 'Helvetica',
     marginTop: '3rem',
-    marginBottom: '3rem',
+    marginBottom: '5rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'end',
@@ -70,7 +70,6 @@ const Create = () => {
     <>
       <div className="row fixed-top">
         <div className="col-12" css={styles.msuLogo}>
-          {/* <h1 css={styles.titleBus}>MSU Shuttle Tracker</h1> */}
           <NavLink to="/shuttleInfo" css={styles.titleBus}>
             MSU Shuttle Tracker
           </NavLink>

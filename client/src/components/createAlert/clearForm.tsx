@@ -38,6 +38,7 @@ const styles = {
     fontSize: '1.8rem',
     fontFamily: 'Helvetica',
     color: $salmon,
+    marginTop: '2rem',
     display: 'flex',
     justifyContent: 'center',
   }),
