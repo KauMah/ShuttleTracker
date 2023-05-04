@@ -95,7 +95,7 @@ const EditRouteModal: React.FC<EditRouteModalProps> = ({ show, route, onHide, on
               />
             ))}
           </Form.Group> */}
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" style={{ marginTop: '12px' }}>
             Save Changes
           </Button>
         </Form>
