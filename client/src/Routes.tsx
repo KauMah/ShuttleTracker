@@ -7,6 +7,7 @@ import HelpPg from './components/helpPg';
 import Home from './components/home';
 import Login from './components/login';
 import Register from './components/register';
+import ShuttleBusop from './components/shuttlebusop';
 import ShuttleInfo from './components/shuttleinfo';
 import { useContext } from 'react';
 
@@ -40,6 +41,7 @@ const LocalRoutes = () => {
         <Route path="/account" element={<Account />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/busOp" element={<ShuttleBusop />} />
       </Routes>
     </BrowserRouter>
   );
