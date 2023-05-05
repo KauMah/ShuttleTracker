@@ -137,6 +137,10 @@ const MsuNav = () => {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const homeRoute =
+    user && user.role === 'admin' ? '/shuttleInfo' : user && user.role === 'driver' ? '/busOp' : '/home';
+
   return (
     <Navbar
       className="fixed-top"
@@ -167,7 +171,7 @@ const MsuNav = () => {
               <div className="col-12">
                 <div css={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div css={styles.buttonCondensed}>
-                    <NavLink to="/home" css={styles.linksCondensed}>
+                    <NavLink to={homeRoute} css={styles.linksCondensed}>
                       Home
                     </NavLink>
                   </div>
@@ -199,7 +203,7 @@ const MsuNav = () => {
             ) : (
               <div className="col-12 justify-content-end" css={styles.msuimg}>
                 <div css={styles.button}>
-                  <NavLink to="/home" css={styles.links}>
+                  <NavLink to={homeRoute} css={styles.links}>
                     Home
                   </NavLink>
                 </div>

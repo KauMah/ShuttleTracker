@@ -1,9 +1,11 @@
 import { $grey, $msured, $white } from '../../assets/colors';
 
 import AlertForm from './alertForm';
+import { AuthContext } from '../../utils/AuthContext';
 import ClearForm from './clearForm';
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
+import { useContext } from 'react';
 
 const styles = {
   msuLogo: css({
@@ -66,11 +68,14 @@ const styles = {
 };
 
 const Create = () => {
+  const user = useContext(AuthContext);
+
+  const homeRoute = user.user?.role === 'admin' ? '/shuttleInfo' : user.user?.role === 'driver' ? '/busOp' : '/';
   return (
     <>
       <div className="row fixed-top">
         <div className="col-12" css={styles.msuLogo}>
-          <NavLink to="/shuttleInfo" css={styles.titleBus}>
+          <NavLink to={homeRoute} css={styles.titleBus}>
             MSU Shuttle Tracker
           </NavLink>
         </div>
