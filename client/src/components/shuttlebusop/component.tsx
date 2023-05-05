@@ -170,7 +170,7 @@ const ShuttleBusop = () => {
   };
 
   const mainContainerStyle = {
-    marginTop: '6.5rem',
+    marginTop: '3.5rem',
   };
 
   return (
