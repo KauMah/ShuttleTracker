@@ -82,6 +82,7 @@ const styles = {
     fontWeight: 500,
   }),
 };
+
 const Login = (): JSX.Element => {
   // const toastify = new Toastify({});
   return (
