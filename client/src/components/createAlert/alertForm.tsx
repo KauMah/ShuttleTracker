@@ -35,18 +35,6 @@ const styles = {
       fontSize: '1.3rem',
     },
   }),
-  dropDown: css({
-    height: '2rem',
-    width: '50rem',
-    fontWeight: 700,
-    fontSize: '1.2rem',
-    borderRadius: '100px',
-    border: '1px solid #D1190D',
-    display: 'flex',
-    alignContent: 'center',
-    textAlignLast: 'center',
-    cursor: 'pointer',
-  }),
   textBox: css({
     height: '3rem',
     width: '30rem',

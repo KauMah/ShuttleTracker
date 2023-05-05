@@ -66,9 +66,9 @@ const Home = () => {
         <a className="view-map-link" onClick={handleViewMapClick}>
           View Map
         </a>
-        <AlertModal />
         <img src={map} alt="Map" className="map-image" />
       </div>
+      <AlertModal />
       <div>
         <StopInfo />
       </div>
