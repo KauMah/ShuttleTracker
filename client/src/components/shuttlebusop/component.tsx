@@ -220,7 +220,7 @@ const ShuttleBusop = () => {
             <SendAlertButton onClick={handleSendAlert} />
           </div>
         </div>
-        <div className="row">
+        <div className="row d-flex justify-content-center">
           <AdminPanelBox options={box1Options} showSelect={false} />
           <AdminPanelBox options={box2Options} />
           <AdminPanelBox options={box3Options} />
