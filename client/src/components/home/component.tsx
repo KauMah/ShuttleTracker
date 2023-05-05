@@ -4,6 +4,7 @@ import './styles.css';
 import { ComponentProps, SetStateAction, useRef, useState } from 'react';
 import Map, { Marker } from 'react-map-gl';
 
+import AlertModal from './alertModal';
 import MapEvent from 'react-map-gl';
 import MapboxViewport from 'react-map-gl';
 import Navbar from '../navBar';
@@ -67,6 +68,7 @@ const Home = () => {
         </a>
         <img src={map} alt="Map" className="map-image" />
       </div>
+      <AlertModal />
       <div>
         <StopInfo />
       </div>

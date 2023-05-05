@@ -64,7 +64,7 @@ const styles = {
   titleLogin: css({
     fontFamily: 'Helvetica',
     fontSize: '8vh',
-    fontWeight: 550,
+    fontWeight: 500,
     textAlign: 'center',
     marginTop: '-5vh',
     color: $msured,
@@ -79,11 +79,12 @@ const styles = {
   clickHere: css({
     fontFamily: 'Helvetica',
     fontSize: '15px',
-    fontWeight: 520,
+    fontWeight: 500,
   }),
 };
 
 const Login = (): JSX.Element => {
+  // const toastify = new Toastify({});
   return (
     <div>
       <div className="row">
@@ -104,7 +105,7 @@ const Login = (): JSX.Element => {
               Click Here
             </NavLink>
           </p>
-          <p className="d-flex justify-content-center" style={{ marginTop: '-3vh' }}>
+          <p className="d-flex justify-content-center" style={{ marginTop: '-2vh' }}>
             {/* &nbsp; makes it so that it skips a space */}
             Dont have an account?&nbsp;
             <NavLink to="/register" css={styles.link}>

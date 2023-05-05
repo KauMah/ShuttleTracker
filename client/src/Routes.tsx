@@ -16,7 +16,23 @@ const LocalRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={user.user ? <Home /> : <Navigate to={'/login'} />} />
+        <Route
+          path="/"
+          element={
+            user.user ? (
+              user.user.role === 'admin' ? (
+                <Navigate to={'/shuttleinfo'} />
+              ) : user.user.role == 'driver' ? (
+                <Navigate to={'/busOp'} />
+              ) : (
+                <Home />
+              )
+            ) : (
+              <Navigate to={'/login'} />
+            )
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/shuttleInfo" element={<ShuttleInfo />} />
         <Route path="/home" element={<Home />} />

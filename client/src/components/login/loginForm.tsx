@@ -62,13 +62,6 @@ const LoginForm = (): JSX.Element => {
             setUser(role);
             localStorage.setItem('user', JSON.stringify(role));
             api.defaults.headers.common.Authorization = `Bearer ${_.get(data, 'data.user.access_token', '')}`;
-            if (role?.role === 'admin') {
-              navigate('/shuttleInfo');
-            } else if (role?.role === 'driver') {
-              navigate('/busOp');
-            } else {
-              navigate('/home');
-            }
           })
           .catch((err) => {
             toast(_.get(err, 'response.data.error[0].message', 'Failed unexpectedly, check connection'), {

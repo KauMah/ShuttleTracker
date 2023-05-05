@@ -1,9 +1,11 @@
 import { $grey, $msured, $white } from '../../assets/colors';
 
 import AlertForm from './alertForm';
+import { AuthContext } from '../../utils/AuthContext';
 import ClearForm from './clearForm';
 import { NavLink } from 'react-router-dom';
 import { css } from '@emotion/react';
+import { useContext } from 'react';
 
 const styles = {
   msuLogo: css({
@@ -58,7 +60,7 @@ const styles = {
     fontSize: '3rem',
     fontFamily: 'Helvetica',
     marginTop: '3rem',
-    marginBottom: '6rem',
+    marginBottom: '5rem',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'end',
@@ -66,12 +68,14 @@ const styles = {
 };
 
 const Create = () => {
+  const user = useContext(AuthContext);
+
+  const homeRoute = user.user?.role === 'admin' ? '/shuttleInfo' : user.user?.role === 'driver' ? '/busOp' : '/';
   return (
     <>
       <div className="row fixed-top">
         <div className="col-12" css={styles.msuLogo}>
-          {/* <h1 css={styles.titleBus}>MSU Shuttle Tracker</h1> */}
-          <NavLink to="/shuttleInfo" css={styles.titleBus}>
+          <NavLink to={homeRoute} css={styles.titleBus}>
             MSU Shuttle Tracker
           </NavLink>
         </div>
@@ -82,7 +86,7 @@ const Create = () => {
         <AlertForm />
       </div>
       <div style={{ marginBottom: '7rem' }}>
-        <div css={styles.alerts}>Delete Alerts</div>
+        <div css={styles.alerts}>Active Alerts</div>
         <ClearForm />
       </div>
     </>

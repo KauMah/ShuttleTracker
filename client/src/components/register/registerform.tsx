@@ -5,11 +5,13 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 interface Account {
   firstName: string;
   lastName: string;
+  email: string;
   password: string;
   passwordConfirm: string;
   role: 'admin' | 'driver' | 'rider';
@@ -18,6 +20,7 @@ interface Account {
 const Values: Account = {
   firstName: '',
   lastName: '',
+  email: '',
   password: '',
   passwordConfirm: '',
   role: 'rider',
@@ -32,6 +35,9 @@ const validation = Yup.object().shape({
     .matches(/^[a-zA-Z]+$/, 'Last name can only have letters')
     .max(32, 'Last name must be shorter than 32 characters')
     .required('Last name is required'),
+  email: Yup.string()
+    .matches(/^[\w-.]+@montclair\.edu$/, 'Must be a MSU email')
+    .required('Valid MSU email required'),
   password: Yup.string().min(8, 'Password requires at least 8 characters').required('Password is required'),
   passwordConfirm: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
@@ -43,7 +49,7 @@ const styles = {
     backgroundColor: $salmon,
     height: '5vh 100%',
     width: '10vw 100%',
-    fontSize: '22px',
+    fontSize: '2rem',
     fontWeight: 700,
     borderRadius: '13px',
     marginTop: '3vh',
@@ -58,18 +64,21 @@ const styles = {
     width: '25vw',
     display: 'flex',
     flexDirection: 'column',
-    fontWeight: 900,
+    fontSize: '1.2rem',
+    fontWeight: 500,
     marginBottom: '2vh',
+    appearance: 'none',
     '& input': {
-      borderRadius: '8px',
       height: '4vh',
+      fontSize: '1rem',
       background: $lightGrey,
+      borderRadius: '8px',
+      border: 'none',
     },
   }),
   userRole: css({
     height: '4vh',
     backgroundColor: $lightGrey,
-    border: '3px solid black',
     borderRadius: '20px',
     fontWeight: 500,
     appearance: 'none',
@@ -85,17 +94,16 @@ const RegisterForm = (): JSX.Element => {
         initialValues={Values}
         validationSchema={validation}
         onSubmit={(values, { setSubmitting }) => {
-          const { firstName, lastName, password, passwordConfirm, role } = values;
+          const { firstName, lastName, email, password, passwordConfirm, role } = values;
           const name = `${firstName} ${lastName}`;
-          const email = `${lastName}${firstName.charAt(0)}@montclair.edu`;
 
           api
             .post('/auth/register', { name, email, password, passwordConfirm, role })
             .then((data) => {
               console.log(data);
-              alert(
-                `Your new email is: ${email}. Please save this information. You will now be redirected to the login page`
-              );
+              toast.success('Your account has been created!', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
               nav('/login');
             })
             .catch((err) => {
@@ -117,6 +125,11 @@ const RegisterForm = (): JSX.Element => {
               <label htmlFor="lastName">Last Name</label>
               <Field type="text" name="lastName" id="lastName" placeholder="Last Name" />
               <ErrorMessage name="lastName" component="div" />
+            </div>
+            <div css={styles.input}>
+              <label htmlFor="email">Email</label>
+              <Field type="text" name="email" id="email" placeholder="Email" />
+              <ErrorMessage name="email" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="password">Password</label>

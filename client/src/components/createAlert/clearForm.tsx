@@ -1,89 +1,109 @@
-import { $flash, $salmon } from '../../assets/colors';
-import { Field, Form, Formik } from 'formik';
+import { $msured, $red, $salmon, $white } from '../../assets/colors';
+import { useEffect, useState } from 'react';
 
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
 
-interface Account {
-  id: string;
+interface Alert {
+  _id: string;
+  message: string;
+  title: string;
 }
 
-const Values: Account = {
-  id: '',
-};
-
 const styles = {
-  text: css({
-    fontSize: '1.4rem',
+  form: css({
     fontFamily: 'Helvetica',
-    fontWeight: 500,
-    position: 'absolute',
-    marginTop: '-2.5rem',
-    '@media (max-width: 650px)': {
-      fontSize: '1.3rem',
-    },
+    fontSize: '1.3rem',
+    display: 'flex',
+    justifyContent: 'center',
   }),
-  textBox: css({
-    height: '3rem',
-    width: '30rem',
-    fontSize: '1.2rem',
-    padding: '0.5rem',
-    borderRadius: '0.3rem',
-    border: '1px solid #D1190D',
-    textAlignLast: 'center',
-  }),
-  submitButton: css({
-    backgroundColor: $salmon,
-    height: '5vh 100%',
-    width: '10vw 100%',
-    fontSize: '22px',
-    fontWeight: 700,
-    borderRadius: '13px',
-    marginTop: '3vh',
-    padding: 'auto',
-    transition: 'background-color 0.25s',
+  clearButton: css({
+    backgroundColor: $white,
+    color: $msured,
+    border: 'none',
+    marginBottom: '2rem',
+    cursor: 'pointer',
     '&:hover': {
-      backgroundColor: $flash,
+      color: $red,
     },
+  }),
+  title: css({
+    fontSize: '2.2rem',
+    fontFamily: 'Helvetica',
+    color: $white,
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+  message: css({
+    fontSize: '1.8rem',
+    fontFamily: 'Helvetica',
+    color: $salmon,
+    marginTop: '2rem',
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+  text: css({
+    fontFamily: 'Helvetica',
+    fontSize: '1.4rem',
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+  borderTit: css({
+    background: $salmon,
+    borderRadius: '10px',
+    border: '1px solid black',
   }),
 };
-const ClearForm = (): JSX.Element => {
-  return (
-    <div>
-      <Formik
-        initialValues={Values}
-        onSubmit={(values, { setSubmitting }) => {
-          const { id } = values;
 
-          api
-            .post('/alerts/clear', { id })
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-            .finally(() => {
-              setSubmitting(false);
-            });
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div style={{ position: 'relative', marginTop: '3rem' }} className="d-flex justify-content-center">
-              <label htmlFor="id" css={styles.text}>
-                Alert ID
-              </label>
-              <Field type="text" name="id" id="id" placeholder="ID" css={styles.textBox} maxLength={100} />
-            </div>
-            <div style={{ textAlign: 'center', marginTop: '3vh' }}>
-              <button type="submit" disabled={isSubmitting} css={styles.submitButton}>
-                {isSubmitting ? 'Submitting...' : 'Submit'}
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+const ClearForm = (): JSX.Element => {
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [alertsFetched, setAlertsFetched] = useState(false);
+
+  useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const response = await api.get('/alerts/');
+        if (response.data.data) {
+          setAlerts(response.data.data);
+          setAlertsFetched(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAlerts();
+  }, []);
+
+  const handleClearAlert = async (id: string) => {
+    try {
+      await api.post(`/alerts/clear`, { id });
+      setAlerts(alerts.filter((alert) => alert._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div css={styles.form}>
+      <div>
+        {alertsFetched
+          ? alerts.map((alert) => (
+              <div key={alert._id}>
+                <div css={styles.borderTit}>
+                  <div css={styles.title}>Title:</div>
+                  <p css={styles.text}>{alert.title}</p>
+                </div>
+                <div>
+                  <div css={styles.message}>Message:</div>
+                  <p css={styles.text}>{alert.message}</p>
+                  <button css={styles.clearButton} onClick={() => handleClearAlert(alert._id)}>
+                    Clear
+                  </button>
+                </div>
+              </div>
+            ))
+          : null}
+      </div>
     </div>
   );
 };
