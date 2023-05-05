@@ -65,7 +65,7 @@ const LoginForm = (): JSX.Element => {
             if (role?.role === 'admin') {
               navigate('/shuttleInfo');
             } else if (role?.role === 'driver') {
-              navigate('/account');
+              navigate('/busOp');
             } else {
               navigate('/home');
             }
