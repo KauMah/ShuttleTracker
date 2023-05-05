@@ -122,7 +122,7 @@ const Account = () => {
   const handleCloseModal = () => setShowModal(false);
 
   return (
-    <div style={{ marginTop: '100px' }}>
+    <div style={{ marginTop: '13rem' }}>
       <MsuNav />
       <h1 className="d-flex justify-content-center" css={styles.title}>
         Account

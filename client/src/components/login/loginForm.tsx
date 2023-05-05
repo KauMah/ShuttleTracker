@@ -1,4 +1,4 @@
-import { $flash, $salmon, $white } from '../../assets/colors';
+import { $flash, $msured, $salmon, $white } from '../../assets/colors';
 import { useContext, useEffect } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
@@ -31,7 +31,7 @@ const styles = {
     },
   }),
   error: {
-    color: $white,
+    color: $msured,
     fontsize: '8px',
   },
 };
@@ -48,9 +48,9 @@ const LoginForm = (): JSX.Element => {
       validate={(values) => {
         const errors: LoginValues = {};
         if (!values.email) {
-          errors.email = 'Required';
+          errors.email = '*Required';
         } else if (!/^[\w-.]+@montclair\.edu$/.test(values.email)) {
-          errors.email = 'Invalid email address';
+          errors.email = '*Invalid email address';
         }
         return errors;
       }}
