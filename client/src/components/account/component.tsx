@@ -1,11 +1,27 @@
 import { $black, $flash, $msured, $salmon } from '../../assets/colors';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useContext, useState } from 'react';
 
 import { AuthContext } from '../../utils/AuthContext';
+import { Modal } from 'react-bootstrap';
 import MsuNav from '../navBar';
 import { api } from '../../utils/api';
 import { css } from '@emotion/react';
-import { useContext } from 'react';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+
+interface Pass {
+  user: {
+    password: string;
+  };
+  passCon: string;
+}
+const Values: Pass = {
+  user: {
+    password: '',
+  },
+  passCon: '',
+};
 
 const styles = {
   title: css({
@@ -45,6 +61,7 @@ const styles = {
 };
 const Account = () => {
   const { user, setUser } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -53,14 +70,8 @@ const Account = () => {
     localStorage.removeItem('user');
     navigate('/login');
   };
-
-  const handleNoti = () => {
-    console.log('redirects to noti changes');
-  };
-
-  const handlePass = () => {
-    console.log('redirects to pass change');
-  };
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   return (
     <div style={{ marginTop: '100px' }}>
@@ -89,12 +100,61 @@ const Account = () => {
                 {user?.name}
               </div>
             </div>
-            <button onClick={handleNoti} css={styles.button}>
-              Manage Notifications
-            </button>
-            <button onClick={handlePass} css={styles.button}>
-              Change Password
-            </button>
+            <div>
+              <button onClick={handleShowModal} css={styles.button}>
+                Change Password
+              </button>
+              <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Password Change</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Formik
+                    initialValues={Values}
+                    onSubmit={(values, { setSubmitting }) => {
+                      const {
+                        user: { password },
+                      } = values;
+
+                      api
+                        .post('/user/edit', { user: { password } })
+                        .then((data) => {
+                          console.log(data);
+                          toast.success('Your account has been Updated!', {
+                            position: toast.POSITION.TOP_RIGHT,
+                          });
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
+                      setTimeout(() => {
+                        console.log(false);
+                      });
+                    }}
+                  >
+                    {({ isSubmitting }) => (
+                      <Form>
+                        <div>
+                          <label htmlFor="user.email">Email</label>
+                          <Field type="user.email" name="user.email" id="user.email" placeholder="Email" />
+                          <ErrorMessage name="user.email" component="div" />
+                        </div>
+                        <div>
+                          <label htmlFor="password">Password</label>
+                          <Field type="user.password" name="user.password" id="user.password" placeholder="Password" />
+                          <ErrorMessage name="user.password" component="div" />
+                        </div>
+                        <div style={{ textAlign: 'center', marginTop: '3vh' }}>
+                          <button type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? 'Submitting...' : 'Submit'}
+                          </button>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
+                </Modal.Body>
+              </Modal>
+            </div>
             <button onClick={handleLogout} css={styles.button}>
               Logout
             </button>
