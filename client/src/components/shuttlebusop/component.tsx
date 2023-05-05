@@ -11,9 +11,8 @@ const ShuttleBusop = () => {
   const [stops, setStops] = useState<Stop[]>([]);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [operators, setOperators] = useState<Operator[]>([]);
-  const [riders, setRiders] = useState<Rider[]>([]);
+  const [, setRiders] = useState<Rider[]>([]);
   const [buses, setBuses] = useState<Bus[] | null>(null);
-  const [, setRoutesFetched] = useState(false);
   const [, setLoading] = useState<boolean>(false);
 
   // Bus refreshing
@@ -42,20 +41,6 @@ const ShuttleBusop = () => {
       console.log(err);
     }
   };
-
-  // // Route fetching
-  // const fetchRoutes = async () => {
-  //   try {
-  //     const response = await api.get('/route/');
-  //     // console.log('Routes:', response.data);
-  //     if (response.data.data) {
-  //       setRoutes(response.data.data);
-  //       setRoutesFetched(true);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   // Operator fetching
   const fetchOperators = async () => {
@@ -104,7 +89,7 @@ const ShuttleBusop = () => {
                 return { ...bus, route: routeResponse.data.data };
               }
             }
-            return { ...bus, route: null }; // Set route to null if not found
+            return { ...bus, route: null };
           })
         );
         setBuses(fetchedBuses);
@@ -167,33 +152,15 @@ const ShuttleBusop = () => {
             })
           : [],
     },
+  ];
+
+  const box3Options = [
     {
       title: 'Available Stops',
       content: stops.map((stop) => ({
         id: stop._id,
         text: <>{stop.name}</>,
       })),
-    },
-  ];
-
-  const box3Options = [
-    {
-      title: 'Bus Operators',
-      content: operators
-        .filter((operator) => operator.role === 'driver')
-        .map((operator) => ({
-          id: operator._id,
-          text: <>{`${operator.name} (${operator.email})`}</>,
-        })),
-    },
-    {
-      title: 'Riders',
-      content: riders
-        .filter((operator) => operator.role === 'rider')
-        .map((rider) => ({
-          id: rider._id,
-          text: <>{`${rider.name} (${rider.email})`}</>,
-        })),
     },
   ];
 
@@ -222,8 +189,8 @@ const ShuttleBusop = () => {
         </div>
         <div className="row d-flex justify-content-center">
           <AdminPanelBox options={box1Options} showSelect={false} />
-          <AdminPanelBox options={box2Options} />
-          <AdminPanelBox options={box3Options} />
+          <AdminPanelBox options={box2Options} showSelect={false} />
+          <AdminPanelBox options={box3Options} showSelect={false} />
         </div>
       </div>
     </>
