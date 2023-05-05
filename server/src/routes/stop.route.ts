@@ -1,11 +1,10 @@
 import { addStopHandler, deleteStopHandler, editStopHandler, getStopHandler } from '../controllers/stop.controller';
 import { createStopSchema, deleteStopSchema, editStopSchema } from '../schemas/stop.schema';
-import express, { Request, Response } from 'express';
+import express from 'express';
 
 import { deserializeUser } from '../middleware/deserializeUser';
 import { requireUser } from '../middleware/requireUser';
 import { restrictTo } from '../middleware/restrictTo';
-import stopModel from '../models/stop.model';
 import { validate } from '../middleware/validate';
 
 const stopRouter = express.Router();
@@ -18,6 +17,6 @@ stopRouter.post('/edit', restrictTo('admin'), validate(editStopSchema), editStop
 
 stopRouter.post('/delete', restrictTo('admin'), validate(deleteStopSchema), deleteStopHandler);
 
-stopRouter.get('/', restrictTo('admin'), getStopHandler);
+stopRouter.get('/', getStopHandler);
 
 export default stopRouter;

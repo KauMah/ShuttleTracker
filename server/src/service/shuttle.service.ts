@@ -13,6 +13,7 @@ export const getShuttle = async (id: string) => {
 };
 
 export const deleteShuttle = async (id: string) => {
+  console.log(id);
   return await shuttleModel.findByIdAndDelete(id);
 };
 
