@@ -10,8 +10,8 @@ const alertRouter = express.Router();
 
 alertRouter.use(deserializeUser);
 
-alertRouter.post('/new', validate(createAlertSchema), restrictTo('admin'), createAlertHandler);
-alertRouter.post('/clear', validate(clearAlertSchema), restrictTo('admin'), clearAlertHandler);
+alertRouter.post('/new', validate(createAlertSchema), restrictTo('admin', 'driver'), createAlertHandler);
+alertRouter.post('/clear', validate(clearAlertSchema), restrictTo('admin', 'driver'), clearAlertHandler);
 alertRouter.get('/', getActiveAlertsHandler);
 
 export default alertRouter;

@@ -12,6 +12,7 @@ import {
 
 import { User } from '../models/user.model';
 import _ from 'lodash';
+import bcrypt from 'bcryptjs';
 
 export const getMeHandler = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -94,12 +95,15 @@ export const editUserHandler = async (
 ) => {
   const { user } = req.body;
   const usr = res.locals.user as User;
+  if (user.password) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
   try {
     const u = await editUser(usr.email, user);
     res.status(200).json({
       status: 'success',
       data: {
-        u,
+        u: _.omit(u, ['password']),
       },
     });
   } catch (err: unknown) {
@@ -113,6 +117,9 @@ export const adminEditUserHandler = async (
   next: NextFunction
 ) => {
   const { user } = req.body;
+  if (user.password) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
   try {
     if (!user.id) {
       throw 'no ID supplied';
