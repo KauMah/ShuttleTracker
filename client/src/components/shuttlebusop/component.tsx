@@ -169,8 +169,9 @@ const ShuttleBusop = () => {
     color: $msured,
   };
 
+  // edit for commit
   const mainContainerStyle = {
-    marginTop: '6.5rem',
+    marginTop: '3.5rem',
   };
 
   return (
