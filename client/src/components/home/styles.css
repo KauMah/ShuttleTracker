@@ -1,0 +1,240 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+.map-container {
+  height: 95vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+}
+.react-map-gl {
+  width: 70%;
+  height: 70%;
+  margin: 0 auto;
+  border: 5px solid black;
+  border-style: solid;
+  border-radius: 20px;
+}
+
+.view-map-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.map-image {
+  height: auto !important;
+  width: 50px !important;
+  position: static;
+  margin-top: 100px;
+}
+
+.message {
+  color: black;
+  text-align: center;
+  font-size: 1.2rem;
+  z-index: 9999;
+  margin-top: 8rem;
+  left: 0;
+}
+.container {
+  padding-top: 50px;
+}
+.container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.stops-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+}
+.stops-header1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: auto;
+  background-color: #ff6262;
+  border: 2px solid #d1190d;
+  padding: 20px;
+  border-radius: 10px;
+}
+.stops-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  background-color: white;
+  border: 2px solid #d1190d;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}
+.stops-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+.stops {
+  text-align: center;
+  margin-top: 0px;
+  color: white;
+}
+.stops-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  columns: 2;
+}
+
+.stop {
+  display: inline-block;
+  width: 45%;
+  margin-right: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 800px;
+  text-align: center;
+  padding-left: 150px;
+  text-align: center;
+  white-space: nowrap;
+  margin-bottom: 30px;
+}
+
+.stop-name {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+.stop-name-text {
+  font-size: 20px;
+  margin: 5px 0;
+}
+.stop-lat,
+.stop-long {
+  font-size: 18px;
+  margin: 5px 0;
+}
+.route {
+  display: inline-block;
+  width: 45%;
+  margin-right: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 800px;
+  text-align: center;
+  padding-left: 150px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+.routes {
+  text-align: center;
+  margin-top: 0px;
+  color: white;
+}
+.shuttles {
+  text-align: center;
+  margin-top: 0px;
+  color: white;
+}
+.shuttle {
+  display: inline-block;
+  width: 45%;
+  margin-right: 10%;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 800px;
+  text-align: center;
+  padding-left: 150px;
+  text-align: center;
+  white-space: nowrap;
+  padding-bottom: 40px;
+}
+.view-map-btn {
+  background-color: #d1190d;
+  font-size: 1.2rem;
+  margin: 9rem auto 0;
+  display: block;
+  margin-bottom: 30px;
+  height: 5vh;
+  width: 23vh;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: background-color 0.25s;
+}
+.view-map-btn:hover {
+  background-color: #ff6262;
+}
+.view-map-link {
+  display: block;
+  position: relative;
+  margin-top: 130px;
+  margin-bottom: 30px;
+  padding: 8px 20px;
+  font-size: 30px;
+  max-width: 800px;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  color: #d1190d;
+  border: none;
+  white-space: nowrap;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  z-index: 1;
+}
+
+.view-map-link:hover {
+  color: black;
+  outline: none;
+}
+
+.msuRed {
+  color: #d1190d;
+}
+.salmon {
+  color: #ff6262;
+}
+.flash {
+  color: #ffe2e6;
+}
+.lightGrey {
+  color: #d9d9d9;
+}
+.red {
+  color: rgb(141, 34, 18);
+}
+.transparent {
+  color: rgba(255, 255, 255, 0.1);
+}
+.burgerBtn {
+  color: rgba(80, 75, 75, 0.5);
+}
+
+canvas {
+  border-radius: 15px;
+  overflow: hidden;
+}
