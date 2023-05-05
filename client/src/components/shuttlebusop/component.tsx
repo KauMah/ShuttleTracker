@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { $msured } from '../../assets/colors';
 import AdminPanelBox from '../shuttleinfo/adminPanelBox';
 import MsuNav from '../navBar';
+import SendAlertButton from '../shuttleinfo/sendAlertButton';
 import { api } from '../../utils/api';
 
 const ShuttleBusop = () => {
@@ -126,6 +127,11 @@ const ShuttleBusop = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleSendAlert = () => {
+    console.log('Alert sent');
+    // We still need to implement our alert sending logic here !!
+  };
+
   const box1Options = [
     {
       title: 'Current Routes',
@@ -191,21 +197,34 @@ const ShuttleBusop = () => {
     },
   ];
 
+  const currentViewTextStyle = {
+    fontSize: '1.25rem',
+    color: $msured,
+  };
+
+  const mainContainerStyle = {
+    marginTop: '6.5rem',
+  };
+
   return (
     <>
       <MsuNav />
-      <div
-        style={{
-          backgroundColor: $msured,
-          paddingTop: '0.5rem',
-          paddingBottom: '1rem',
-          paddingLeft: '1rem',
-          paddingRight: '1rem',
-        }}
-      >
-        <AdminPanelBox options={box1Options} />
-        <AdminPanelBox options={box2Options} />
-        <AdminPanelBox options={box3Options} />
+      <div className="container" style={mainContainerStyle}>
+        <div className="row">
+          <div className="col-12 d-flex justify-content-center">
+            <p style={currentViewTextStyle}>Current View: Bus Operator</p>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12 d-flex justify-content-center" style={{ marginTop: '-12px' }}>
+            <SendAlertButton onClick={handleSendAlert} />
+          </div>
+        </div>
+        <div className="row">
+          <AdminPanelBox options={box1Options} showSelect={false} />
+          <AdminPanelBox options={box2Options} />
+          <AdminPanelBox options={box3Options} />
+        </div>
       </div>
     </>
   );
