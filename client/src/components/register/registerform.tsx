@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { $flash, $lightGrey, $salmon } from '../../assets/colors';
+import { $flash, $lightGrey, $msured, $salmon } from '../../assets/colors';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import { api } from '../../utils/api';
@@ -28,16 +28,16 @@ const Values: Account = {
 
 const validation = Yup.object().shape({
   firstName: Yup.string()
-    .matches(/^[a-zA-Z]+$/, 'First name can only have letters')
-    .max(32, 'First name must be shorter than 32 characters')
-    .required('First name is required'),
+    .matches(/^[a-zA-Z]+$/, '*First name can only have letters')
+    .max(32, '*First name must be shorter than 32 characters')
+    .required('*First name is required'),
   lastName: Yup.string()
-    .matches(/^[a-zA-Z]+$/, 'Last name can only have letters')
-    .max(32, 'Last name must be shorter than 32 characters')
-    .required('Last name is required'),
+    .matches(/^[a-zA-Z]+$/, '*Last name can only have letters')
+    .max(32, '*Last name must be shorter than 32 characters')
+    .required('*Last name is required'),
   email: Yup.string()
-    .matches(/^[\w-.]+@montclair\.edu$/, 'Must be a MSU email')
-    .required('Valid MSU email required'),
+    .matches(/^[\w-.]+@montclair\.edu$/, '*Must be a MSU email')
+    .required('*Valid MSU email required'),
   password: Yup.string().min(8, 'Password requires at least 8 characters').required('Password is required'),
   passwordConfirm: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
@@ -84,6 +84,9 @@ const styles = {
     appearance: 'none',
     cursor: 'pointer',
   }),
+  error: css({
+    color: $msured,
+  }),
 };
 
 const RegisterForm = (): JSX.Element => {
@@ -119,27 +122,27 @@ const RegisterForm = (): JSX.Element => {
             <div css={styles.input}>
               <label htmlFor="firstName">First Name</label>
               <Field type="text" name="firstName" id="firstName" placeholder="First Name" />
-              <ErrorMessage name="firstName" component="div" />
+              <ErrorMessage css={styles.error} name="firstName" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="lastName">Last Name</label>
               <Field type="text" name="lastName" id="lastName" placeholder="Last Name" />
-              <ErrorMessage name="lastName" component="div" />
+              <ErrorMessage css={styles.error} name="lastName" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="email">Email</label>
               <Field type="text" name="email" id="email" placeholder="Email" />
-              <ErrorMessage name="email" component="div" />
+              <ErrorMessage css={styles.error} name="email" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="password">Password</label>
               <Field type="password" name="password" id="password" placeholder="Password" />
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage css={styles.error} name="password" component="div" />
             </div>
             <div css={styles.input}>
               <label htmlFor="passwordConfirm">Confirm Password</label>
               <Field type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password" />
-              <ErrorMessage name="passwordConfirm" component="div" />
+              <ErrorMessage css={styles.error} name="passwordConfirm" component="div" />
             </div>
             <label htmlFor="role">What are you?&nbsp;</label>
             <Field component="select" name="role" id="role" css={styles.userRole} style={{ textAlign: 'center' }}>
