@@ -1,4 +1,6 @@
-import { $black, $flash, $msured, $salmon } from '../../assets/colors';
+import * as Yup from 'yup';
+
+import { $black, $flash, $lightGrey, $msured, $red, $salmon } from '../../assets/colors';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useContext, useState } from 'react';
 
@@ -22,6 +24,15 @@ const Values: Pass = {
   },
   passCon: '',
 };
+
+const validation = Yup.object().shape({
+  user: Yup.object().shape({
+    password: Yup.string().min(8, '*Password requires at least 8 characters').required('*Password is required'),
+  }),
+  passCon: Yup.string()
+    .oneOf([Yup.ref('user.password')], '*Passwords must match')
+    .required('*Confirm password required'),
+});
 
 const styles = {
   title: css({
@@ -57,6 +68,43 @@ const styles = {
       background: $flash,
       color: $salmon,
     },
+  }),
+  submitButton: css({
+    backgroundColor: $salmon,
+    width: '5rem 10%',
+    fontSize: '2rem',
+    fontWeight: 700,
+    borderRadius: '13px',
+    marginTop: '3vh',
+    padding: 'auto',
+    transition: 'background-color 0.25s',
+    '&:hover': {
+      backgroundColor: $flash,
+    },
+  }),
+  input: css({
+    fontFamily: 'Helvetica',
+    width: '29rem',
+    display: 'flex',
+    flexDirection: 'column',
+    fontSize: '1.2rem',
+    fontWeight: 500,
+    marginBottom: '2vh',
+    appearance: 'none',
+    '& input': {
+      height: '2.3rem',
+      fontSize: '1rem',
+      background: $lightGrey,
+      borderRadius: '8px',
+      border: 'none',
+    },
+  }),
+  error: css({
+    color: $msured,
+  }),
+  passChange: css({
+    fontFamily: 'Helvetica',
+    fontSize: '1.8rem',
   }),
 };
 const Account = () => {
@@ -106,11 +154,12 @@ const Account = () => {
               </button>
               <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Password Change</Modal.Title>
+                  <Modal.Title css={styles.passChange}>Change Password</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Formik
                     initialValues={Values}
+                    validationSchema={validation}
                     onSubmit={(values, { setSubmitting }) => {
                       const {
                         user: { password },
@@ -123,6 +172,7 @@ const Account = () => {
                           toast.success('Your account has been Updated!', {
                             position: toast.POSITION.TOP_RIGHT,
                           });
+                          handleCloseModal();
                         })
                         .catch((err) => {
                           console.log(err);
@@ -134,18 +184,18 @@ const Account = () => {
                   >
                     {({ isSubmitting }) => (
                       <Form>
-                        <div>
-                          <label htmlFor="user.email">Email</label>
-                          <Field type="user.email" name="user.email" id="user.email" placeholder="Email" />
-                          <ErrorMessage name="user.email" component="div" />
-                        </div>
-                        <div>
+                        <div css={styles.input}>
                           <label htmlFor="password">Password</label>
-                          <Field type="user.password" name="user.password" id="user.password" placeholder="Password" />
-                          <ErrorMessage name="user.password" component="div" />
+                          <Field type="password" name="user.password" id="user.password" placeholder="Password" />
+                          <ErrorMessage css={styles.error} name="user.password" component="div" />
+                        </div>
+                        <div css={styles.input}>
+                          <label htmlFor="passCon">Confirm Password</label>
+                          <Field type="password" name="passCon" id="passCon" placeholder="Confirm Password" />
+                          <ErrorMessage css={styles.error} name="passCon" component="div" />
                         </div>
                         <div style={{ textAlign: 'center', marginTop: '3vh' }}>
-                          <button type="submit" disabled={isSubmitting}>
+                          <button type="submit" disabled={isSubmitting} css={styles.submitButton}>
                             {isSubmitting ? 'Submitting...' : 'Submit'}
                           </button>
                         </div>
