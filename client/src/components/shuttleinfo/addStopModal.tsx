@@ -51,8 +51,8 @@ const AddStopModal: React.FC<AddStopModalProps> = ({ show, onHide, loadData, onA
           </Form.Group>
           <Form.Group controlId="coordinates">
             <Form.Label>Coordinates (x, y)</Form.Label>
-            <Form.Control type="text" placeholder="x" value={x} onChange={(e) => setX(e.target.value)} />
-            <Form.Control type="text" placeholder="y" value={y} onChange={(e) => setY(e.target.value)} />
+            <Form.Control type="text" placeholder="longitude" value={x} onChange={(e) => setX(e.target.value)} />
+            <Form.Control type="text" placeholder="latitude" value={y} onChange={(e) => setY(e.target.value)} />
           </Form.Group>
           <Button variant="primary" type="submit" style={{ marginTop: '12px' }}>
             Add Stop
