@@ -42,6 +42,7 @@ const Home = () => {
   const [route, setRoute] = useState();
   const [stops, setStops] = useState([]);
   const [stop, setStop] = useState();
+  const [stopWaits, setStopWaits] = useState([]);
   const [waypoints, setWaypoints] = useState();
   const [shuttles, setShuttles] = useState([]);
   const map = useRef<MapRef>(null);
@@ -95,6 +96,11 @@ const Home = () => {
           coordinates: rt,
         },
       };
+      const waits = data.routes[0].legs;
+      for (const wait in waits) {
+        console.log(waits[wait].duration);
+      }
+
       setWaypoints(geojson);
     };
     fetcher();
